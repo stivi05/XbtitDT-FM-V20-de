@@ -1,0 +1,876 @@
+<hack>
+  <title>SQL Update V7.1 > V18 to V20</title>
+  <author>DiemThuy</author>
+  <version>DT FM</version>
+  <file>
+    <name>"database"</name>
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[ALTER TABLE `{$db_prefix}files` ADD `tag` text NOT NULL;]]></data>
+</operation> 
+
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[ALTER TABLE `{$db_prefix}files` ADD `pretime` varchar(250) NOT NULL DEFAULT '';]]></data>
+</operation> 
+
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[ALTER TABLE `{$db_prefix}files` ADD `catid` varchar(50) NOT NULL;]]></data>
+</operation> 
+
+<operation>
+      <action>"sql"</action>
+      <data><![CDATA[ALTER TABLE `{$db_prefix}users` ADD `helpdesk` enum('yes','no') default 'no';]]></data>
+</operation>
+
+<operation>
+      <action>"sql"</action>
+      <data><![CDATA[ALTER TABLE `{$db_prefix}users` ADD `helped` varchar(255) NOT NULL;]]></data>
+</operation>  
+
+<operation>
+      <action>"sql"</action>
+      <data><![CDATA[ALTER TABLE `{$db_prefix}users` ADD `helplang` varchar(255) NOT NULL;]]></data>
+</operation>
+
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[ALTER TABLE `{$db_prefix}files` ADD `language` INT( 9 ) NOT NULL DEFAULT '0';]]></data>
+</operation>       
+    
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[ALTER TABLE `{$db_prefix}files` ADD `team` varchar(10) default '0';]]></data>
+</operation>
+
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[ALTER TABLE `{$db_prefix}files` ADD `dead_time` int(10) unsigned NOT NULL DEFAULT '0';]]></data>
+</operation>
+
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[ALTER TABLE `{$db_prefix}users` ADD `on_topic` int(11) NOT NULL default '0';]]></data>
+</operation>
+
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[ALTER TABLE `{$db_prefix}users` ADD `gender` INT( 9 ) NOT NULL DEFAULT '2';]]></data>
+</operation>
+
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[ALTER TABLE `{$db_prefix}categories` ADD `porn` enum('yes','no') NOT NULL default 'no';]]></data>
+</operation>
+    
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[ALTER TABLE `{$db_prefix}users` ADD `tor` varchar(10) NOT NULL DEFAULT 'last';]]></data>
+</operation>
+
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[ALTER TABLE `{$db_prefix}users` ADD  `on_forum` int(11) NOT NULL default '0';]]></data>
+</operation>
+
+
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[ALTER TABLE `{$db_prefix}users` ADD `pchat` varchar(40) NOT NULL;]]></data>
+</operation>
+
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[ALTER TABLE `{$db_prefix}users` ADD `forumbanned` enum('yes','no') NOT NULL default 'no';]]></data>
+</operation>
+
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[ALTER TABLE `{$db_prefix}users` ADD `commentpm` enum('true','false') DEFAULT 'true' NOT NULL;]]></data>
+</operation>
+
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[ALTER TABLE `{$db_prefix}users` ADD `trophy` varchar(10) NOT NULL DEFAULT '0';]]></data>
+</operation>
+    
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[ALTER TABLE `{$db_prefix}users` ADD `team` int(10) unsigned NOT NULL default '0';]]></data>
+</operation>
+
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[ALTER TABLE `{$db_prefix}chat` ADD `pchat` varchar(40) NOT NULL;]]></data>
+</operation>
+
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[ALTER TABLE `{$db_prefix}users_level` ADD `speers` enum('yes','no') NOT NULL DEFAULT 'yes';]]></data>
+</operation>
+
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[ALTER TABLE `{$db_prefix}paypal_settings` ADD `vip_daysb` varchar(60) NOT NULL DEFAULT '';]]></data>
+</operation>
+
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[ALTER TABLE `{$db_prefix}paypal_settings` ADD `vip_daysc` varchar(60) NOT NULL DEFAULT '';]]></data>
+</operation>
+
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[ALTER TABLE `{$db_prefix}paypal_settings` ADD `gbb` varchar(60) NOT NULL DEFAULT '';]]></data>
+</operation>
+
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[ALTER TABLE `{$db_prefix}paypal_settings` ADD `gbc` varchar(60) NOT NULL DEFAULT '';]]></data>
+</operation>
+
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[ALTER TABLE `{$db_prefix}paypal_settings` ADD `togb` varchar(60) NOT NULL DEFAULT '';]]></data>
+</operation>
+
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[ALTER TABLE `{$db_prefix}paypal_settings` ADD `togbb` varchar(60) NOT NULL DEFAULT '';]]></data>
+</operation>
+
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[ALTER TABLE `{$db_prefix}paypal_settings` ADD `togbc` varchar(60) NOT NULL DEFAULT '';]]></data>
+</operation>
+
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[ALTER TABLE `{$db_prefix}paypal_settings` ADD `today` varchar(60) NOT NULL DEFAULT '';]]></data>
+</operation>
+
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[ALTER TABLE `{$db_prefix}paypal_settings` ADD `todayb` varchar(60) NOT NULL DEFAULT '';]]></data>
+</operation>
+
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[ALTER TABLE `{$db_prefix}paypal_settings` ADD `todayc` varchar(60) NOT NULL DEFAULT '';]]></data>
+</operation>
+
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[CREATE TABLE IF NOT EXISTS`{$db_prefix}categories_perm` (
+`catid` INT( 10 ) NOT NULL ,
+`levelid` INT( 11 ) NOT NULL ,
+`viewcat` ENUM( 'yes', 'no' ) NOT NULL DEFAULT 'yes' ,
+`viewtorrlist` ENUM( 'yes', 'no' ) NOT NULL DEFAULT 'yes' ,
+`viewtorrdet` ENUM( 'yes', 'no' ) NOT NULL DEFAULT 'yes' ,
+`downtorr` ENUM( 'yes', 'no' ) NOT NULL DEFAULT 'yes' ,
+`ratio` FLOAT NOT NULL
+) ENGINE=MyISAM ;]]></data>
+</operation>
+
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[
+CREATE TABLE IF NOT EXISTS `{$db_prefix}dox` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `added` datetime default '0000-00-00 00:00:00',
+  `title` varchar(255) NOT NULL default '',
+  `filename` varchar(255) NOT NULL default '',
+  `size` int(10) unsigned NOT NULL default '0',
+  `uppedby` int(10) unsigned NOT NULL default '0',
+  `url` varchar(255) NOT NULL default '',
+  `hits` int(10) unsigned NOT NULL default '0',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM;]]></data>
+</operation>
+
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[CREATE TABLE IF NOT EXISTS `{$db_prefix}profile_status` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `userid` int(10) NOT NULL DEFAULT '0',
+  `last_status` varchar(140) NOT NULL,
+  `last_update` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `userid` (`userid`)
+) ENGINE=MyISAM;]]></data>
+</operation>
+
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[INSERT INTO `{$db_prefix}categories_perm` (`catid`, `levelid`, `viewcat`, `viewtorrlist`, `viewtorrdet`, `downtorr`, `ratio`) VALUES
+(1, 10, 'no', 'no', 'no', 'no', 0),
+(1, 9, 'no', 'no', 'no', 'no', 0),
+(1, 8, 'yes', 'yes', 'yes', 'yes', 0),
+(1, 7, 'yes', 'yes', 'yes', 'yes', 0),
+(1, 6, 'yes', 'yes', 'yes', 'yes', 0),
+(1, 5, 'yes', 'yes', 'yes', 'yes', 0),
+(1, 4, 'yes', 'yes', 'yes', 'yes', 0),
+(1, 3, 'yes', 'yes', 'yes', 'yes', 0),
+(1, 2, 'no', 'no', 'no', 'no', 0),
+(1, 1, 'no', 'no', 'no', 'no', 0),
+
+(2, 10, 'no', 'no', 'no', 'no', 0),
+(2, 9, 'no', 'no', 'no', 'no', 0),
+(2, 8, 'yes', 'yes', 'yes', 'yes', 0),
+(2, 7, 'yes', 'yes', 'yes', 'yes', 0),
+(2, 6, 'yes', 'yes', 'yes', 'yes', 0),
+(2, 5, 'yes', 'yes', 'yes', 'yes', 0),
+(2, 4, 'yes', 'yes', 'yes', 'yes', 0),
+(2, 3, 'yes', 'yes', 'yes', 'yes', 0),
+(2, 2, 'no', 'no', 'no', 'no', 0),
+(2, 1, 'no', 'no', 'no', 'no', 0),
+
+(3, 10, 'no', 'no', 'no', 'no', 0),
+(3, 9, 'no', 'no', 'no', 'no', 0),
+(3, 8, 'yes', 'yes', 'yes', 'yes', 0),
+(3, 7, 'yes', 'yes', 'yes', 'yes', 0),
+(3, 6, 'yes', 'yes', 'yes', 'yes', 0),
+(3, 5, 'yes', 'yes', 'yes', 'yes', 0),
+(3, 4, 'yes', 'yes', 'yes', 'yes', 0),
+(3, 3, 'yes', 'yes', 'yes', 'yes', 0),
+(3, 2, 'no', 'no', 'no', 'no', 0),
+(3, 1, 'no', 'no', 'no', 'no', 0),
+
+(4, 10, 'no', 'no', 'no', 'no', 0),
+(4, 9, 'no', 'no', 'no', 'no', 0),
+(4, 8, 'yes', 'yes', 'yes', 'yes', 0),
+(4, 7, 'yes', 'yes', 'yes', 'yes', 0),
+(4, 6, 'yes', 'yes', 'yes', 'yes', 0),
+(4, 5, 'yes', 'yes', 'yes', 'yes', 0),
+(4, 4, 'yes', 'yes', 'yes', 'yes', 0),
+(4, 3, 'yes', 'yes', 'yes', 'yes', 0),
+(4, 2, 'no', 'no', 'no', 'no', 0),
+(4, 1, 'no', 'no', 'no', 'no', 0),
+
+(5, 10, 'no', 'no', 'no', 'no', 0),
+(5, 9, 'no', 'no', 'no', 'no', 0),
+(5, 8, 'yes', 'yes', 'yes', 'yes', 0),
+(5, 7, 'yes', 'yes', 'yes', 'yes', 0),
+(5, 6, 'yes', 'yes', 'yes', 'yes', 0),
+(5, 5, 'yes', 'yes', 'yes', 'yes', 0),
+(5, 4, 'yes', 'yes', 'yes', 'yes', 0),
+(5, 3, 'yes', 'yes', 'yes', 'yes', 0),
+(5, 2, 'no', 'no', 'no', 'no', 0),
+(5, 1, 'no', 'no', 'no', 'no', 0),
+
+(6, 10, 'no', 'no', 'no', 'no', 0),
+(6, 9, 'no', 'no', 'no', 'no', 0),
+(6, 8, 'yes', 'yes', 'yes', 'yes', 0),
+(6, 7, 'yes', 'yes', 'yes', 'yes', 0),
+(6, 6, 'yes', 'yes', 'yes', 'yes', 0),
+(6, 5, 'yes', 'yes', 'yes', 'yes', 0),
+(6, 4, 'yes', 'yes', 'yes', 'yes', 0),
+(6, 3, 'yes', 'yes', 'yes', 'yes', 0),
+(6, 2, 'no', 'no', 'no', 'no', 0),
+(6, 1, 'no', 'no', 'no', 'no', 0),
+
+(7, 10, 'no', 'no', 'no', 'no', 0),
+(7, 9, 'no', 'no', 'no', 'no', 0),
+(7, 8, 'yes', 'yes', 'yes', 'yes', 0),
+(7, 7, 'yes', 'yes', 'yes', 'yes', 0),
+(7, 6, 'yes', 'yes', 'yes', 'yes', 0),
+(7, 5, 'yes', 'yes', 'yes', 'yes', 0),
+(7, 4, 'yes', 'yes', 'yes', 'yes', 0),
+(7, 3, 'yes', 'yes', 'yes', 'yes', 0),
+(7, 2, 'no', 'no', 'no', 'no', 0),
+(7, 1, 'no', 'no', 'no', 'no', 0),
+
+(8, 10, 'no', 'no', 'no', 'no', 0),
+(8, 9, 'no', 'no', 'no', 'no', 0),
+(8, 8, 'yes', 'yes', 'yes', 'yes', 0),
+(8, 7, 'yes', 'yes', 'yes', 'yes', 0),
+(8, 6, 'yes', 'yes', 'yes', 'yes', 0),
+(8, 5, 'yes', 'yes', 'yes', 'yes', 0),
+(8, 4, 'yes', 'yes', 'yes', 'yes', 0),
+(8, 3, 'yes', 'yes', 'yes', 'yes', 0),
+(8, 2, 'no', 'no', 'no', 'no', 0),
+(8, 1, 'no', 'no', 'no', 'no', 0),
+
+(9, 10, 'no', 'no', 'no', 'no', 0),
+(9, 9, 'no', 'no', 'no', 'no', 0),
+(9, 8, 'yes', 'yes', 'yes', 'yes', 0),
+(9, 7, 'yes', 'yes', 'yes', 'yes', 0),
+(9, 6, 'yes', 'yes', 'yes', 'yes', 0),
+(9, 5, 'yes', 'yes', 'yes', 'yes', 0),
+(9, 4, 'yes', 'yes', 'yes', 'yes', 0),
+(9, 3, 'yes', 'yes', 'yes', 'yes', 0),
+(9, 2, 'no', 'no', 'no', 'no', 0),
+(9, 1, 'no', 'no', 'no', 'no', 0),
+
+(11, 10, 'no', 'no', 'no', 'no', 0),
+(11, 9, 'no', 'no', 'no', 'no', 0),
+(11, 8, 'yes', 'yes', 'yes', 'yes', 0),
+(11, 7, 'yes', 'yes', 'yes', 'yes', 0),
+(11, 6, 'yes', 'yes', 'yes', 'yes', 0),
+(11, 5, 'yes', 'yes', 'yes', 'yes', 0),
+(11, 4, 'yes', 'yes', 'yes', 'yes', 0),
+(11, 3, 'yes', 'yes', 'yes', 'yes', 0),
+(11, 2, 'no', 'no', 'no', 'no', 0),
+(11, 1, 'no', 'no', 'no', 'no', 0),
+
+(12, 10, 'no', 'no', 'no', 'no', 0),
+(12, 9, 'no', 'no', 'no', 'no', 0),
+(12, 8, 'yes', 'yes', 'yes', 'yes', 0),
+(12, 7, 'yes', 'yes', 'yes', 'yes', 0),
+(12, 6, 'yes', 'yes', 'yes', 'yes', 0),
+(12, 5, 'yes', 'yes', 'yes', 'yes', 0),
+(12, 4, 'yes', 'yes', 'yes', 'yes', 0),
+(12, 3, 'yes', 'yes', 'yes', 'yes', 0),
+(12, 2, 'no', 'no', 'no', 'no', 0),
+(12, 1, 'no', 'no', 'no', 'no', 0);]]></data>
+</operation>
+
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[CREATE TABLE IF NOT EXISTS  `{$db_prefix}contact_system` (
+  `id` int(9) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `cat` varchar(255) DEFAULT NULL,
+  `subcat` varchar(255) DEFAULT NULL,
+  `message` text,
+  `ipaddress` varchar(255) DEFAULT NULL,
+  `date` varchar(255) DEFAULT NULL,
+  `re` enum('yes','no') NOT NULL DEFAULT 'no',
+  `message2` text,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM;]]></data>
+</operation>
+
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[CREATE TABLE IF NOT EXISTS `{$db_prefix}downloads` (
+  `id` int(5) NOT NULL AUTO_INCREMENT,
+  `uid` int(10) NOT NULL,
+  `info_hash` varchar(40) NOT NULL,
+  `date` datetime NOT NULL,
+  `updown` varchar(10) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id` (`id`,`uid`)
+) ENGINE=MyISAM;]]></data>
+</operation>
+
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[CREATE TABLE IF NOT EXISTS `{$db_prefix}flashscores` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `game` int(11) NOT NULL DEFAULT '0',
+  `user` int(11) NOT NULL DEFAULT '0',
+  `level` int(11) NOT NULL DEFAULT '0',
+  `score` int(11) NOT NULL DEFAULT '0',
+  `date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM;]]></data>
+</operation>
+
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[INSERT INTO `{$db_prefix}flashscores` (`ID`, `game`, `user`, `level`, `score`, `date`) VALUES
+(13, 1, 2, 1, 10, '2010-02-18 12:14:36'),
+(14, 2, 2, 1, 10, '2010-02-18 12:27:07'),
+(15, 3, 2, 1, 10, '2010-02-18 12:27:44'),
+(16, 4, 2, 1, 10, '2010-02-18 12:33:43'),
+(17, 5, 2, 1, 10, '2010-02-18 12:14:36'),
+(18, 6, 2, 1, 10, '2010-02-18 12:27:07'),
+(19, 7, 2, 1, 10, '2010-02-18 12:33:43'),
+(20, 8, 2, 1, 10, '2010-02-18 12:33:43'),
+(21, 9, 2, 1, 10, '2010-02-18 12:33:43'),
+(22, 10, 2, 1, 10, '2010-02-18 12:14:36'),
+(23, 11, 2, 1, 10, '2010-02-18 12:27:07'),
+(24, 12, 2, 1, 10, '2010-02-18 12:27:44'),
+(25, 13, 2, 1, 10, '2010-02-18 12:33:43'),
+(26, 14, 2, 1, 10, '2010-02-18 12:14:36'),
+(27, 15, 2, 1, 10, '2010-02-18 12:27:07'),
+(28, 16, 2, 1, 10, '2010-02-18 12:33:43'),
+(29, 17, 2, 1, 10, '2010-02-18 12:33:43'),
+(30, 18, 2, 1, 10, '2010-02-18 12:33:43'),
+(31, 19, 2, 1, 10, '2010-02-18 12:14:36'),
+(32, 20, 2, 1, 10, '2010-02-18 12:27:07'),
+(33, 21, 2, 1, 10, '2010-02-18 12:33:43'),
+(34, 22, 2, 1, 10, '2010-02-18 12:33:43'),
+(35, 23, 2, 1, 10, '2010-02-18 12:33:43'),
+(36, 24, 2, 1, 10, '2010-02-18 12:35:57');]]></data>
+</operation>
+
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[INSERT INTO `{$db_prefix}blocks` (`blockid`, `content`, `position`, `sortid`, `status`, `title`, `cache`, `minclassview`, `maxclassview`) VALUES
+
+(151, 'mp3', 'r', 2, 1, 'MP', 'no', 3, 8);]]></data>
+</operation>
+
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[UPDATE `{$db_prefix}blocks` SET `status` = '0' WHERE `content` ='toptorrents';]]></data>
+</operation>
+
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[UPDATE `{$db_prefix}blocks` SET `status` = '0' WHERE `content` ='seedwanted';]]></data>
+</operation>
+
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[ CREATE TABLE IF NOT EXISTS  `{$db_prefix}forum_pm` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `user_id` int(10) unsigned NOT NULL,
+  `topicid` int(10) unsigned NOT NULL,
+  `enabled` enum('yes','no') NOT NULL default 'yes',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM;]]></data>
+</operation>
+
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[CREATE TABLE IF NOT EXISTS `{$db_prefix}khez_configs` (
+				`key` varchar(30) NOT NULL,
+				`value` varchar(200) NOT NULL,
+				 UNIQUE KEY (`key`)
+) ENGINE=MyISAM ;]]></data>
+</operation>
+
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[CREATE TABLE IF NOT EXISTS `{$db_prefix}gallery` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `owner` int(10) NOT NULL DEFAULT '0',
+  `name` varchar(255) NOT NULL DEFAULT '',
+  UNIQUE KEY `id` (`id`)
+) ENGINE=MyISAM;]]></data>
+</operation>
+
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[INSERT INTO `{$db_prefix}khez_configs` VALUES
+					('kocs_cfg_logs', 'true'),
+					('kocs_cfg_keycheck', 'true'),
+					('kocs_cfg_key', '08077a68b7bc66b899dabd2f90c84eeb'),
+					('kocs_bak_last', '0'),
+					('kocs_bak_by', '0'),
+					('kocs_res_last', '0'),
+					('kocs_res_by', '0'),
+					('kocs_res_errors', '0');]]></data>
+</operation>
+
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[CREATE TABLE IF NOT EXISTS `{$db_prefix}quiz` (
+  `qid` int(5) unsigned NOT NULL AUTO_INCREMENT,
+  `Question` text,
+  `opt1` text,
+  `opt2` text,
+  `opt3` text,
+  `opt4` text,
+  `woptcode` varchar(5) default NULL,
+  PRIMARY KEY (`qid`)
+) ENGINE=MyISAM;]]></data>
+</operation>
+    
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[CREATE TABLE IF NOT EXISTS `{$db_prefix}searchcloud` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `searchedfor` varchar(50) character set utf8 collate utf8_unicode_ci NOT NULL,
+  `howmuch` int(10) NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM;]]></data>
+</operation>
+    
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[INSERT INTO `{$db_prefix}modules` (`id`, `name`, `activated`, `type`, `changed`, `created`) VALUES
+(12, 'invite', 'yes', 'misc', '2012-08-17 08:19:05', '2012-08-17 08:19:05'),
+(13, 'team', 'yes', 'misc', '2012-08-17 08:19:05', '2012-08-17 08:19:05'),
+(14, 'speedtest', 'yes', 'misc', '2012-08-17 08:19:05', '2012-08-17 08:19:05'),
+(15, 'teams', 'yes', 'misc', '2012-08-17 08:19:05', '2012-08-17 08:19:05'),
+(16, 'IMDB', 'yes', 'misc', '2012-08-17 08:19:05', '2012-08-17 08:19:05'),
+(17, 'quiz', 'yes', 'misc', '2012-08-17 08:19:05', '2012-08-17 08:19:05'),
+(18, 'quiz_admin', 'yes', 'misc', '2012-08-17 08:19:05', '2012-08-17 08:19:05'),
+(19, 'calender', 'yes', 'misc', '2012-08-17 08:19:05', '2012-08-17 08:19:05'),
+(20, 'server', 'yes', 'misc', '2014-08-13 14:28:19', '2014-08-17 08:19:05'),
+(21, 'results', 'yes', 'misc', '2014-08-13 14:28:19', '2014-08-17 08:19:05'),
+(22, 'sb_to_upload_conversion', 'yes', 'misc', '2014-08-13 14:28:19', '2014-08-17 08:19:05'),
+(23, 'cache', 'yes', 'misc', '2014-08-13 14:28:19', '2014-08-17 08:19:05');]]></data>
+</operation>
+
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[CREATE TABLE IF NOT EXISTS `{$db_prefix}notes` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `userid` int(10) NOT NULL DEFAULT '0',
+  `note` varchar(255) NOT NULL DEFAULT '',
+  `added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM;]]></data>
+</operation>
+    
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[CREATE TABLE IF NOT EXISTS `{$db_prefix}teams` (
+  `id` int(10) NOT NULL auto_increment,
+  `added` datetime NOT NULL default '0000-00-00 00:00:00',
+  `owner` int(10) NOT NULL default '0',
+  `info` text,
+  `name` varchar(255) default NULL,
+  `image` varchar(255) default NULL,
+  UNIQUE KEY `id` (`id`)
+) ENGINE=MyISAM;]]></data>
+</operation>
+    
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[INSERT INTO `{$db_prefix}teams` (`id`, `added`, `owner`, `info`, `name`, `image`) VALUES
+(1, '0000-00-00 00:00:00', 0, '', 'none', '');]]></data>
+</operation>
+    
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[UPDATE `{$db_prefix}teams` SET `id` = '0' WHERE `id` =1;]]></data>
+</operation>
+
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[ALTER TABLE `{$db_prefix}teams` AUTO_INCREMENT =1;]]></data>
+</operation>
+    
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[INSERT INTO `{$db_prefix}settings` (`key`, `value`) VALUES
+('uploff', 'false'),
+('log_sw_dt', 'yupy'),
+('nfosw', 'true'),
+('tag', 'true'),
+('srss', 'true'),
+('noteon', 'true'),
+('up_all', 'true'),
+('up_id', '8'),
+('up_on', 'false'),
+('pm_shit', 'true'),
+('pm_tekst', 'We did add you to our Shit List because you did not follow our rules , you are under staff controll now , last change to improve your behaviour , else you will be banned for life !'),
+('pms_tekst', 'We did remove you from the Shit List because your behaviour did improve , be carefull to not get your self on the Shit List again !'),
+('demote', 'false'),
+('slon', 'false'),
+('shit_group', '10'),
+('shit_group_back', '3'),
+('shoutdt', 'true'),
+('shoutdtav', 'true'),
+('shoutdtz', 'true'),
+('onav', 'true'),
+('anonymous', 'false'),
+('shoutline', '10'),
+('shoutdel', 'true'),
+('acp', 'false'),
+('un1', 'admin'),
+('un2', 'root'),
+('pw1', 'admin'),
+('pw2', 'root'),
+('dm_id', '10'),
+('en_sys', 'true'),
+('imgsw', 'true'),
+('uplang', 'true'),
+('ytv', 'true'),
+('imdbt', 'true'),
+('imdbimg', 'false'),
+('imdbmh', 'false'),
+('imdbbl', 'false'),
+('simtor', 'false'),
+('simsw', 'true'),
+('cloud', 'true'),
+('event_sw', 'false'),
+('event', 'test'),
+('event_day', '1'),
+('event_month', '10'),
+('speedsw', 'true'),
+('delsw', 'true'),
+('googlesw', 'true'),
+('google', 'analitic'),
+('pmpop', 'false'),
+('lastsw', 'false'),
+('customlang', 'custom'),
+('customflag', 'vn'),
+('AFSW', 'false'),
+('AFP', '3'),
+('AFT', '10'),
+('ssl', 'false'),
+('download_ratio', '2147483648'),
+('error', 'false'),
+('multie', '6'),
+('uiswitch', 'true'),
+('uion', 'false'),
+('p1', 'false'),
+('p2', 'false'),
+('p3', 'true'),
+('p4', 'true'),
+('p5', 'false'),
+('p6', 'false'),
+('p7', 'false'),
+('p8', 'false'),
+('p9', 'false'),
+('p10', 'false'),
+('p11', 'false'),
+('p12', 'false'),
+('p13', 'false'),
+('p14', 'false'),
+('p15', 'false'),
+('p16', 'true'),
+('p17', 'true'),
+('preen', '100'),
+('prtwee', '110'),
+('prdrie', '120'),
+('prvier', '130'),
+('prvijf', '140'),
+('przes', '150'),
+('przeven', '160'),
+('pracht', '170'),
+('prnegen', '180'),
+('prtien', '190'),
+('prelf', '200'),
+('prtwaalf', '210'),
+('prdertien', '220'),
+('prveertien', '230'),
+('prvijftien', '240'),
+('przestien', '250'),
+('przeventien', '260'),
+('sloton', 'false'),
+('toup', 'false'),
+('touppr', '1000'),
+('logmin', 'true'),
+('autotprune', 'false'),
+('autotprundedays', '60'),
+('aannn', 'true'),
+('teams', 'true'),
+('blackjack', 'true'),
+('bugs', 'true'),
+('helpdesk', 'true'),
+('offerr', 'true'),
+('subtitles', 'true'),
+('colup', 'true'),
+('coldown', 'true'),
+('supportsw', 'true'),
+('pie', 'true'),
+('imdbmenu', 'true'),
+('cblock', 'false'),
+('thco', 'false'),
+('ownip', 'false'),
+('logisw', 'false'),
+('endtch', 'false'),
+('orlydb', 'false'),
+('tordayy', 'true'),
+('enable_dox', 'false'),
+('limit_dox', '204800'),
+('dox_del', '30'),
+('dox_text', 'custom text'),
+('ul', '1'),
+('dl', '1'),
+('quizbon', '10'),
+('quiz', 'false'),
+('quizp', 'true'),
+('caldt', 'false'),
+('pmdt', 'true'),
+('sbup', 'false'),
+('server', 'false'),
+('amenu', 'false'),
+('bmenu', 'link 1'),
+('cmenu', 'name 1'),
+('dmenu', 'false'),
+('emenu', 'link 2'),
+('fmenu', 'name 2'),
+('gmenu', 'false'),
+('hmenu', 'link3'),
+('imenu', 'name 3'),
+('jmenu', 'false'),
+('kmenu', 'link 4'),
+('prepre', 'false'),
+('lmenu', 'name 4'),
+('cache_version', '1'),
+('gallery', 'true'),
+('irc_lang', 'en'),
+('gcsw', 'false'),
+('owth', 'false'),
+('customlanga', 'custom'),
+('customflaga', 'ba'),
+('customlangb', 'custom'),
+('customflagb', 'be'),
+('customlangc', 'custom'),
+('customflagc', 'hk'),
+('gcsitk', 'change_me'),
+('gcsekk', 'change_me');
+]]></data>
+</operation>
+    
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[create table if not exists xbt_announce_log
+(
+	id int not null auto_increment,
+	ipa int unsigned not null,
+	port int not null,
+	event int not null,
+	info_hash binary(20) not null,
+	peer_id binary(20) not null,
+	downloaded bigint unsigned not null,
+	left0 bigint unsigned not null,
+	uploaded bigint unsigned not null,
+	uid int not null,
+	mtime int not null,
+	primary key (id)
+) engine = myisam;]]></data>
+</operation>
+
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[CREATE TABLE IF NOT EXISTS `{$db_prefix}shitlist` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `shit_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `shit_name` varchar(250) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=MyISAM;]]></data>
+</operation>
+
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[INSERT INTO `{$db_prefix}style` (`id`, `style`, `style_url`, `style_type`) VALUES
+
+(11, 'FS 23 DT FM', 'style/FS-23', 3);
+]]></data>
+</operation>
+
+
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[CREATE TABLE IF NOT EXISTS `{$db_prefix}videos` (
+`title` text,
+`category` text,
+`id` varchar( 11 ) default NULL ,
+`number` int( 10 ) NOT NULL AUTO_INCREMENT ,
+PRIMARY KEY ( `number` )
+) ENGINE=MyISAM;]]></data>
+</operation>
+    
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[create table if not exists xbt_config
+(
+	name varchar(255) not null,
+	value varchar(255) not null
+) engine = myisam;]]></data>
+</operation>
+    
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[create table if not exists xbt_deny_from_clients
+(
+	peer_id char(20) not null
+) engine = myisam;]]></data>
+</operation>
+    
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[create table if not exists xbt_deny_from_hosts
+(
+	begin int unsigned not null,
+	end int unsigned not null
+) engine = myisam;]]></data>
+</operation>
+    
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[create table if not exists xbt_files
+(
+	fid int not null auto_increment,
+	info_hash binary(20) not null,
+	down_multi int not null default 100,
+	up_multi int not null default 100,
+	leechers int not null default 0,
+	seeders int not null default 0,
+	completed int not null default 0,
+	flags int not null default 0,
+	mtime int not null,
+	ctime int not null,
+	primary key (fid),
+	unique key (info_hash)
+) engine = myisam;]]></data>
+</operation>
+    
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[create table if not exists xbt_files_users
+(
+	fid int not null,
+	uid int not null,
+	active tinyint not null,
+	announced int not null,
+	completed int not null,
+	downloaded bigint unsigned not null,
+	`left` bigint unsigned not null,
+	uploaded bigint unsigned not null,
+	down_rate int(11) NOT NULL ,
+    up_rate int(11) NOT NULL,
+    peer_id binary(8) NOT NULL,
+	completed_time int not null,
+	mtime int not null,
+	unique key (fid, uid),
+	key (uid)
+) engine = myisam;]]></data>
+</operation>
+    
+        
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[create table if not exists xbt_scrape_log
+(
+	id int not null auto_increment,
+	ipa int unsigned not null,
+	info_hash binary(20),
+	uid int not null,
+	mtime int not null,
+	primary key (id)
+) engine = myisam;]]></data>
+</operation>
+    
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[create table if not exists xbt_users
+(
+	uid int not null auto_increment,
+	can_announce tinyint not null default 1,
+	-- can_leech tinyint not null default 1,
+	-- wait_time int not null default 0,
+	-- peers_limit int not null default 0,
+	-- torrents_limit int not null default 0,
+	-- torrent_pass char(32) not null,
+	torrent_pass_version int not null default 0,
+	downloaded bigint unsigned not null default 0,
+	uploaded bigint unsigned not null default 0,
+	primary key (uid)
+) engine = myisam;]]></data>
+</operation>
+
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[CREATE TABLE IF NOT EXISTS `{$db_prefix}username` (
+  `uid` int(10) NOT NULL,
+  `username` varchar(30) NOT NULL,
+  `org` varchar(30) NOT NULL,
+  `date` varchar(30) NOT NULL
+) ENGINE=MyISAM ;]]></data>
+</operation>
+
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[UPDATE `{$db_prefix}files` SET `moder` = 'ok'  WHERE `moder` = 'um';]]></data>
+</operation> 
+    
+  </file>
+  <!-- End sql -->
+
+</hack>

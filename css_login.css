@@ -1,0 +1,43 @@
+/* main body classes */
+
+
+body{font-family:"tahoma", "arial", "helvetica", "sans-serif";font-size:8pt;background-image:url(images/pic/login/dt.jpg);background-repeat:no-repeat;background-color:black;margin-top:0px;margin-bottom:0px;_height:100%;min-height:100%;}
+
+
+td.tboxhead{padding:0px;border:0px;width:400px;height:10px;background-image: url(images/pic/login/header.png);background-repeat:no-repeat;background-position:left;}
+td.tboxmidd{padding:0px;border:0px;width:400px;height:10px;background-image: url(images/pic/login/middle.png);background-repeat:repeat-y;background-position:left;}
+td.tboxfoot{padding:0px;border:0px;width:400px;height:10px;background-image: url(images/pic/login/footer.png);background-repeat:no-repeat;background-position:left;}
+
+td.tboxheadb{padding:0px;border:0px;width:800px;height:10px;background-image: url(images/pic/login/headerb.png);background-repeat:no-repeat;background-position:left;}
+td.tboxmiddb{padding:0px;border:0px;width:800px;height:10px;background-image: url(images/pic/login/middleb.png);background-repeat:repeat-y;background-position:left;}
+td.tboxfootb{padding:0px;border:0px;width:800px;height:10px;background-image: url(images/pic/login/footerb.png);background-repeat:no-repeat;background-position:left;}
+
+
+img.login{background-image:url(images/pic/login/login.png);width:150px;height:60px;background-repeat:no-repeat;border:0;}
+img.recover{background-image:url(images/pic/login/recover.png);width:150px;height:60px;background-repeat:no-repeat;border:0;}
+img.signup{background-image:url(images/pic/login/signup.png);width:150px;height:60px;background-repeat:no-repeat;border:0;}
+
+
+/* buttons colors */
+a.button,button{background-color:#FFFFFF;border:1px solid #dedede;border-top:1px solid #eee;border-left:1px solid #eee;font-size:12px;text-decoration:none;font-weight:bold;color:#565656;cursor:pointer;}
+button{height:auto;overflow:visible;padding:4px 10px 3px 7px;}
+button[type]{padding-left:2px;padding-right:2px;padding-top:0px;padding-bottom:1px;}
+*:first-child+html button[type]{padding:4px 10px 3px 7px;}
+button img,a.button img{margin:0 3px -3px 0 !important;padding:0;border:none;width:16px;height:16px;float:none;}
+/* Standard */
+button:hover,a.button:hover{border:1px solid #235C96;color:#235C96;}
+a.button:active{border:1px solid #235C96;color:#fff;}
+
+/* Positive */
+body .positive{color:#black;}
+a.positive:hover,button.positive:hover{border:1px solid #C6D880;color:#529214;}
+a.positive:active{border:1px solid #529214;color:#fff;}
+
+/* Negative */
+body .negative{color:#d12f19;}
+a.negative:hover,button.negative:hover{border:1px solid #fbc2c4;color:#d12f19;}
+a.negative:active{border:1px solid #d12f19;color:#fff;}
+
+/* img classes for buttons */
+img.buttoncateg{background-image:url(images/pic/login/categories.png);background-repeat:no-repeat;border:0;}
+img.buttonnext{background-image:url(images/pic/login/next.png);background-repeat:no-repeat;border:0;}

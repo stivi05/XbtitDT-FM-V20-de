@@ -1,0 +1,220 @@
+<hack>
+  <title>Advanced Show Seedbox</title>
+  <author>DiemThuy</author>
+  <version>DT FM</version>
+
+  <!-- start SQL-->
+
+  <file>
+    <name>"database"</name>
+    <operation>
+	      <action>"sql"</action>
+	      <data><![CDATA[ALTER TABLE `{$db_prefix}files` ADD `seedbox` ENUM( '0', '1' ) NOT NULL DEFAULT '0';]]></data>
+    </operation>
+    <operation>
+	      <action>"sql"</action>
+	      <data><![CDATA[INSERT INTO `{$db_prefix}settings` (`key`, `value`) VALUES ('seedip', '0');]]></data>
+    </operation>
+        <operation>
+	      <action>"sql"</action>
+	      <data><![CDATA[INSERT INTO `{$db_prefix}blocks` VALUES ('', 'seedbox', 'l', 0, 1, 'BLOCK_SB', 'no', 3, 8 );]]></data>
+    </operation>
+</file>
+
+  <!-- End SQL -->
+  
+  <!--Start index.php -->
+<file>
+    <name>"$DEFAULT_ROOT/index.php"</name>
+<operation>
+		      <search><![CDATA[case 'delete':
+        require("$THIS_BASEPATH/delete.php");
+        $tpl->set("main_content",set_block($language["DELETE_TORRENT"],"center",$torrenttpl->fetch(load_template("torrent.delete.tpl"))));
+        $tpl->set("main_title",$btit_settings["name"]." .::. "."Index->Torrent->Delete");
+        break;]]></search>
+		      <action>"add"</action>
+		      <data><![CDATA[
+              case 'seedbox':
+        require("$THIS_BASEPATH/seedbox.php");
+        $tpl->set("main_content",set_block($language["SEEDBOX"],"center",$seedboxtpl->fetch(load_template("seedbox.tpl"))));
+        $tpl->set("main_title",$btit_settings["name"]." .::. "."Index->seedbox");
+        break;
+        ]]></data>
+		      <where>"after"</where>
+     </operation>
+</file>
+
+  <!-- End index.php -->
+  
+<!--Start torrents.php -->
+  
+  <file>
+    <name>"$DEFAULT_ROOT/torrents.php"</name>
+
+      <operation>
+		      <search><![CDATA[if ($SHOW_UPLOADER)
+        $query = "SELECT]]></search>
+		      <action>"add"</action>
+		      <data><![CDATA[ f.seedbox as seedbox,]]></data>
+		      <where>"after"</where>
+     </operation>
+
+     <operation>
+		      <search><![CDATA[else
+        $query = "SELECT]]></search>
+		      <action>"add"</action>
+		      <data><![CDATA[ f.seedbox as seedbox, ]]></data>
+     			<where>"after"</where>
+	</operation>
+	
+	     <operation>
+		      <search><![CDATA[$torrents[$i]["category"]]]></search>
+		      <action>"add"</action>
+		      <data><![CDATA[
+              //seedbox start
+              if($data["seedbox"]=="1") {
+$sb = "<img src=images/seedbox.gif alt='high speed torrent'>";
+}
+else {   $sb='';
+}
+//seedbox end
+]]></data>
+     			<where>"before"</where>
+	</operation>
+	
+	     <operation>
+		      <search><![CDATA[if ($btit_settings["tag"]==true and ($data["tag"]))
+{  
+
+   if ($GLOBALS["usepopup"])
+       $torrents[$i]["filename"]="<img src=\"images/plus.gif\" id=\"expandoGif".$data["hash"]."\" onclick=\"expand('".$data["hash"]."')\"> <a href=\"javascript:popdetails('index.php?page=torrent-details&amp;id=".$data["hash"]."');\" title=\"".$language["VIEW_DETAILS"].": ".($data["filename"]!=""?$filename:$data["hash"])."\" onmouseover=\" return overlib('<center>".$filename."</center><center><img src=" .$tdt. $balon . "  width=200 border=0></center><center>Category: ".$data["cname"]." Size: " . makesize($data["size"]) . "</center><center>Added:" . get_elapsed_time($data["added"]) . " ago</center><center><font color = green>Seeders: " . $data["seeds"] . "<font color = red> Leechers: " .$data["leechers"] . "<font color = purple> Done: " . $data["finished"] . "</font></center>', CENTER);\" onmouseout=\"return nd();\">".$data["filename"]."</a>&nbsp;$team&nbsp;<br/>".($data["external"]=="no"?"":" (<span style=\"color:red\">EXT</span>)")."]]></search>
+		      <action>"add"</action>
+		      <data><![CDATA[ ".$sb."]]></data>
+     			<where>"after"</where>
+	</operation>
+		     <operation>
+		      <search><![CDATA[else
+       $torrents[$i]["filename"]="<img src=\"images/plus.gif\" id=\"expandoGif".$data["hash"]."\" onclick=\"expand('".$data["hash"]."')\"> <a href=\"index.php?page=torrent-details&amp;id=".$data["hash"]."\" title=\"".$language["VIEW_DETAILS"].": ".$data["filename"]."\" onmouseover=\" return overlib('<center>".$filename."</center><center><img src=" .$tdt. $balon . "  width=200 border=0></center><center>Category: ".$data["cname"]." Size: " . makesize($data["size"]) . "</center><center>Added:" . get_elapsed_time($data["added"]) . " ago</center><center><font color = green>Seeders: " . $data["seeds"] . "<font color = red> Leechers: " .$data["leechers"] . "<font color = purple> Done: " . $data["finished"] . "</font></center>', CENTER);\" onmouseout=\"return nd();\">".($data["filename"]!=""?$filename:$data["hash"])."</a>&nbsp;$team&nbsp;<br/>".($data["external"]=="no"?"":" (<span style=\"color:red\">EXT</span>)")."]]></search>
+		      <action>"add"</action>
+		      <data><![CDATA[ ".$sb."]]></data>
+     			<where>"after"</where>
+	</operation>
+	
+		     <operation>
+		      <search><![CDATA[{       
+
+   if ($GLOBALS["usepopup"])
+       $torrents[$i]["filename"]="<a href=\"javascript:popdetails('index.php?page=torrent-details&amp;id=".$data["hash"]."');\" title=\"".$language["VIEW_DETAILS"].": ".($data["filename"]!=""?$filename:$data["hash"])."\" onmouseover=\" return overlib('<center>".$filename."</center><center><img src=" .$tdt. $balon . "  width=200 border=0></center><center>Category: ".$data["cname"]." Size: " . makesize($data["size"]) . "</center><center>Added:" . get_elapsed_time($data["added"]) . " ago</center><center><font color = green>Seeders: " . $data["seeds"] . "<font color = red> Leechers: " .$data["leechers"] . "<font color = purple> Done: " . $data["finished"] . "</font></center>', CENTER);\" onmouseout=\"return nd();\">".$data["filename"]."</a>&nbsp;$team&nbsp;<br/>".($data["external"]=="no"?"":" (<span style=\"color:red\">EXT</span>)")." ]]></search>
+		      <action>"add"</action>
+		      <data><![CDATA[ ".$sb."]]></data>
+     			<where>"after"</where>
+	</operation>
+		     <operation>
+		      <search><![CDATA[else
+       $torrents[$i]["filename"]="<a href=\"index.php?page=torrent-details&amp;id=".$data["hash"]."\" title=\"".$language["VIEW_DETAILS"].": ".$data["filename"]."\" onmouseover=\" return overlib('<center>".$filename."</center><center><img src=" .$tdt. $balon . "  width=200 border=0></center><center>Category: ".$data["cname"]." Size: " . makesize($data["size"]) . "</center><center>Added:" . get_elapsed_time($data["added"]) . " ago</center><center><font color = green>Seeders: " . $data["seeds"] . "<font color = red> Leechers: " .$data["leechers"] . "<font color = purple> Done: " . $data["finished"] . "</font></center>', CENTER);\" onmouseout=\"return nd();\">".($data["filename"]!=""?$filename:$data["hash"])."</a>&nbsp;$team&nbsp;<br/>".($data["external"]=="no"?"":" (<span style=\"color:red\">EXT</span>)")."]]></search>
+		      <action>"add"</action>
+		      <data><![CDATA[ ".$sb."]]></data>
+     			<where>"after"</where>
+	</operation>
+
+</file>
+
+  <!-- End torrents.php -->
+  
+<!-- start sanity.php -->
+  
+    <file>
+  <name>"$DEFAULT_ROOT/include/sanity.php"</name>
+  <operation>
+    <action>"add"</action>
+    <where>"before"</where>
+    <search><![CDATA[// END TORRENT'S SANITY]]></search>
+    <data><![CDATA[
+//Auto Seedbox Start
+do_sqlquery("UPDATE {$TABLE_PREFIX}files SET `seedbox`='0' ");
+
+$sid=do_sqlquery("select * FROM {$TABLE_PREFIX}peers WHERE `ip` =".$btit_settings["seedip"]);
+while($sow=mysqli_fetch_array($sid))
+{
+do_sqlquery("UPDATE {$TABLE_PREFIX}files SET `seedbox`='1' WHERE `info_hash`='$sow[infohash]'");
+}
+//Auto Seedbox End
+]]></data>
+    </operation>
+</file>
+
+   <!-- end sanity.php -->
+  
+   <!-- start admin.config -->
+   
+  <file>
+  <name>"$DEFAULT_ROOT/admin/admin.config.php"</name>
+  <operation>
+    <action>"add"</action>
+    <where>"after"</where>
+    <search><![CDATA[$btit_settings["forum"]=$_POST["f_link"];]]></search>
+    <data><![CDATA[
+//advanced seedbox hack
+        $btit_settings["seedip"]=$_POST["seedip"];
+//advanced seedbox hack end
+
+]]></data>
+    </operation>
+</file>
+
+   <!-- end admin.config -->
+
+   	<!-- start admin.config template -->
+   	
+  <file>
+    <name>"$DEFAULT_STYLE_PATH/admin.config.tpl"</name>
+    <operation>
+    <action>"add"</action>
+    <where>"before"</where>
+    <search><![CDATA[<tr>
+       <td align="center" class="header" colspan="2"><input type="submit" name="write" class="btn" value="<tag:language.FRM_CONFIRM />" /></td>]]></search>
+    <data><![CDATA[
+       <tr>
+      <td class="lista" align="center" colspan="4"><font color ="red"><center>if you want to use more ip,s , you must add between every IP <font color ="steelblue">OR ip =<font color ="red">( <font color ="green">'<font color ="red">12.34.56.789<font color ="green">' OR ip =<font color ="green">'<font color ="red">12.12.12.123<font color ="green">' OR ip =<font color ="green">'<font color ="red">34.34.34.123<font color ="green">'<font color ="red"> ) every ip must be between <font color ="green">' '</font></center></td>
+       </tr>
+      <tr>
+      <td class="header">Seedbox Ip,s</td>
+      <td class="lista"><input type="text" name="seedip" value="<tag:config.seedip />" size="60" /></td>
+      <td class="lista"><font color = "red">syntax  <font color ="green">'<font color = "red">12.12.12.123<font color ="green">' </font></td>
+      </tr>
+     ]]></data>
+    </operation>
+  </file>
+  	<!-- end admin.config template -->
+  	
+  	  <!-- lang_blocks.php -->
+  <file>
+    <name>"$DEFAULT_LANGUAGE_PATH/lang_blocks.php"</name>
+    <operation>
+    <action>"add"</action>
+    <where>"before"</where>
+    <search><![CDATA[?>]]></search>
+    <data><![CDATA[
+    $language['BLOCK_SB']='Seedbox';
+    ]]></data>
+    </operation>
+  </file>
+
+  <!-- lang_main.php -->
+  <file>
+    <name>"$DEFAULT_LANGUAGE_PATH/lang_main.php"</name>
+    <operation>
+    <action>"add"</action>
+    <where>"before"</where>
+    <search><![CDATA[?>]]></search>
+    <data><![CDATA[
+$language['SEEDBOX']='Torrents speeded up by SeedBox';
+	]]></data>
+    </operation>
+  </file>
+  	
+  	  	<!-- copy the files-->
+  	
+
+    	<!-- end copy / end hack-->
+  </hack>

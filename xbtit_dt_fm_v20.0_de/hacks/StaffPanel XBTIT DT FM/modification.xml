@@ -1,0 +1,164 @@
+<hack>
+  <title>Staff Panel (extended version)</title>
+  <author>Lupin</author>
+  <version>DT FM</version>
+  <file>
+    <name>"database"</name>
+    <operation>
+      <action>"sql"</action>
+      <data><![CDATA[CREATE TABLE `{$db_prefix}adminpanel` (
+  `id` int(11) NOT NULL auto_increment,
+  `section` varchar(50) NOT NULL,
+  `description` varchar(250) NOT NULL,
+  `link` varchar(200) NOT NULL,
+  `id_level` int(11) NOT NULL,
+  `access` tinyint(4) NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM;]]></data>
+    </operation>
+    <operation>
+      <action>"sql"</action>
+      <data><![CDATA[INSERT INTO `xbtit_adminpanel` (`section`, `description`, `link`, `id_level`, `access`) VALUES 
+('config', 'ACP_TRACKER_SETTINGS', 'index.php?page=admin&user={uid}&code={ucode}&do=config&action=read', 7, 0),
+('banip', 'ACP_BAN_IP', 'index.php?page=admin&user={uid}&code={ucode}&do=banip&action=read', 7, 0),
+('language', 'ACP_LANGUAGES', 'index.php?page=admin&user={uid}&code={ucode}&do=language&action=read', 7, 0),
+('style', 'ACP_STYLES', 'index.php?page=admin&user={uid}&code={ucode}&do=style&action=read', 7, 0),
+('category', 'ACP_CATEGORIES', 'index.php?page=admin&user={uid}&code={ucode}&do=category&action=read', 7, 0),
+('poller', 'ACP_POLLS', 'index.php?page=admin&user={uid}&code={ucode}&do=poller&action=read', 7, 0),
+('badwords', 'ACP_CENSORED', 'index.php?page=admin&user={uid}&code={ucode}&do=badwords&action=read', 7, 0),
+('blocks', 'ACP_BLOCKS', 'index.php?page=admin&user={uid}&code={ucode}&do=blocks&action=read', 7, 0),
+('masspm', 'ACP_MASSPM', 'index.php?page=admin&user={uid}&code={ucode}&do=masspm&action=read', 7, 0),
+('pruneu', 'ACP_PRUNE_USERS', 'index.php?page=admin&user={uid}&code={ucode}&do=pruneu', 7, 0),
+('searchdiff', 'ACP_SEARCH_DIFF', 'index.php?page=admin&user={uid}&code={ucode}&do=searchdiff', 7, 0),
+('prunet', 'ACP_PRUNE_TORRENTS', 'index.php?page=admin&user={uid}&code={ucode}&do=prunet', 7, 0),
+('forum', 'ACP_FORUM', 'index.php?page=admin&user={uid}&code={ucode}&do=forum&action=read', 7, 0),
+('mysql_stats', 'ACP_MYSQL_STATS', 'index.php?page=admin&user={uid}&code={ucode}&do=mysql_stats', 7, 0),
+('logview', 'ACP_SITE_LOG', 'index.php?page=admin&user={uid}&code={ucode}&do=logview', 7, 0);]]></data>
+    </operation>
+  </file>
+  <file>
+    <name>"$DEFAULT_ROOT/admin/admin.index.php"</name>
+    <operation>
+    <search><![CDATA[include("$ADMIN_PATH/admin.menu.php");]]></search>
+    <action>"add"</action>
+    <where>"before"</where>
+    <data><![CDATA[
+
+// --------> modpanel
+// check the permissions if id_level<8
+if ($CURUSER['id_level']<8 && $do!='' && $do!="users"  && $do!="masspm"  && $do!="pruneu"  && $do!="searchdiff")
+{
+
+  if ($CURUSER['admin_access']!='yes')
+     {
+       err_msg($language["ERROR"],$language["NOT_ADMIN_CP_ACCESS"]);
+       stdfoot();
+       exit;
+  }
+
+  // check access in the table
+  $ra=do_sqlquery("SELECT access FROM {$TABLE_PREFIX}adminpanel WHERE section='$do' AND id_level=".$CURUSER['id']);
+  // row don't exists
+  if (!$ra)
+     {
+       err_msg($language["ERROR"],$language["NO_SECTION_ACCESS"]);
+       stdfoot();
+       exit;
+  }
+   $rar=mysqli_fetch_assoc($ra);
+  // access is not set to ok
+  if ($rar['access']!='1')
+     {
+       err_msg($language["ERROR"],$language["NO_SECTION_ACCESS"]);
+       stdfoot();
+       exit;
+  }
+
+}
+// --------> modpanel
+
+]]></data>
+    </operation>
+    <operation>
+    <search><![CDATA[switch ($do)
+    {]]></search>
+    <action>"replace"</action>
+    <data><![CDATA[switch ($do)
+    {
+
+    // --------> modpanel
+    case 'modpanel':
+      $admintpl->set("usercode",$CURUSER['random']);
+      $admintpl->set("userid",$CURUSER['uid']);
+      $tpl->set("main_content",set_block($language["ACP_MODPANEL"],"center",$admintpl->fetch(load_template("admin.modpanel.tpl"))));
+      break;
+    // --------> modpanel
+
+]]></data>
+    </operation>
+  </file>
+  <file>
+    <name>"$DEFAULT_ROOT/admin/admin.menu.php"</name>
+    <operation>
+    <search><![CDATA[)),
+    1=>array(]]></search>
+    <action>"add"</action>
+    <where>"before"</where>
+    <data><![CDATA[,
+
+// --------> modpanel
+                          array(
+                    "url"=>"index.php?page=admin&amp;user=".$CURUSER["uid"]."&amp;code=".$CURUSER["random"]."&amp;do=modpanel&amp;action=read" ,
+                    "description"=>$language["ACP_MODPANEL"])
+// --------> modpanel
+
+]]></data>
+    </operation>
+    <operation>
+    <search><![CDATA[?>]]></search>
+    <action>"replace"</action>
+    <data><![CDATA[
+
+// --------> modpanel
+if ($CURUSER['id_level']<8)
+{
+  $admin_menu=array(array('title'=>$CURUSER['level'].' Menu')); //reset array
+  $menu_array=get_result("SELECT description, link FROM {$TABLE_PREFIX}adminpanel WHERE id_level=".$CURUSER['id']." AND access='1'");
+  foreach ($menu_array as $id=>$mar)
+          {
+          if (array_key_exists($mar['description'],$language))
+             $link_desc=$language[$mar['description']];
+          else
+             $link_desc=unesc($mar['description']);
+          $admin_menu[0]['menu'][]=array('url'=>str_replace(array('{uid}','{ucode}'),array($CURUSER['uid'],$CURUSER['random']),$mar['link']),
+                                       'description'=>$link_desc
+                                       );
+  }
+}
+// --------> modpanel
+
+?>]]></data>
+    </operation>
+  </file>
+  <file>
+    <name>"$DEFAULT_LANGUAGE_PATH/lang_admin.php"</name>
+    <operation>
+    <search><![CDATA[?>]]></search>
+    <action>"add"</action>
+    <where>"before"</where>
+    <data><![CDATA[
+
+// --------> modpanel
+$language['ACP_MODPANEL']='Staff Panel Settings';
+$language['MODCP_SECTION']='Section (the section you want to allow your mod/admin, it\'s the do=xxxx part in the link):';
+$language['MODCP_DESC']='Description (if you use a language definition, then language string will be used, else the string you wrote. eg: you put "ACP_BAN_IP" it\'ll display "'.$language['ACP_BAN_IP'].'" ):';
+$language['MODCP_URL']='URL (the url to access the resource, {uid} will be replaced by user\'s id and {ucode} eg: link for banip is http://localhost/xbtit/index.php?page=admin&user={uid}&code={ucode}&do=category&action=read):';
+$language['MODCP_NEWSECTION']='Add a new section';
+$language['NO_SECTION_ACCESS']='You can\'t access this section.';
+// --------> modpanel
+
+]]></data>
+    </operation>
+  </file>
+
+</hack>

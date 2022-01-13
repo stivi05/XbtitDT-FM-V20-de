@@ -1,0 +1,112 @@
+/* Tab System */
+/* Tab Line */
+.ktabs {
+	text-align: left;
+	padding: 5px 8px 5px 8px;
+	height: 20px;
+}
+/* Actual Tab */
+.ktab {
+	background-color: #86A1BE;
+	border-bottom: 1px solid #375576;
+	padding: 6px 5px 6px 5px;
+	border: thin solid #375576;
+	border-top: none;
+}
+/* Tab Text */
+.kbutton {
+	color: #FFFFFF;
+	font-weight: bold;
+	text-align: center;
+	vertical-align: middle;
+}
+/* Message System */
+/* Messages */
+.kSuccess, .kError, .kWarning, .kNotice, .kDBError {
+	margin: 2px 6px 2px 6px;
+	border: 1px solid #ADADAD;
+	padding: 1px 0px 1px 0px;
+	text-align: center;
+	font-weight: bold;
+	color: #EDEDED;
+}
+/* Success Message */
+.kSuccess {
+	background-color: #006600;
+}
+/* Notice Message */
+.kNotice {
+	background-color: #666600;
+}
+/* Warning Message */
+.kWarning {
+	background-color: #660000;
+}
+/* Error Message */
+.kError {
+	background-color: #AA0000;
+}
+/* DBError Message */
+.kDBError {
+	background-color: #BB0000;
+	padding-left: 50px;
+	padding-right: 50px;
+}
+/* Help System */
+/* Help Page */
+.kHelpBox {
+	margin: 0px 6px 5px 6px;
+	border: thin solid #0F0F0F;
+}
+/* Help Menu */
+.kHelpContents {
+	display: table;
+	margin: 0px 6px 5px 10px;
+	padding: 5px 6px 5px 6px;
+	background-color: #86A1BE;
+	border: thin dashed #0F0F0F;
+}
+/* Help Header */
+.kHelpHeader {
+	font-weight: bold;
+	text-align: center;
+	display: block;
+}
+/* Help Item */
+.kHelpItem {
+	padding: 0px 6px 0px 6px;
+	font-size: 1.2em;	
+}
+/* Todo System */
+/* Todo Box */
+.kTodoBox {
+	margin: 2px 6px 2px 6px;
+	padding: 1px 0px 1px 0px;
+	font-weight: bold;
+	color: #EDEDED;
+	display: table;
+}
+/* Todo Levels */
+.kTodoNow, .kTodoNext, .kTodoMaybe, .kTodoLast, .kTodoNever {
+	padding: 3px 6px 3px 6px;
+}
+/* ASAP */
+.kTodoNow {
+	background-color: #006600;	
+}
+/* Next Important Update */
+.kTodoNext {
+	background-color: #666600;
+}
+/* If I have time */
+.kTodoMaybe {
+	background-color: #660000;
+}
+/* Not really on the list */
+.kTodoLast {
+	background-color: #AA0000;	
+}
+/* Doubtful */
+.kTodoNever {
+	background-color: #BB0000;
+}

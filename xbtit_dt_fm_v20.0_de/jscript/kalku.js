@@ -1,0 +1,7 @@
+function calc(from) {
+gb = document.sizes.gb.value; mb = document.sizes.mb.value; kb = document.sizes.kb.value; b = document.sizes.byte.value;
+if(from=='gb') { document.sizes.mb.value=""+gb+""; document.sizes.mb.value*="1024"; document.sizes.kb.value=""+gb+""; document.sizes.kb.value*="1024"; document.sizes.kb.value*="1024"; document.sizes.byte.value=""+gb+""; document.sizes.byte.value*="1024"; document.sizes.byte.value*="1024"; document.sizes.byte.value*="1024"; }
+else if(from=='mb') { document.sizes.gb.value=""+mb+""; document.sizes.gb.value/="1024"; document.sizes.kb.value=""+mb+""; document.sizes.kb.value*="1024"; document.sizes.byte.value=""+mb+""; document.sizes.byte.value*="1024"; document.sizes.byte.value*="1024"; }
+else if(from=='kb') { document.sizes.gb.value=""+kb+""; document.sizes.gb.value/="1024"; document.sizes.gb.value/="1024"; document.sizes.mb.value=""+kb+""; document.sizes.mb.value/="1024"; document.sizes.byte.value=""+kb+""; document.sizes.byte.value*="1024"; }
+else if(from=='byte') { document.sizes.gb.value=""+b+""; document.sizes.gb.value/="1024"; document.sizes.gb.value/="1024"; document.sizes.gb.value/="1024"; document.sizes.mb.value=""+b+""; document.sizes.mb.value/="1024"; document.sizes.mb.value/="1024"; document.sizes.kb.value=""+b+""; document.sizes.kb.value/="1024"; }
+}

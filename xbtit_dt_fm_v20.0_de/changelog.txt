@@ -1,0 +1,43 @@
+----V20----
+
+25/01/2015 new rev number / copyrights / logos by BeyondHD / etc
+25/01/2015 optimized sanity.php
+25/01/2015 removed old php 4 mailer
+25/01/2015 fixed image upload hack to use png for screenshots
+25/01/2015 up to date lightbox system 
+25/01/2015 added no image - image in featured torrent
+
+28/01/2015 added new marquee jscript to replace the html marguee tags
+28/01/2015 changed H&R block marquee to new script
+28/01/2015 changed paypal block marquee to new script
+
+31/01/2015 changed last torrents marquee to new script
+31/01/2015 added mouse over stop/go to the script
+31/01/2015 added ajax category selector
+
+01/02/2015 rewrite auto external torrents update
+01/02/2015 added shoutbox reply , thanks Danno
+01/02/2015 changed partners hack to use new marquee script
+
+02/02/2015 updated both update hacks to V20
+02/02/2015 added 3 extra custom languages to upload language
+02/02/2015 optimized upload.php
+02/02/2015 added phpmailer 5.2.4    
+02/02/2015 announce.php updated to mysqli after some testing
+
+03/02/2015 added porn yes/no to admin category , so now more than one porn cat can be hidded
+03/02/2015 added min age to see porn categories
+03/02/2015 changed torrents.php to new no porn code 
+
+05/02/2015 added sql error protection on admin donate , and show deleted before a deleted donor name
+05/02/2015 changed all torrents by uploader hack to use new marquee script , thanks Flier 
+05/02/2015 changed last torrents block to new no porn code 
+05/02/2015 changed featured block to new no porn code 
+05/02/2015 changed last torrents imgage scroll block to new no porn code
+05/02/2015 changed details.php to new no porn code  
+
+06/02/2015 fixed imdb rating in tl
+06/02/2015 added Jquery to top as to install hack
+06/02/2015 final test stage , fixed a few small things 
+
+08/02/2015 re-added 2 missing gallery files

@@ -1,0 +1,1 @@
+<center>  <tag:betgameinfo />      </center>

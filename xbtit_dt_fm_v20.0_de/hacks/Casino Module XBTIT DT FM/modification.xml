@@ -1,0 +1,290 @@
+<hack>
+  <title>Casino Module</title>
+  <author>cooly</author>
+  <version>DT FM</version>
+
+
+
+<file>
+    <name>"database"</name>
+    <operation>
+    <action>"sql"</action>
+    <data><![CDATA[CREATE TABLE IF NOT EXISTS `casino` (
+  `userid` int(10) NOT NULL default '0',
+  `win` bigint(20) default NULL,
+  `lost` bigint(20) default NULL,
+  `trys` int(11) NOT NULL default '0',
+  `date` datetime NOT NULL default '0000-00-00 00:00:00',
+  `enableplay` enum('yes','no') collate latin1_general_ci NOT NULL default 'yes',
+  `deposit` bigint(20) NOT NULL default '0',
+  PRIMARY KEY  (`userid`)
+) ENGINE=MyISAM;]]></data>
+    </operation>
+
+<operation>
+    <action>"sql"</action>
+    <data><![CDATA[CREATE TABLE IF NOT EXISTS `casino_bets` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `userid` int(10) NOT NULL default '0',
+  `proposed` varchar(40) collate latin1_general_ci NOT NULL default '',
+  `challenged` varchar(40) collate latin1_general_ci NOT NULL default '',
+  `amount` bigint(20) NOT NULL default '0',
+  `time` datetime NOT NULL default '0000-00-00 00:00:00',
+  PRIMARY KEY  (`id`),
+  KEY `userid` (`userid`,`proposed`,`challenged`,`amount`)
+) ENGINE=MyISAM;]]></data>
+    </operation>
+
+<operation>
+    <action>"sql"</action>
+    <data><![CDATA[INSERT INTO `{$db_prefix}settings` (`key` , `value`) VALUES ('class_allowed', '3|4|5|6|7|8');]]></data>
+    </operation>
+<operation>
+    <action>"sql"</action>
+    <data><![CDATA[INSERT INTO `{$db_prefix}settings` (`key` , `value`) VALUES ('enable', '1');]]></data>
+    </operation>
+<operation>
+    <action>"sql"</action>
+    <data><![CDATA[INSERT INTO `{$db_prefix}settings` (`key` , `value`) VALUES ('ratio_mini', '0.5');]]></data>
+    </operation>
+<operation>
+    <action>"sql"</action>
+    <data><![CDATA[INSERT INTO `{$db_prefix}settings` (`key` , `value`) VALUES ('maxtrys', '5000000000');]]></data>
+    </operation>
+<operation>
+    <action>"sql"</action>
+    <data><![CDATA[INSERT INTO `{$db_prefix}settings` (`key` , `value`) VALUES ('cheat_value', '5');]]></data>
+    </operation>
+<operation>
+    <action>"sql"</action>
+    <data><![CDATA[INSERT INTO `{$db_prefix}settings` (`key` , `value`) VALUES ('cheat_ratio_user', '0.4');]]></data>
+    </operation>
+<operation>
+    <action>"sql"</action>
+    <data><![CDATA[INSERT INTO `{$db_prefix}settings` (`key` , `value`) VALUES ('cheat_breakpoint', '3');]]></data>
+    </operation>
+<operation>
+    <action>"sql"</action>
+    <data><![CDATA[INSERT INTO `{$db_prefix}settings` (`key` , `value`) VALUES ('cheat_ratio_global', '0.4');]]></data>
+    </operation>
+<operation>
+    <action>"sql"</action>
+    <data><![CDATA[INSERT INTO `{$db_prefix}settings` (`key` , `value`) VALUES ('win_amount_on_number', '2');]]></data>
+    </operation>
+<operation>
+    <action>"sql"</action>
+    <data><![CDATA[INSERT INTO `{$db_prefix}settings` (`key` , `value`) VALUES ('win_amount', '4');]]></data>
+    </operation>
+<operation>
+    <action>"sql"</action>
+    <data><![CDATA[INSERT INTO `{$db_prefix}settings` (`key` , `value`) VALUES ('maxusrbet', '5');]]></data>
+    </operation>
+<operation>
+    <action>"sql"</action>
+    <data><![CDATA[INSERT INTO `{$db_prefix}settings` (`key` , `value`) VALUES ('maxtotbet', '30');]]></data>
+    </operation>
+<operation>
+    <action>"sql"</action>
+    <data><![CDATA[INSERT INTO `{$db_prefix}settings` (`key` , `value`) VALUES ('cheat_value_max', '7');]]></data>
+    </operation>
+<operation>
+    <action>"sql"</action>
+    <data><![CDATA[INSERT INTO `{$db_prefix}settings` (`key` , `value`) VALUES ('max_gains_user', '99999999999999');]]></data>
+    </operation>
+<operation>
+    <action>"sql"</action>
+    <data><![CDATA[INSERT INTO `{$db_prefix}settings` (`key` , `value`) VALUES ('max_gains_global', '99999999999999');]]></data>
+    </operation>
+
+<operation>
+    <action>"sql"</action>
+    <data><![CDATA[INSERT INTO {$db_prefix}modules (`name`,`activated`,`type`,`changed`,`created`) VALUES ('casino', 'yes', 'misc', NOW(), NOW());]]></data>
+    </operation>
+</file>
+
+
+
+<file>
+    <name>"$DEFAULT_ROOT/jscript/xbtit.js"</name>
+    <operation>
+      <search><![CDATA[var newwindow;
+    function popdetails(url) {
+        newwindow=window.open(url,'popdetails','height=500,width=500,resizable=yes,scrollbars=yes,status=yes');
+        if (window.focus) newwindow.focus();
+    }]]></search>
+      <action>"add"</action>
+      
+      <data><![CDATA[        
+	  function popcasino(url) {
+		newwindow=window.open(url,'popcasino','height=200,width=500,resizable=yes,scrollbars=yes,status=yes');
+		if (window.focus) newwindow.focus();
+	}
+	]]></data>
+<where>"after"</where>
+    </operation>
+ 
+
+</file>
+
+<file>
+    <name>"$DEFAULT_ROOT/include/functions.php"</name>
+    <operation>
+      <search><![CDATA[function stderr($heading, $text,$close=false) {
+  err_msg($heading,$text,$close);
+  stdfoot(true,false);
+  die();
+}]]></search>
+      <action>"add"</action>
+      
+      <data><![CDATA[
+	  function casinoerr($heading, $text,$close=false) {
+  global $CURUSER, $BASEURL;
+  err_msg($heading,$text,$close);
+  $username=$CURUSER["username"];
+  send_pm(0,2,sqlesc("Cheat Alert"),sqlesc("".$username."&nbsp; was attempting to cheat in the Casino.\n click <a href=".$BASEURL."/index.php?page=modules&module=casino&action=stats target=_top>Here</a> to ban this user."));
+  stdfoot(true,false);
+  die();
+}]]></data>
+<where>"after"</where>
+    </operation>
+ 
+
+</file>
+
+<file>
+    <name>"$DEFAULT_ROOT/blocks/mainmenu_block.php"</name>
+    <operation>
+      <search><![CDATA[print("<td class=\"header\" align=\"center\"><a class=\"mainmenu\" href=\"index.php?page=limit\">".$language["MNU_STATS"]."</a></td>\n");]]></search>
+      <action>"add"</action>
+      
+      <data><![CDATA[
+	  print("<td class=\"header\" align=\"center\"><a href=\"index.php?page=modules&module=casino\">Casino</a></td>\n");
+	  ]]></data>
+<where>"after"</where>
+    </operation>
+ 
+
+</file>
+
+<file>
+    <name>"$DEFAULT_ROOT/blocks/dropdownmenu_block.php"</name>
+    <operation>
+      <search><![CDATA[//hack add one]]></search>
+      <action>"add"</action>
+      
+      <data><![CDATA[
+      print("<a href=\"index.php?page=modules&amp;module=casino\"><img src=\"images/menu/casino.png\" title='Casino' alt=\'\' /></a>\n"); 
+      ]]></data>
+<where>"after"</where>
+    </operation>
+     <operation>
+      <search><![CDATA[//hack add two]]></search>
+      <action>"add"</action>
+      
+      <data><![CDATA[
+      print("<li><a href='index.php?page=modules&amp;module=casino'>Casino</a></li>\n");
+	  ]]></data>
+<where>"after"</where>
+    </operation>
+
+</file>
+
+<file>
+    <name>"$DEFAULT_ROOT/admin/admin.config.php"</name>
+    <operation>
+      <search><![CDATA[$btit_settings["ssl"]=$_POST["ssl"];
+// ssl]]></search>
+      <action>"add"</action>
+      
+      <data><![CDATA[
+	  $btit_settings["class_allowed"]=$_POST["class_allowed"];
+$btit_settings["enable"]=$_POST["enable"];
+$btit_settings["ratio_mini"]=$_POST["ratio_mini"];
+$btit_settings["maxtrys"]=$_POST["maxtrys"];
+$btit_settings["cheat_value"]=$_POST["cheat_value"];
+$btit_settings["cheat_ratio_user"]=$_POST["cheat_ratio_user"];
+$btit_settings["cheat_breakpoint"]=$_POST["cheat_breakpoint"];
+$btit_settings["cheat_ratio_global"]=$_POST["cheat_ratio_global"];
+$btit_settings["win_amount_on_number"]=$_POST["win_amount_on_number"];
+$btit_settings["win_amount"]=$_POST["win_amount"];
+$btit_settings["maxusrbet"]=$_POST["maxusrbet"];
+$btit_settings["maxtotbet"]=$_POST["maxtotbet"];
+$btit_settings["cheat_value_max"]=$_POST["cheat_value_max"];
+$btit_settings["max_gains_user"]=$_POST["max_gains_user"];
+$btit_settings["max_gains_global"]=$_POST["max_gains_global"];
+]]></data>
+<where>"after"</where>
+    </operation>
+ 
+
+</file>
+
+<file>
+    <name>"$DEFAULT_STYLE_PATH/admin.config.tpl"</name>
+    <operation>
+      <search><![CDATA[<tr>
+       <td align="center" class="header" colspan="2"><input type="submit" name="write" class="btn" value="<tag:language.FRM_CONFIRM />" /></td>
+      <td align="center" class="header" colspan="2"><input type="submit" name="cancel" class="btn" value="<tag:language.FRM_CANCEL />" /></td>
+    </tr>]]></search>
+      <action>"add"</action>
+      
+      <data><![CDATA[ 
+	  <tr>
+      <td class="header" align="center" colspan="4">Casino settings</td>
+    </tr>
+<tr>
+      <td class="header">Enabled</td>
+      <td class="lista"><input type="text" name="enable" value="<tag:config.enable />" size="1" /></td>
+      <td class="header">Allowed groups</td>
+      <td class="lista"><input type="text" name="class_allowed" value="<tag:config.class_allowed />" size="10" /></td>
+      
+    </tr>
+<tr>
+<td class="header">Min Ratio</td>
+      <td class="lista"><input type="text" name="ratio_mini" value="<tag:config.ratio_mini />" size="2" /></td>
+<td class="header">Max trys</td>
+      <td class="lista"><input type="text" name="maxtrys" value="<tag:config.maxtrys />" size="3" /></td>
+</tr>
+<tr>
+      
+      <td class="header">Cheat value</td>
+      <td class="lista"><input type="text" name="cheat_value" value="<tag:config.cheat_value />" size="1" /></td>
+      <td class="header">Cheat ratio</td>
+      <td class="lista"><input type="text" name="cheat_ratio_user" value="<tag:config.cheat_ratio_user />" size="2" /></td>
+    </tr>
+<tr>
+      <td class="header">Cheat Breakpoint</td>
+      <td class="lista"><input type="text" name="cheat_breakpoint" value="<tag:config.cheat_breakpoint />" size="1" /></td>
+      <td class="header">Cheat Ratio global</td>
+      <td class="lista"><input type="text" name="cheat_ratio_global" value="<tag:config.cheat_ratio_global />" size="2" /></td>
+     
+    </tr>
+<tr>
+      <td class="header">max Total bets</td>
+      <td class="lista"><input type="text" name="maxtotbet" value="<tag:config.maxtotbet />" size="1" /></td>
+      <td class="header">max user bet</td>
+      <td class="lista"><input type="text" name="maxusrbet" value="<tag:config.maxusrbet />" size="2" /></td>
+      
+    </tr>
+<tr>
+<td class="header">Win amount</td>
+      <td class="lista"><input type="text" name="win_amount" value="<tag:config.win_amount />" size="2" /></td>
+<td class="header">max Cheat value</td>
+      <td class="lista"><input type="text" name="cheat_value_max" value="<tag:config.cheat_value_max />" size="2" /></td>
+</tr>
+<tr>
+ <td class="header">Win amount on number</td>
+      <td class="lista"><input type="text" name="win_amount_on_number" value="<tag:config.win_amount_on_number />" size="2" /></td><td class="header">max gains global</td>
+      <td class="lista"><input type="text" name="max_gains_global" value="<tag:config.max_gains_global />" size="15" /></td>
+</tr>
+    <tr>
+      
+      <td class="header">max gains user</td>
+      <td class="lista"><input type="text" name="max_gains_user" value="<tag:config.max_gains_user />" size="15" /></td>
+      <td class=lista colpsan=2></td><td class=lista colpsan=2></td>
+    </tr>
+	]]></data>
+<where>"before"</where>
+    </operation>
+ 
+</hack>

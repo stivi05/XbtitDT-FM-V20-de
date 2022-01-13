@@ -1,0 +1,1011 @@
+<hack>
+  <title>MyBB Integration</title>
+  <author>cooly</author>
+  <version>DT FM</version>
+
+  <file>
+     <name>"database"</name>
+     <operation>
+      <action>"sql"</action>
+      <data><![CDATA[ALTER TABLE `{$db_prefix}users` ADD `mybb_fid` int(11) NOT NULL default '0';]]></data>
+    </operation>
+  </file>
+
+  <file>
+    <name>"$DEFAULT_ROOT/include/functions.php"</name>
+    <operation>
+      <search><![CDATA[    if($id>1)
+    {
+        $res = do_sqlquery("SELECT ]]></search>
+      <action>"add"</action>
+      <where>"after"</where>
+      <data><![CDATA[u.mybb_fid,]]></data>
+    </operation>
+    <operation>
+      <search><![CDATA[    if($id==1)
+    {
+        $res = do_sqlquery("SELECT ]]></search>
+      <action>"add"</action>
+      <where>"after"</where>
+      <data><![CDATA[u.mybb_fid,]]></data>
+    </operation>
+	 <operation>
+      <search><![CDATA[// EOF]]></search>
+      <action>"add"</action>
+      <where>"before"</where>
+      <data><![CDATA[//start MYBB funcs
+/**
+ * MyBB setcookie() wrapper.
+ *
+ * @param string The cookie identifier.
+ * @param string The cookie value.
+ * @param int The timestamp of the expiry date.
+ * @param boolean True if setting a HttpOnly cookie (supported by IE, Opera 9, Konqueror)
+ */
+function mybb_setcookie($name, $value="", $expires="", $httponly=false)
+{   
+    global $THIS_BASEPATH;
+    require_once $THIS_BASEPATH.'/mybb/inc/class_core.php';
+	global $mybb;
+
+	if(!$mybb->settings['cookiepath'])
+	{
+		$mybb->settings['cookiepath'] = "/";
+	}
+
+	if($expires == -1)
+	{
+		$expires = 0;
+	}
+	elseif($expires == "" || $expires == null)
+	{
+		$expires = TIME_NOW + (60*60*24*365); // Make the cookie expire in a years time
+	}
+	else
+	{
+		$expires = TIME_NOW + intval($expires);
+	}
+
+	$mybb->settings['cookiepath'] = str_replace(array("\n","\r"), "", $mybb->settings['cookiepath']);
+	$mybb->settings['cookiedomain'] = str_replace(array("\n","\r"), "", $mybb->settings['cookiedomain']);
+	$mybb->settings['cookieprefix'] = str_replace(array("\n","\r", " "), "", $mybb->settings['cookieprefix']);
+
+	// Versions of PHP prior to 5.2 do not support HttpOnly cookies and IE is buggy when specifying a blank domain so set the cookie manually
+	$cookie = "Set-Cookie: {$mybb->settings['cookieprefix']}{$name}=".urlencode($value);
+
+	if($expires > 0)
+	{
+		$cookie .= "; expires=".@gmdate('D, d-M-Y H:i:s \\G\\M\\T', $expires);
+	}
+
+	if(!empty($mybb->settings['cookiepath']))
+	{
+		$cookie .= "; path={$mybb->settings['cookiepath']}";
+	}
+
+	if(!empty($mybb->settings['cookiedomain']))
+	{
+		$cookie .= "; domain={$mybb->settings['cookiedomain']}";
+	}
+
+	if($httponly == true)
+	{
+		$cookie .= "; HttpOnly";
+	}
+	
+	$mybb->cookies[$name] = $value;
+
+	header($cookie, false);
+}
+
+/**
+ * Unset a cookie set by MyBB.
+ *
+ * @param string The cookie identifier.
+ */
+function mybb_unsetcookie($name)
+{
+    global $THIS_BASEPATH;
+    require_once $THIS_BASEPATH.'/mybb/inc/class_core.php';
+	global $mybb;
+	
+	$expires = -3600;
+	mybb_setcookie($name, "", $expires);
+	
+	unset($mybb->cookies[$name]);
+}
+/**
+ * Generates a random string.
+ *
+ * @param int The length of the string to generate.
+ * @return string The random string.
+ */
+function random_str($length="8")
+{
+	$set = array("a","A","b","B","c","C","d","D","e","E","f","F","g","G","h","H","i","I","j","J","k","K","l","L","m","M","n","N","o","O","p","P","q","Q","r","R","s","S","t","T","u","U","v","V","w","W","x","X","y","Y","z","Z","1","2","3","4","5","6","7","8","9");
+	$str = '';
+
+	for($i = 1; $i <= $length; ++$i)
+	{
+		$ch = my_rand(0, count($set)-1);
+		$str .= $set[$ch];
+	}
+
+	return $str;
+}
+/**
+ * Salts a password based on a supplied salt.
+ *
+ * @param string The md5()'ed password.
+ * @param string The salt.
+ * @return string The password hash.
+ */
+if(!function_exists(salt_password)){
+function salt_password($password, $salt)
+{
+	return md5(md5($salt).$password);
+}
+}
+/**
+ * Generates a 50 character random login key.
+ *
+ * @return string The login key.
+ */
+function generate_loginkey()
+{
+	return random_str(50);
+}
+/**
+ * Wrapper function for mt_rand. Automatically seeds using a secure seed once.
+ *
+ * @param int Optional lowest value to be returned (default: 0) 
+ * @param int Optional highest value to be returned (default: mt_getrandmax()) 
+ * @param boolean True forces it to reseed the RNG first
+ * @return int An integer equivilent of a secure hexadecimal seed
+ */
+function my_rand($min=null, $max=null, $force_seed=false)
+{
+	static $seeded = false;
+	static $obfuscator = 0;
+
+	if($seeded == false || $force_seed == true)
+	{
+		mt_srand(secure_seed_rng());
+		$seeded = true;
+
+		$obfuscator = abs((int) secure_seed_rng());
+		
+		// Ensure that $obfuscator is <= mt_getrandmax() for 64 bit systems.
+		if($obfuscator > mt_getrandmax())
+		{
+			$obfuscator -= mt_getrandmax();
+		}
+	}
+
+	if($min !== null && $max !== null)
+	{
+		$distance = $max - $min;
+		if ($distance > 0)
+		{
+			return $min + (int)((float)($distance + 1) * (float)(mt_rand() ^ $obfuscator) / (mt_getrandmax() + 1));
+		}
+		else
+		{
+			return mt_rand($min, $max);
+		}
+	}
+	else
+	{
+		$val = mt_rand() ^ $obfuscator;
+		return $val;
+	}
+}
+/**
+ * Returns a securely generated seed for PHP's RNG (Random Number Generator)
+ *
+ * @param int Length of the seed bytes (8 is default. Provides good cryptographic variance)
+ * @return int An integer equivilent of a secure hexadecimal seed
+ */
+function secure_seed_rng($count=8)
+{
+	$output = '';
+	
+	// Try the unix/linux method
+	if(@is_readable('/dev/urandom') && ($handle = @fopen('/dev/urandom', 'rb')))
+	{
+		$output = @fread($handle, $count);
+		@fclose($handle);
+	}
+	
+	// Didn't work? Do we still not have enough bytes? Use our own (less secure) rng generator
+	if(strlen($output) < $count)
+	{
+		$output = '';
+		
+		// Close to what PHP basically uses internally to seed, but not quite.
+		$unique_state = microtime().@getmypid();
+		
+		for($i = 0; $i < $count; $i += 16)
+		{
+			$unique_state = md5(microtime().$unique_state);
+			$output .= pack('H*', md5($unique_state));
+		}
+	}
+	
+	// /dev/urandom and openssl will always be twice as long as $count. base64_encode will roughly take up 33% more space but crc32 will put it to 32 characters
+	$output = hexdec(substr(dechex(crc32(base64_encode($output))), 0, $count));
+	
+	return $output;
+}
+
+function mybb_send_pm($from,$to,$subject,$message){
+global $mybb_prefix, $TABLE_PREFIX, $btit_settings;
+
+$to=get_result('SELECT `mybb_fid` FROM `'.$TABLE_PREFIX.'users` WHERE `id`='.$to.' LIMIT 1;', true, $btit_settings["CACHE_DURATION"]);
+        if (!isset($to[0]))
+        return false;
+        # valid user
+        $to=$to[0]['mybb_fid'];
+        if ($to==0)
+        return false;
+   $list=mysql_real_escape_string("System Mail");
+   do_sqlquery("INSERT INTO ".$mybb_prefix."privatemessages VALUES ('',".$to.", ".$to.", ".$from.", '".$list."', 1, ".$subject.", 0, ".$message.", 0, 0, 0, 0, 0, 0, 0, 0)",true);	
+   do_sqlquery("UPDATE `".$mybb_prefix."users` SET `unreadpms`=`unreadpms`+1 WHERE uid=".$to."",true);
+}
+//since groups cant be changed a way of processing the forum perms for the block
+function mybb_forum_perms($id_level)
+{
+global $TABLE_PREFIX;
+$id_level=get_result("SELECT * from ".$TABLE_PREFIX."users_level where id=".$id_level, true, $btit_settings["CACHE_DURATION"]);
+foreach($id_level as $id=>$group)
+{
+if($group["edit_forum"]=="yes" && $group["admin_access"]=="yes"){
+$group=4;
+}
+elseif($group["edit_forum"]=="yes" && $group["admin_access"]!="yes"){
+$group=6;
+}
+else{
+$group=2;
+}
+}
+return $group;
+}
+//rebuild the mybb cache for new users/posts/threads
+function update_mybb_stats()
+{
+global $mybb_prefix;
+$stat=do_sqlquery("select cache from mybb_datacache where title='stats'");
+$stat1=mysql_fetch_assoc($stat);
+$stats[] = $stat1[cache];
+$numusers=mysql_fetch_row(mysql_query("SELECT COUNT(*) as num from {$mybb_prefix}users order by uid desc"));
+$numthreads=mysql_fetch_row(mysql_query("SELECT COUNT(*) FROM `{$mybb_prefix}threads` AS `tc`"));
+$numposts=mysql_fetch_row(mysql_query("SELECT COUNT(*) FROM `{$mybb_prefix}posts` AS `pc`"));
+$unapproved=mysql_fetch_row(mysql_query(" SELECT COUNT(*) as num from {$mybb_prefix}forums where unapprovedthreads=1"));
+$collect=do_sqlquery("select uid, username from {$mybb_prefix}users order by uid desc limit 1");
+$lastmember=mysql_fetch_assoc($collect);
+$new_stats['numusers']=$numusers[0]['num'];
+$new_stats['numthreads']=$numthreads[0]['tc'];
+$new_stats['numposts']=$numposts[0]['pc'];
+$new_stats['numunapprovedthreads']=$unapproved[0]['num'];
+$new_stats['lastuid'] = $lastmember['uid'];
+$new_stats['lastusername'] = $lastmember['username'];
+if(empty($new_stats))
+{
+return;
+}
+if(is_array($stats))
+{
+$stats = array_merge($stats, $new_stats);
+}
+else
+{
+$stats = serialize($new_stats);
+}
+$stats = serialize($stats);
+do_sqlquery("update {$mybb_prefix}datacache set cache='$stats' where title='stats'");
+return false;
+}
+function mybb_level_check($level)
+{
+global $TABLE_PREFIX;
+$id_level=get_result("SELECT * from ".$TABLE_PREFIX."users_level where id=".$level, true, $btit_settings["CACHE_DURATION"]);
+foreach($id_level as $id=>$group)
+{
+switch($level)
+{
+case'6':
+$level=6;
+break;
+case'7':
+case'8':
+$level=4;
+break;
+case'':
+default;
+$level=2;
+}
+}
+return $level;
+}
+//end MYBB funcs
+
+]]></data>
+    </operation>
+  </file>
+
+
+  <file>
+    <name>"$DEFAULT_ROOT/login.php"</name>
+    <operation>
+      <search><![CDATA[$res = do_sqlquery("SELECT `u`.`salt`, `u`.`pass_type`, `u`.`username`, `u`.`id`, `u`.`random`, `u`.`password`".((substr($FORUMLINK,0,3)=="smf") ? ", `u`.`smf_fid`, `s`.`passwd`":(($FORUMLINK=="ipb")?", `u`.`ipb_fid`, `i`.`members_pass_hash`":""))." FROM `{$TABLE_PREFIX}users` `u` ".((substr($FORUMLINK,0,3)=="smf") ? "LEFT JOIN `{$db_prefix}members` `s` ON `u`.`smf_fid`=`s`.".(($FORUMLINK=="smf")?"`ID_MEMBER`":"`id_member`")."":(($FORUMLINK=="ipb")?"LEFT JOIN `{$ipb_prefix}members` `i` ON `u`.`ipb_fid`=`i`.`member_id`":""))." WHERE `u`.`username` ='".AddSlashes($user)."'",true);]]></search>
+      <action>"replace"</action>
+      <data><![CDATA[$res = do_sqlquery("SELECT `u`.`salt`, `u`.`pass_type`, `u`.`username`, `u`.`id`, `u`.`random`, `u`.`password`".((substr($FORUMLINK,0,3)=="smf") ? ", `u`.`smf_fid`, `s`.`passwd`":"")."".(($FORUMLINK=="ipb")?", `u`.`ipb_fid`, `i`.`members_pass_hash`, `i`.`members_pass_salt`, `i`.`name`, `i`.`member_group_id`":"")."".(($FORUMLINK=="mybb")?", `u`.`mybb_fid`,`my`.`password` as `mypass`,`my`.`salt` as `mysalt`,`my`.`loginkey`":"")." FROM `{$TABLE_PREFIX}users` `u` ".((substr($FORUMLINK,0,3)=="smf") ? "LEFT JOIN `{$db_prefix}members` `s` ON `u`.`smf_fid`=`s`.".(($FORUMLINK=="smf")?"`ID_MEMBER`":"`id_member`")."":"")."".(($FORUMLINK=="ipb")?"LEFT JOIN `{$ipb_prefix}members` `i` ON `u`.`ipb_fid`=`i`.`member_id`":"")."".(($FORUMLINK=="mybb")?"LEFT JOIN `{$mybb_prefix}users` `my` ON `u`.`mybb_fid`=`my`.`uid`":"")." WHERE `u`.`username` ='".AddSlashes($user)."'",true);]]></data>
+    </operation>
+	
+	<operation>
+      <search><![CDATA[}
+                    else
+                        set_ipb_cookie($row["ipb_fid"]);
+                }]]></search>
+      <action>"add"</action>
+      <where>"after"</where>
+      <data><![CDATA[elseif ($FORUMLINK=="mybb" && salt_password(md5($pwd), $row['mysalt']) == $row['mypass'])
+		mybb_setcookie("mybbuser", $row['mybb_fid']."_".$row['loginkey'], $remember=='', true);]]></data>
+    </operation>
+  </file>
+
+
+<file>
+    <name>"$DEFAULT_ROOT/logout.php"</name>
+    <operation>
+      <search><![CDATA[elseif($GLOBALS["FORUMLINK"]=="ipb")
+    kill_ipb_cookie();]]></search>
+      <action>"add"</action>
+      <where>"after"</where>
+      <data><![CDATA[
+elseif($GLOBALS["FORUMLINK"]=="mybb")
+mybb_unsetcookie("mybbuser");
+mybb_unsetcookie("sid");]]></data>
+    </operation>
+	</file>
+  
+  <file>
+    <name>"$DEFAULT_ROOT/user/usercp.profile.php"</name>
+    <operation>
+      <search><![CDATA[$registry->init();
+                           IPSMember::save($CURUSER["ipb_fid"], array("members" => array("email" => "$email")));
+                       }]]></search>
+      <action>"add"</action>
+      <where>"after"</where>
+      <data><![CDATA[					   elseif($GLOBALS["FORUMLINK"]=="mybb")
+					   {
+					   do_sqlquery("UPDATE {$mybb_prefix}users SET email='".$email."' WHERE uid='".$CURUSER["mybb_fid"]."'",true);
+					   }]]></data>
+    </operation>
+</file>
+
+
+
+<file>
+    <name>"$DEFAULT_ROOT/user/usercp.pass.php"</name>
+<operation>
+      <search><![CDATA[IPSMember::save($arr["ipb_fid"], array("members" => array("member_login_key" => "", "member_login_key_expire" => "0", "members_pass_hash" => "$ipbhash[0]", "members_pass_salt" => "$ipbhash[1]")));
+                }]]></search>
+      <action>"add"</action>
+      <where>"after"</where>
+      <data><![CDATA[elseif($GLOBALS["FORUMLINK"]=="mybb")
+                {
+                 $salt = random_str(8);
+				 $md5=md5($_POST["new_pwd"]);
+	             $pass=salt_password($md5,$salt);
+	             $key=generate_loginkey();
+				 do_sqlquery("UPDATE {$mybb_prefix}users SET password='$pass', salt='$salt',loginkey='$key' WHERE uid=".$arr["mybb_fid"],true);
+                }    ]]></data>
+    </operation>
+</file>
+
+<file>
+    <name>"$DEFAULT_ROOT/user/usercp.pmbox.php"</name>
+    <operation>
+      <search><![CDATA[        if ($what=="outbox" && $action=="list")
+          {
+           $usercptpl->set("MSG_LIST",true,true);
+           $pmoutboxtpl=array();
+           $pmoutboxtpl["frm_action"]="index.php?page=usercp&amp;do=pm&amp;action=deleteall&amp;uid=".$uid."&amp;type=out";
+           $usercptpl->set("pmbox",$pmoutboxtpl);
+
+           if(substr($FORUMLINK,0,3)=="smf")
+           {
+               if($FORUMLINK=="smf")
+                   $res=do_sqlquery("SELECT pm.ID_PM id, pmr.ID_MEMBER receiver, pm.msgtime added, pm.subject, pm.body msg, IF(pmr.is_read=0,'no','yes') readed, u.username receivername FROM {$db_prefix}personal_messages pm LEFT JOIN {$db_prefix}pm_recipients pmr ON pm.ID_PM=pmr.ID_PM LEFT JOIN {$TABLE_PREFIX}users u ON pmr.ID_MEMBER=u.smf_fid WHERE pm.ID_MEMBER_FROM=".$CURUSER["smf_fid"]." AND pm.deletedBySender!=1 ORDER BY added DESC",true);
+               else
+                   $res=do_sqlquery("SELECT `pm`.`id_pm` `id`, `pmr`.`id_member` `receiver`, `pm`.`msgtime` `added`, `pm`.`subject`, `pm`.`body` `msg`, IF(`pmr`.`is_read`=0,'no','yes') `readed`, `u`.`username` `receivername` FROM `{$db_prefix}personal_messages` `pm` LEFT JOIN `{$db_prefix}pm_recipients` `pmr` ON `pm`.`id_pm`=`pmr`.`id_pm` LEFT JOIN `{$TABLE_PREFIX}users` `u` ON `pmr`.`id_member`=`u`.`smf_fid` WHERE `pm`.`id_member_from`=".$CURUSER["smf_fid"]." AND `pm`.`deleted_by_sender`!=1 ORDER BY `added` DESC",true);
+           }
+           elseif($FORUMLINK=="ipb")
+               header("Location: index.php?page=forum&action=pm");]]></search>
+      <action>"add"</action>
+      <where>"after"</where>
+      <data><![CDATA[		   
+	           elseif($FORUMLINK=="mybb")
+               header("Location: index.php?page=forum&action=pm");]]></data>
+    </operation>
+	
+	<operation>
+      <search><![CDATA[        elseif ($what=="inbox" && $action=="list")
+          {
+           $usercptpl->set("MSG_LIST",true,true);
+           $pminboxtpl=array();
+           $pminboxtpl["frm_action"]="index.php?page=usercp&amp;do=pm&amp;action=deleteall&amp;uid=".$uid."&amp;type=in";
+           $usercptpl->set("pmbox",$pminboxtpl);
+
+           if(substr($FORUMLINK,0,3)=="smf")
+           {
+               if($FORUMLINK=="smf")
+                   $res=do_sqlquery("SELECT `pm`.`ID_PM` `id`, `pm`.`ID_MEMBER_FROM` `sender`, `pmr`.`ID_MEMBER` `receiver`, `pm`.`msgtime` `added`, `pm`.`subject`, `pm`.`body` `msg`, IF(`pmr`.`is_read`=0,'no','yes') `readed`, `pm`.`fromName` `sendername` FROM `{$db_prefix}personal_messages` `pm` LEFT JOIN `{$db_prefix}pm_recipients` `pmr` ON `pm`.`ID_PM`=`pmr`.`ID_PM` WHERE `pmr`.`ID_MEMBER`=".$CURUSER["smf_fid"]." AND `pmr`.`deleted`!=1 ORDER BY `added` DESC",true);
+               else
+                   $res=do_sqlquery("SELECT `pm`.`id_pm` `id`, `pm`.`id_member_from` `sender`, `pmr`.`id_member` `receiver`, `pm`.`msgtime` `added`, `pm`.`subject`, `pm`.`body` `msg`, IF(`pmr`.`is_read`=0,'no','yes') `readed`, `pm`.`from_name` `sendername` FROM `{$db_prefix}personal_messages` `pm` LEFT JOIN `{$db_prefix}pm_recipients` `pmr` ON `pm`.`id_pm`=`pmr`.`id_pm` WHERE `pmr`.`id_member`=".$CURUSER["smf_fid"]." AND `pmr`.`deleted`!=1 ORDER BY `added` DESC",true);
+           }
+           elseif($FORUMLINK=="ipb")
+               header("Location: index.php?page=forum&action=pm");]]></search>
+      <action>"add"</action>
+      <where>"after"</where>
+      <data><![CDATA[
+	  		   elseif($FORUMLINK=="mybb")
+               header("Location: index.php?page=forum&action=pm");]]></data>
+    </operation>
+  </file>
+
+<file>
+    <name>"$DEFAULT_ROOT/forum/forum.index.php"</name>
+    <operation>
+      <search><![CDATA[elseif ($btit_settings["forum"]=="ipb")
+  {
+     $FORUMLINK=$BASEURL."/".$btit_settings["forum"];
+     $ipb_content="";
+     $ipb_content.="
+     <script type=\"text/javascript\" language=\"JavaScript\">
+
+     function autoIframe(frameId){
+     var newheight
+              try{
+                newheight = document.getElementById(frameId).contentWindow.document.body.scrollHeight;
+                document.getElementById(frameId).height = newheight + 45;
+              }
+                catch(err){
+                window.status = err.message;
+              }
+     }
+
+
+     function autoResize(id){
+
+     var newheight;
+
+     if (!window.opera && !document.mimeType && document.all && document.getElementById){
+
+     newheight=document.getElementById(id).contentWindow.document.body.offsetHeight;
+
+     }else if(document.getElementById){
+
+     newheight=document.getElementById(id).contentWindow.document.body.scrollHeight;
+
+     }
+
+     document.getElementById(id).height= (newheight + 45) + \"px\";
+
+     }
+
+     </script>
+     <noscript>".
+     err_msg($language["ERROR"], "Resizable window will not work without Javascript.<br />Please enable Javascript or view the forum in a new window <a target='_new' href='$BASEURL/$FORUMLINK'>Here</a>")
+     ."</noscript>";
+    
+     $topic=intval($_GET["topicid"]);;
+     $action=htmlspecialchars($_GET["action"]);
+     $user=intval($_GET["userid"]);
+     
+     if ($action=="viewtopic")
+       {
+       $ipb_content.="
+          <div align=\"center\">
+          <iframe id=\"forum_ifrm\" onload=\"autoIframe('forum_ifrm')\" name=\"Forum\" border=\"0\" frameborder=\"0\" src=\"$FORUMLINK/index.php?showtopic=$topic&view=getnewpost\" width=\"98%\">Your browser don't support iframe, then click <a href=\"$FORUMLINK/index.php?showtopic=$topic&view=getnewpost\">here</a> to get forum page</iframe>
+          </div>";
+      }
+     elseif ($action=="showuser")
+       {
+       $ipb_content.="
+          <div align=\"center\">
+          <iframe id=\"forum_ifrm\" onload=\"autoIframe('forum_ifrm')\" name=\"Forum\" border=\"0\" frameborder=\"0\" src=\"$FORUMLINK/index.php?showuser=$user\" width=\"98%\">Your browser don't support iframe, then click <a href=\"$FORUMLINK/index.php?showuser=$user\">here</a> to get forum page</iframe>
+          </div>";
+      }
+     elseif ($action=="pm")
+       {
+       $ipb_content.="
+          <div align=\"center\">
+          <iframe id=\"forum_ifrm\" onload=\"autoIframe('forum_ifrm')\" name=\"Forum\" border=\"0\" frameborder=\"0\" src=\"$FORUMLINK/index.php?app=members&module=messaging\" width=\"98%\">Your browser don't support iframe, then click <a href=\"$FORUMLINK/index.php?app=members&module=messaging\">here</a> to get forum page</iframe>
+          </div>";
+      }
+     elseif ($action=="newpm")
+       {
+       $ipb_content.="
+          <div align=\"center\">
+          <iframe id=\"forum_ifrm\" onload=\"autoIframe('forum_ifrm')\" name=\"Forum\" border=\"0\" frameborder=\"0\" src=\"$FORUMLINK/index.php?app=members&module=messaging&section=send&do=form&entered_name=".(isset($_GET['to'])?htmlentities($_GET['to']):'')."\" width=\"98%\">Your browser don't support iframe, then click <a href=\"$FORUMLINK/index.php?app=members&module=messaging&section=send&do=form&entered_name=".(isset($_GET['to'])?htmlentities($_GET['to']):'')."\">here</a> to get forum page</iframe>
+          </div>";//added name inserts into ipb form.
+      }
+     else
+       {
+       $ipb_content.="
+          <div align=\"center\">
+          <iframe id=\"forum_ifrm\" onload=\"autoIframe('forum_ifrm')\" name=\"Forum\" border=\"0\" frameborder=\"0\" src=\"$FORUMLINK/index.php\" width=\"98%\">Your browser don't support iframe, then click <a href=\"$FORUMLINK/index.php\">here</a> to get forum page</iframe>
+          </div>";
+      }
+
+     $tpl->set("main_content",set_block($block_title,"center",$ipb_content));
+}]]></search>
+      <action>"add"</action>
+      <where>"after"</where>
+      <data><![CDATA[
+	  elseif ($btit_settings["forum"]=="mybb")
+  {
+     $FORUMLINK=$BASEURL."/".$btit_settings["forum"];
+     $mybb_content="";
+     $mybb_content.="
+     <script type=\"text/javascript\" language=\"JavaScript\">
+
+     function autoIframe(frameId){
+     var newheight
+              try{
+                newheight = document.getElementById(frameId).contentWindow.document.body.scrollHeight;
+                document.getElementById(frameId).height = newheight + 45;
+              }
+                catch(err){
+                window.status = err.message;
+              }
+     }
+
+
+     function autoResize(id){
+
+     var newheight;
+
+     if (!window.opera && !document.mimeType && document.all && document.getElementById){
+
+     newheight=document.getElementById(id).contentWindow.document.body.offsetHeight;
+
+     }else if(document.getElementById){
+
+     newheight=document.getElementById(id).contentWindow.document.body.scrollHeight;
+
+     }
+
+     document.getElementById(id).height= (newheight + 45) + \"px\";
+
+     }
+
+     </script>
+     <noscript>".
+     err_msg($language["ERROR"], "Resizable window will not work without Javascript.<br />Please enable Javascript or view the forum in a new window <a target='_new' href='$BASEURL/$FORUMLINK'>Here</a>")
+     ."</noscript>";
+    
+     $topic=intval($_GET["topicid"]);;
+     $action=htmlspecialchars($_GET["action"]);
+     $user=intval($_GET["userid"]);
+	 $pid=intval(0+$_GET["pid"]);
+     
+     if ($action=="viewtopic")
+       {
+       $mybb_content.="
+          <div align=\"center\">
+          <iframe id=\"forum_ifrm\" onload=\"autoIframe('forum_ifrm')\" name=\"Forum\" border=\"0\" frameborder=\"0\" src=\"$FORUMLINK/showthread.php?tid=$topic&pid=$pid#pid$pid\" width=\"98%\">Your browser don't support iframe, then click <a href=\"$FORUMLINK/showthread.php?tid=$topic\">here</a> to get forum page</iframe>
+          </div>";
+      }
+     elseif ($action=="showuser")
+       {
+       $mybb_content.="
+          <div align=\"center\">
+          <iframe id=\"forum_ifrm\" onload=\"autoIframe('forum_ifrm')\" name=\"Forum\" border=\"0\" frameborder=\"0\" src=\"$FORUMLINK/member.php?action=profile&uid=$user\" width=\"98%\">Your browser don't support iframe, then click <a href=\"$FORUMLINK/member.php?action=profile&uid=$user\">here</a> to get forum page</iframe>
+          </div>";
+      }
+     elseif ($action=="pm")
+       {
+       $mybb_content.="
+          <div align=\"center\">
+          <iframe id=\"forum_ifrm\" onload=\"autoIframe('forum_ifrm')\" name=\"Forum\" border=\"0\" frameborder=\"0\" src=\"$FORUMLINK/private.php\" width=\"98%\">Your browser don't support iframe, then click <a href=\"$FORUMLINK/private.php\">here</a> to get forum page</iframe>
+          </div>";
+      }
+     elseif ($action=="newpm")
+       {
+       $mybb_content.="
+          <div align=\"center\">
+          <iframe id=\"forum_ifrm\" onload=\"autoIframe('forum_ifrm')\" name=\"Forum\" border=\"0\" frameborder=\"0\" src=\"$FORUMLINK/private.php?action=send&uid=".(isset($_GET['uid'])?intval(0+$_GET['uid']):'')."\" width=\"98%\">Your browser don't support iframe, then click <a href=\"$FORUMLINK/private.php?action=send&uid=".(isset($_GET['uid'])?intval(0+$_GET['uid']):'')."\">here</a> to get forum page</iframe>
+          </div>";//added name inserts into ipb form.
+      }
+    else
+       {
+       $mybb_content.="
+          <div align=\"center\">
+          <iframe id=\"forum_ifrm\" onload=\"autoIframe('forum_ifrm')\" name=\"Forum\" border=\"0\" frameborder=\"0\" src=\"$FORUMLINK/index.php\" width=\"98%\">Your browser don't support iframe, then click <a href=\"$FORUMLINK/index.php\">here</a> to get forum page</iframe>
+          </div>";
+      }
+
+     $tpl->set("main_content",set_block($block_title,"center",$mybb_content));
+
+
+}]]></data>
+    </operation>
+	</file>
+
+<file>
+    <name>"$DEFAULT_ROOT/include/common.php"</name>
+    <operation>
+      <search><![CDATA[    if($FORUMLINK=="ipb")
+    {
+        ipb_send_pm($sender,$recepient,$subject,$msg);
+    }]]></search>
+      <action>"add"</action>
+      <where>"after"</where>
+      <data><![CDATA[
+	  	elseif ($FORUMLINK=='mybb') {
+	    
+		mybb_send_pm($sender,$recepient,$subject,$msg);
+	}]]></data>
+    </operation>
+	</file>
+	
+	<file>
+    <name>"$DEFAULT_ROOT/blocks/forum_block.php"</name>
+    <operation>
+      <search><![CDATA[global $CURUSER, $FORUMLINK, $THIS_BASEPATH, $db_prefix, $block_forumlimit, $btit_settings, $TABLE_PREFIX, $language, $ipb_prefix;]]></search>
+      <action>"replace"</action>
+      <data><![CDATA[global $CURUSER, $FORUMLINK, $THIS_BASEPATH, $db_prefix, $block_forumlimit, $btit_settings, $TABLE_PREFIX, $language, $ipb_prefix, $mybb_prefix;]]></data>
+    </operation>
+	    <operation>
+      <search><![CDATA[elseif ($FORUMLINK=='ipb') {
+    $topicsTable=$ipb_prefix.'topics';
+    $postsTable=$ipb_prefix.'posts';
+}]]></search>
+      <action>"add"</action>
+	  <where>"after"</where>
+      <data><![CDATA[
+	       elseif ($FORUMLINK=='mybb') {
+    $topicsTable=$mybb_prefix.'threads';
+    $postsTable=$mybb_prefix.'posts';
+}]]></data>
+    </operation>
+	 <operation>
+      <search><![CDATA[    elseif($FORUMLINK=="ipb")
+    {
+        $level=$CURUSER["id_level"];]]></search>
+      <action>"add"</action>
+	  <where>"before"</where>
+      <data><![CDATA[	elseif($FORUMLINK=="mybb")
+    {
+        $level=mybb_forum_perms($CURUSER["id_level"]);
+        $query=get_result("SELECT `f`.`fid`, `p`.`gid`, `p`.`canview` FROM `{$mybb_prefix}forums` `f` LEFT JOIN `{$mybb_prefix}forumpermissions` `p` ON (`f`.`fid`=`p`.`fid`) ORDER BY `f`.`fid` ASC");
+        $exclude="";
+
+        foreach($query as $check)
+        {
+            $forumid=$check["fid"];
+			if($check["gid"]==$level && $check["canview"]==0)
+			
+                $exclude=($exclude." AND fid!=".$forumid);
+           
+                    }
+        // --- Use the value defined in the site config or use 5 by default
+        if (isset($GLOBALS["block_forumlimit"]))
+               $limit="LIMIT " . $GLOBALS["block_forumlimit"];
+        else
+               $limit=" LIMIT 5";
+
+        $sqlquery="SELECT tp.tid,tp.subject,tp.message,tp.username,tp.dateline,tp.uid,tp.pid ";
+        $sqlquery.= "FROM {$mybb_prefix}posts tp ";
+        $sqlquery.= " WHERE fid!=0 ";
+        $sqlquery.= $exclude." ORDER BY dateline DESC ".$limit;
+        $sql = get_result($sqlquery, true, $btit_settings["cache_duration"]);
+		foreach($sql as $fid=> $post)
+        {
+		
+	    
+                $href="href='".$btit_settings["url"]."/index.php?page=forum&amp;action=viewtopic&amp;topicid=".$post["tid"]."&pid=".$post["pid"]."'";
+                $href2="href='".$btit_settings["url"]."/index.php?page=forum&amp;action=showuser&amp;userid=".$post[uid]."'";
+            
+        $postsList.="<tr><td class=lista><a ".$href.">".
+        wordwrap($post["subject"],20 ,"\n", true)."</a><br>".
+        wordwrap(format_comment($post["message"]),20 ,"\n", true)."<br>By:&nbsp;<a ".$href2.">".$post["username"].($btit_settings["fmhack_simple_donor_display"]=="enabled"?get_user_icons($post):"")."</a>&nbsp;On:&nbsp;".gmdate('m-d-Y',$post["dateline"])."<br>At:&nbsp;".gmdate('h:i A',$post["dateline"])."</td></tr>";
+        }
+    }
+	]]></data>
+    </operation>
+	</file>
+	
+<file>
+    <name>"$DEFAULT_ROOT/include/blocks.php"</name>
+    <operation>
+      <search><![CDATA[function get_menu($pos) {
+  global $TABLE_PREFIX, $CURUSER, $FORUMLINK, $CACHE_DURATION, $language;
+  $blocks=get_result('SELECT title, content, cache FROM '.$TABLE_PREFIX.'blocks WHERE position="'.$pos.'" AND status=1 AND '.$CURUSER['id_level'].'>=minclassview  AND '.$CURUSER['id_level'].'<=maxclassview '.(($FORUMLINK==''||$FORUMLINK=='internal'||substr($FORUMLINK,0,3)=='smf'||$FORUMLINK=='ipb')?'':' AND content!="forum"').' ORDER BY sortid',true, $CACHE_DURATION);
+  $return='';
+  foreach ($blocks as $entry)
+                $return.=get_block($language[$entry['title']],'justify',$entry['content'],$entry['cache']=='yes');
+  return $return;
+}]]></search>
+      <action>"replace"</action>
+      
+      <data><![CDATA[function get_menu($pos) {
+  global $TABLE_PREFIX, $CURUSER, $FORUMLINK, $CACHE_DURATION, $language;
+  $blocks=get_result('SELECT title, content, cache FROM '.$TABLE_PREFIX.'blocks WHERE position="'.$pos.'" AND status=1 AND '.$CURUSER['id_level'].'>=minclassview  AND '.$CURUSER['id_level'].'<=maxclassview '.(($FORUMLINK==''||$FORUMLINK=='internal'||$FORUMLINK=='smf'||$FORUMLINK=='ipb'||$FORUMLINK=='mybb')?'':' AND content!="forum"').' ORDER BY sortid',true, $CACHE_DURATION);
+  $return='';
+  foreach ($blocks as $entry)
+		$return.=get_block($language[$entry['title']],'justify',$entry['content'],$entry['cache']=='yes');
+  return $return;
+}]]></data>
+    </operation>
+	    <operation>
+      <search><![CDATA[function main_menu() {
+  global $TABLE_PREFIX, $CURUSER, $tpl;
+
+  $blocks=get_result('SELECT content FROM '.$TABLE_PREFIX.'blocks WHERE position="t" AND status=1 AND '.$CURUSER['id_level'].'>=minclassview  AND '.$CURUSER['id_level'].'<=maxclassview '.(($FORUMLINK==''||$FORUMLINK=='internal'||substr($FORUMLINK,0,3)=='smf'||$FORUMLINK=='ipb')?'':' AND content!="forum"').' ORDER BY sortid',true, $CACHE_DURATION);
+  $return='';
+  foreach ($blocks as $entry)
+    $return.=get_content(realpath(dirname(__FILE__).'/..').'/blocks/'.$entry['content'].'_block.php');
+
+  return set_block('','justify',$return);
+}]]></search>
+      <action>"replace"</action>
+      
+      <data><![CDATA[function main_menu() {
+  global $TABLE_PREFIX, $CURUSER, $tpl;
+
+  $blocks=get_result('SELECT content FROM '.$TABLE_PREFIX.'blocks WHERE position="t" AND status=1 AND '.$CURUSER['id_level'].'>=minclassview  AND '.$CURUSER['id_level'].'<=maxclassview '.(($FORUMLINK==''||$FORUMLINK=='internal'||$FORUMLINK=='smf'||$FORUMLINK=='ipb'||$FORUMLINK=='mybb')?'':' AND content!="forum"').' ORDER BY sortid',true, $CACHE_DURATION);
+  $return='';
+  foreach ($blocks as $entry)
+    $return.=get_content(realpath(dirname(__FILE__).'/..').'/blocks/'.$entry['content'].'_block.php');
+
+  return set_block('','justify',$return);
+}]]></data>
+    </operation>
+</file>
+
+<file>
+    <name>"$DEFAULT_ROOT/account.php"</name>
+     <operation>
+      <search><![CDATA[function aggiungiutente() {
+
+global $DBDT,$INVITATIONSON, $VALID_INV, $SITENAME,$SITEEMAIL,$BASEURL,$VALIDATION,$USERLANG,$USE_IMAGECODE, $TABLE_PREFIX, $XBTT_USE, $language,$THIS_BASEPATH, $FORUMLINK, $db_prefix, $btit_settings;]]></search>
+      <action>"replace"</action>
+      
+      <data><![CDATA[function aggiungiutente() {
+
+global $DBDT,$INVITATIONSON, $VALID_INV, $SITENAME,$SITEEMAIL,$BASEURL,$VALIDATION,$USERLANG,$USE_IMAGECODE, $TABLE_PREFIX, $XBTT_USE, $language,$THIS_BASEPATH, $FORUMLINK, $db_prefix, $btit_settings,$mybb_prefix;]]></data>
+    </operation>
+    <operation>
+      <search><![CDATA[      $res=do_sqlquery("UPDATE `{$TABLE_PREFIX}users` SET `id_level`=3".((substr($FORUMLINK,0,3)=="smf" || $FORUMLINK=="ipb") ? ", `random`=$random2" : "")." WHERE `id_level`=2 AND `random`=$random",true);]]></search>
+      <action>"replace"</action>
+      
+      <data><![CDATA[      $res=do_sqlquery("UPDATE {$TABLE_PREFIX}users SET id_level=3".(($FORUMLINK=="smf" || $FORUMLINK=="ipb" || $FORUMLINK=="mybb") ? ", random=$random2" : "")." WHERE id_level=2 AND random=$random",true);]]></data>
+    </operation>
+	
+	<operation>
+      <search><![CDATA[          success_msg($language["ACCOUNT_CREATED"],$language["ACCOUNT_CONGRATULATIONS"]);]]></search>
+      <action>"add"</action>
+      <where>"before"</where>
+      <data><![CDATA[		  elseif($FORUMLINK=="mybb")
+		  {
+		  $get=get_result("SELECT mybb_fid FROM {$TABLE_PREFIX}users WHERE id_level=3 AND random=$random2",true,$btit_settings['cache_duration']);
+          do_sqlquery("UPDATE {$mybb_prefix}users SET usergroup=2 WHERE uid=".$get[0]["mybb_fid"],true);
+		  }]]></data>
+    </operation>
+	<operation>
+      <search><![CDATA[if ($act=="confirm") {
+
+      global $FORUMLINK, $db_prefix, $THIS_BASEPATH, $btit_settings]]></search>
+      <action>"replace"</action>
+      
+      <data><![CDATA[if ($act=="confirm") {
+
+      global $FORUMLINK, $db_prefix, $THIS_BASEPATH, $btit_settings, $mybb_prefix;]]></data>
+    </operation>
+	<operation>
+      <search><![CDATA[if ($FORUMLINK=="ipb" || mysqli_num_rows($test))
+{
+    ipb_create($utente, $email, $pwd, $idlevel, $newuid);
+}]]></search>
+      <action>"add"</action>
+      <where>"after"</where>
+      <data><![CDATA[
+	  $test=do_sqlquery("SHOW TABLES LIKE '{$mybb_prefix}users'");
+
+if ($FORUMLINK=="mybb" || mysql_num_rows($test))
+{
+    
+	$salt = random_str(8);
+	$pwd=md5($pwd);
+	$pass=salt_password($pwd,$salt);
+	$key=generate_loginkey();
+	$suptime=time();
+	$ugroup=2;
+	// Set the data for the new user.
+	$ret = do_sqlquery("INSERT INTO {$mybb_prefix}users (`uid`,`username`, `password`, `salt`,`loginkey`,`usergroup`,`email`, `regdate`,`hideemail`,`receivepms`) VALUES ($newuid, '$utente', '$pass', '$salt','$key',$ugroup, '$email','$suptime',1,1)",true);
+    $fid=mysql_insert_id();
+    do_sqlquery("UPDATE {$TABLE_PREFIX}users SET mybb_fid=$fid WHERE id=$newuid",true);
+	update_mybb_stats();//update the users/posts/threads stats.
+}]]></data>
+    </operation>
+  </file>
+
+<file>
+    <name>"$DEFAULT_ROOT/blocks/mainusertoolbar_block.php"</name>
+    <operation>
+      <search><![CDATA[global $CURUSER, $INVITATIONSON, $FORUMLINK, $db_prefix, $btit_settings, $language, $ipb_prefix;]]></search>
+      <action>"replace"</action>
+      <data><![CDATA[global $CURUSER, $INVITATIONSON, $FORUMLINK, $db_prefix, $btit_settings, $language, $ipb_prefix, $mybb_prefix;]]></data>
+    </operation>
+	<operation>
+      <search><![CDATA[elseif($FORUMLINK=="ipb")
+    $resmail=get_result("SELECT `msg_count_new` `ur` FROM `{$ipb_prefix}members` WHERE `member_id`=".$CURUSER["ipb_fid"],true,$btit_settings['cache_duration']);]]></search>
+      <action>"add"</action>
+	  <action>"after"</action>
+      <data><![CDATA[
+	  elseif($FORUMLINK=="mybb")
+    $resmail=get_result("SELECT `unreadpms` `ur` FROM `{$mybb_prefix}users` WHERE `uid`=".$CURUSER["mybb_fid"],true,$btit_settings['cache_duration']);]]></search>]]></data>
+    </operation>
+</file>
+
+<file>
+    <name>"$DEFAULT_ROOT/blocks/user_block.php"</name>
+    <operation>
+      <search><![CDATA[global $CURUSER, $user, $USERLANG, $FORUMLINK, $db_prefix,$btit_settings, $ipb_prefix,$baseurl,$STYLEURL ;]]></search>
+      <action>"replace"</action>
+      <data><![CDATA[global $CURUSER, $user, $USERLANG, $FORUMLINK, $db_prefix,$btit_settings, $ipb_prefix,$baseurl,$STYLEURL , $mybb_prefix;]]></data>
+    </operation>
+	<operation>
+      <search><![CDATA[             elseif($FORUMLINK=="ipb")
+                 $resmail=get_result("SELECT `msg_count_new` `ur` FROM `{$ipb_prefix}members` WHERE `member_id`=".$CURUSER["ipb_fid"],true,$btit_settings['cache_duration']);]]></search>
+      <action>"add"</action>
+	  <action>"after"</action>
+      <data><![CDATA[
+	  elseif($FORUMLINK=="mybb")
+    $resmail=get_result("SELECT `unreadpms` `ur` FROM `{$mybb_prefix}users` WHERE `uid`=".$CURUSER["mybb_fid"],true,$btit_settings['cache_duration']);]]></search>]]></data>
+    </operation>
+</file>
+
+<file>
+    <name>"$DEFAULT_ROOT/admin/admin.users.tools.php"</name>
+    <operation>
+      <search><![CDATA[$ipblevel=$ipb_group[0]["perm_id"];
+                        IPSMember::save($ipb_fid, array("members" => array("member_group_id" => "$ipblevel")));
+                    }
+                    else $note.=' Group not found in IPB.';
+                }]]></search>
+      <action>"add"</action>
+	  <where>"after"</where>
+      <data><![CDATA[				
+	  elseif($FORUMLINK=="mybb")
+                {
+				 $getgroup=mybb_level_check($level);
+                 do_sqlquery("UPDATE `{$mybb_prefix}users` SET `usergroup`='$getgroup' WHERE `uid`=".$curu["mybb_fid"],true);
+                }]]></data>
+    </operation>
+<operation>
+      <search><![CDATA[                elseif($FORUMLINK=="ipb")
+                {
+                    IPSMember::save($ipb_fid, array("members" => array("email" => "$email")));
+                }]]></search>
+      <action>"add"</action>
+      <where>"after"</where>
+      <data><![CDATA[				
+	  elseif($FORUMLINK=="mybb")
+                {
+				 do_sqlquery("UPDATE `{$mybb_prefix}users` SET `email`='$email' WHERE `uid`=".$curu["mybb_fid"],true);
+                }]]></data>
+    </operation>
+	<operation>
+      <search><![CDATA[                    if (substr($FORUMLINK,0,3)=='smf')
+                    {
+                        $dupe=get_result("SELECT ".(($FORUMLINK=="smf")?"`ID_MEMBER`":"`id_member`")." FROM `{$db_prefix}members` WHERE `member".(($FORUMLINK=="smf")?"N":"_n")."ame`=".$username." LIMIT 1", true, $CACHE_DURATION);
+                        if (!isset($dupe[0])) {
+                            $smfset[]='member'.(($FORUMLINK=="smf")?"N":"_n").'ame='.$username;
+                        } else
+                            $newname.=', dupe name in smf memberName';
+                        $dupe=get_result("SELECT ".(($FORUMLINK=="smf")?"`ID_MEMBER`":"`id_member`")." FROM {$db_prefix}members WHERE `real".(($FORUMLINK=="smf")?"N":"_n")."ame`=".$username." LIMIT 1", true, $CACHE_DURATION);
+                        if (!isset($dupe[0])) {
+                            $smfset[]='real'.(($FORUMLINK=="smf")?"N":"_n").'ame='.$username;
+                        } else
+                            $newname.=', dupe name in smf realName';
+                    }]]></search>
+      <action>"add"</action>
+      <where>"after"</where>
+      <data><![CDATA[				
+					elseif ($FORUMLINK=='mybb')
+                    {
+                        $dupe=get_result('SELECT uid FROM '.$mybb_prefix.'users WHERE username='.$username.' LIMIT 1;');
+                        if (!isset($dupe[0]))
+                        {
+                            do_sqlquery('UPDATE '.$mybb_prefix.'users SET username='.$username.' WHERE uid='.$curu['mybb_fid']);
+							update_mybb_stats();
+                        }
+                        else
+                            $newname.=', dupe name in MyBB memberName';
+                        
+                    }]]></data>
+    </operation>
+	<operation>
+      <search><![CDATA[               if($FORUMLINK=="ipb")
+                {
+                    $ipbhash=ipb_passgen($pass);
+                    IPSMember::save($ipb_fid, array("members" => array("member_login_key" => "", "member_login_key_expire" => "0", "members_pass_hash" => "$ipbhash[0]", "members_pass_salt" => "$ipbhash[1]")));
+                }]]></search>
+      <action>"add"</action>
+      <where>"after"</where>
+      <data><![CDATA[				
+	  if($FORUMLINK=="mybb")
+                {
+                 $salt = random_str(8);
+				 $md5=md5($pass);
+	             $pass=salt_password($md5,$salt);
+	             $key=generate_loginkey();
+				 do_sqlquery("UPDATE {$mybb_prefix}users SET password='$pass', salt='$salt',loginkey='$key' WHERE uid=".$curu["mybb_fid"],true);
+                }]]></data>
+    </operation>
+	<operation>
+      <search><![CDATA[    else
+        $smf_fid=$curu['smf_fid'];
+}]]></search>
+      <action>"add"</action>
+      <where>"after"</where>
+      <data><![CDATA[elseif ($FORUMLINK=='mybb') 
+{
+    if (!isset($curu['mybb_fid']) || $curu['mybb_fid']==0)
+    {
+        # go full mysql search on it's ass
+        $mybb_user=get_result('SELECT `uid` FROM `'.$mybb_prefix.'users` WHERE `username`='.sqlesc($curu['username']).' LIMIT 1;');
+        if (isset($mybb_user[0]))
+        {
+            $mybb_fid=$mybb_user[0]['uid'];
+            quickQuery('UPDATE `'.$TABLE_PREFIX.'users` SET `mybb_fid`='.$mybb_fid.' WHERE `id`='.$uid.' LIMIT 1;');
+        }
+        else
+        {
+            $mybb_fid=false;
+            $note=' User not found in myBB.';
+        }
+    }
+    else
+        $mybb_fid=$curu['mybb_fid'];
+}]]></data>
+    </operation>
+       </file>
+	   
+<file>
+    <name>"$DEFAULT_ROOT/blocks/dropdownmenu_block.php"</name>
+    <operation>
+      <search><![CDATA[        if ($GLOBALS["FORUMLINK"]=="" || $GLOBALS["FORUMLINK"]=="internal" || substr($GLOBALS["FORUMLINK"],0,3)=="smf" || $GLOBALS["FORUMLINK"]=="ipb")]]></search>
+      <action>"replace"</action>
+      <data><![CDATA[        if ($GLOBALS["FORUMLINK"]=="" || $GLOBALS["FORUMLINK"]=="internal" || substr($GLOBALS["FORUMLINK"],0,3)=="smf" || $GLOBALS["FORUMLINK"]=="ipb" || $GLOBALS["FORUMLINK"]=="mybb")]]></data>
+    </operation>
+	</file>
+	
+<file>
+    <name>"$DEFAULT_ROOT/blocks/mainmenu_block.php"</name>
+    <operation>
+      <search><![CDATA[   if ($FORUMLINK=="" || $FORUMLINK=="internal" || substr($FORUMLINK,0,3)=="smf" || $FORUMLINK=="ipb")]]></search>
+      <action>"replace"</action>
+      <data><![CDATA[   if ($FORUMLINK=="" || $FORUMLINK=="internal" || substr($FORUMLINK,0,3)=="smf" || $FORUMLINK=="ipb" || $FORUMLINK=="mybb")]]></data>
+    </operation>
+	</file>
+
+<file>
+    <name>"$DEFAULT_ROOT/blocks/menu_block.php"</name>
+    <operation>
+      <search><![CDATA[        if ($FORUMLINK=="" || $FORUMLINK=="internal" || substr($FORUMLINK,0,3)=="smf" || $FORUMLINK=="ipb")]]></search>
+      <action>"replace"</action>
+      <data><![CDATA[        if ($FORUMLINK=="" || $FORUMLINK=="internal" || substr($FORUMLINK,0,3)=="smf" || $FORUMLINK=="ipb" || $FORUMLINK=="mybb")]]></data>
+    </operation>
+	</file>
+
+
+	</file>
+   
+</hack>

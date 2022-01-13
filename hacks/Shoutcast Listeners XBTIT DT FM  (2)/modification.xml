@@ -1,0 +1,55 @@
+<hack>
+  <title>Shoutcast listeners</title>
+  <author>cooly/Petr1fied</author>
+  <version>DT FM</version>
+  
+  
+  <file>
+    <name>"$DEFAULT_ROOT/index.php"</name>
+    <operation>
+      <search><![CDATA[    case 'admin':
+        require("$THIS_BASEPATH/admin/admin.index.php");
+        $tpl->set("main_title",$btit_settings["name"]." .::. "."Index->Admin");
+        // the main_content for current template is setting within admin/index.php
+        break;]]></search>
+      <action>"add"</action>
+      <where>"after"</where>
+      <data><![CDATA[		
+		case 'listeners':
+		require(load_language("lang_shoutcast.php"));
+        require("$THIS_BASEPATH/whos_listening.php");
+        $tpl->set("main_content",set_block($language["list"],"center",$listennowtpl->fetch(load_template("listen.tpl"))));
+        $tpl->set("main_title","Index->".$language["list"]."");
+        break;
+                    ]]></data>
+    </operation>
+  </file>
+  
+  <file>
+    <name>"$DEFAULT_ROOT/radiostats/fetch.php"</name>
+    <operation>
+      <search><![CDATA[echo "<tr><td class=header><b>".$language['BL_LISTEN'].":</b></td><td class=lista>&nbsp;<br><b><a href='index.php?page=listeners'> (".$shoutcast->GetCurrentListenersCount()." of ".$shoutcast->GetMaxListenersCount()." listeners, peak: ".$shoutcast->GetPeakListenersCount().")</a><p></b></td></tr>";]]></search>
+      <action>"replace"</action>
+      
+      <data><![CDATA[echo "<tr><td class=header><b>".$language['BL_LISTEN'].":</b></td><td class=lista>&nbsp;<br><b><a href='index.php?page=listeners'> (".$shoutcast->GetCurrentListenersCount()." of ".$shoutcast->GetMaxListenersCount()." listeners, peak: ".$shoutcast->GetPeakListenersCount().")</a><p></b></td></tr>";]]></data>
+    </operation>
+  </file>
+  
+   <file>
+    <name>"$DEFAULT_LANGUAGE_PATH/lang_userdetails.php"</name>
+    <operation>
+      <action>"add"</action>
+      <search><![CDATA[?>]]></search>
+      <where>"before"</where>
+      <data><![CDATA[
+$language["PLAYER"]= 'Player';
+$language["NOPLAYER"]='Nobody listening!';
+$language["NOSHOUTCAST"]='Must be no Dj!';
+$language["NOSHOUTCASTCONN"]='<b>Shoutcast Down!</b>';
+]]></data>
+    </operation>
+  </file>
+  
+
+  
+</hack>

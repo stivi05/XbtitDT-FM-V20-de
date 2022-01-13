@@ -1,0 +1,238 @@
+<hack>
+  <title>Shoutcast Stats and DJ application</title>
+  <author>cooly (dj slots fix by Petr1fied)</author>
+  <version>DT FM</version>
+  
+  <file>
+    <name>"database"</name>
+    <operation>
+      <action>"sql"</action>
+      <data><![CDATA[INSERT INTO `xbtit_settings` (`key`, `value`) VALUES 
+	('radio_pass', 'mypass'),
+	('radio_port', '8000'),
+	('radio_ip', 'localhost'),
+	('radio_interval', '1200');]]></data>
+    </operation>
+    <operation>
+            <action>"sql"</action>
+            <data><![CDATA[INSERT INTO `{$db_prefix}tasks` (`task`, `last_time`) VALUES ('radio', 1264963389);]]></data>
+        </operation>
+        <operation>
+            <action>"sql"</action>
+            <data><![CDATA[CREATE TABLE IF NOT EXISTS `{$db_prefix}shoutcastdj` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uid` int(10) unsigned NOT NULL DEFAULT '0',
+  `active` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `activedays` char(30) NOT NULL DEFAULT '',
+  `activetime` char(11) NOT NULL DEFAULT '',
+  `genre` char(50) NOT NULL DEFAULT '',
+  KEY `id` (`id`),
+  KEY `active` (`active`)
+) ENGINE=MyISAM;
+]]></data>
+        </operation>
+	<operation>
+            <action>"sql"</action>
+            <data><![CDATA[INSERT INTO `{$db_prefix}blocks` (`blockid`, `content`, `position`, `sortid`, `status`, `title`, `cache`, `minclassview`, `maxclassview`) VALUES (302, 'radio', 'c', 3, 1, 'BLOCK_RAD', 'no', 3, 8);]]></data>
+        </operation>
+  </file>
+  
+  <file>
+    <name>"$DEFAULT_ROOT/include/functions.php"</name>
+    <operation>
+      <search><![CDATA[//Disallow special characters in username]]></search>
+      <action>"add"</action>
+      <where>"after"</where>
+      <data><![CDATA[
+ function do_radio($ts) {	 
+require_once(dirname(__FILE__).'/shoutcast.class.php');
+global $btit_settings;
+$cast = new ShoutCast();
+$cast->host = $btit_settings["radio_ip"];
+$cast->port = $btit_settings["radio_port"];
+$cast->passwd = $btit_settings["radio_pass"];
+if ($cast->openstats()) {
+	if ($cast->GetStreamStatus()) {	
+		$history = $cast->GetSongHistory();
+		if (is_array($history)) {
+		global $TABLE_PREFIX;
+do_sqlquery("INSERT INTO {$TABLE_PREFIX}chat (uid, time, name, text) VALUES (0,".time().", 'System','[radio]')");
+exit();
+}}}else{}
+}
+]]></data>
+    </operation>
+  </file>
+  
+  <file>
+    <name>"$DEFAULT_ROOT/ajaxchat/format_shout.php"</name>
+    
+	<operation>
+      <search><![CDATA[    global $smilies, $BASEURL, $privatesmilies]]></search>
+      <action>"add"</action>
+      <where>"after"</where>
+      <data><![CDATA[, $SITENAME, $btit_settings, $radio_msg]]></data>
+    </operation>
+	<operation>
+      <search><![CDATA[    // [b]Bold[/b]
+    $s = preg_replace("/\[b\]((\s|.)+?)\[\/b\]/", "<b>\\1</b>", $s);]]></search>
+      <action>"add"</action>
+      <where>"after"</where>
+      <data><![CDATA[	$s = preg_replace("/\[radio\]\s*/i", "".$radio_msg."", $s);]]></data>
+    </operation>
+  </file>
+  
+  <file>
+    <name>"$DEFAULT_ROOT/admin/admin.index.php"</name>
+    <operation>
+      <search><![CDATA[    case 'searchdiff':
+      include("$ADMIN_PATH/admin.search_diff.php");
+      $tpl->set("main_content",set_block($block_title,"center",$admintpl->fetch(load_template("admin.search_diff.tpl"))));
+      break;]]></search>
+      <action>"add"</action>
+      <where>"after"</where>
+      <data><![CDATA[
+    case 'radio_settings':
+      include("$ADMIN_PATH/admin.radioconf.php");
+      $tpl->set("main_content",set_block($language["RAD_SETTINGS"],"center",$admintpl->fetch(load_template("radio.config.tpl"))));
+      break;]]></data>
+    </operation>
+  </file>
+  
+    <file>
+    <name>"$DEFAULT_ROOT/blocks/mainusertoolbar_block.php"</name>
+    <operation>
+      <search><![CDATA[if ($CURUSER["admin_access"]=="yes")
+print("\n<td align=\"center\" style=\"text-align:center;\"><a class=\"mainuser\" href=\"index.php?page=admin&amp;user=".$CURUSER["uid"]."&amp;code=".$CURUSER["random"]."\"><img src=\"images/staff.png\" /></a></td>\n");]]></search>
+      <action>"add"</action>
+      <where>"before"</where>
+      <data><![CDATA[
+	  $djuser=do_sqlquery("SELECT active,uid from {$TABLE_PREFIX}shoutcastdj WHERE uid=".$CURUSER["uid"]);
+$rowdj= mysqli_fetch_array($djuser);
+if ($rowdj["active"]=="1")
+print("</td><td style=\"text-align:center;\" align=\"center\"><a href=index.php?page=dj&do=manage><img src=\"images/dj.png\" /></a></td>");
+]]></data>
+    </operation>
+  </file>
+  
+  <file>
+    <name>"$DEFAULT_ROOT/jscript/xbtit.js"</name>
+    <operation>
+      <search><![CDATA[    function poppeer(url) {
+        newwindow=window.open(url,'poppeers','height=400,width=650,resizable=yes,scrollbars=yes');
+        if (window.focus) newwindow.focus();
+    }]]></search>
+      <action>"add"</action>
+      <where>"after"</where>
+      <data><![CDATA[
+	function PopRadio(form) {
+         newWin=window.open('play.php?type='+form,'Radio','height=100,width=400,resizable=yes,scrollbars=yes');
+         if (window.focus) {newWin.focus()}
+}]]></data>
+    </operation>
+  </file>
+  
+  <file>
+    <name>"$DEFAULT_LANGUAGE_PATH/lang_admin.php"</name>
+    <operation>
+      <search><![CDATA[?>]]></search>
+      <action>"add"</action>
+      <where>"before"</where>
+      <data><![CDATA[
+$language["RAD_SETTINGS"]="Radio Settings";
+$language['djhead']="Dj List";
+      ]]></data>
+    </operation>
+  </file>
+  
+  <file>
+    <name>"$DEFAULT_ROOT/admin/admin.menu.php"</name>
+    <operation>
+      <search><![CDATA[2=>array(
+                    "url"=>"index.php?page=admin&amp;user=".$CURUSER["uid"]."&amp;code=".$CURUSER["random"]."&amp;do=logview" ,
+                    "description"=>$language["ACP_SITE_LOG"])]]></search>
+      <action>"add"</action>
+      <where>"after"</where>
+      <data><![CDATA[,
+                    array(
+                    "url"=>"index.php?page=admin&amp;user=".$CURUSER["uid"]."&amp;code=".$CURUSER["random"]."&amp;do=radio_settings" ,
+                    "description"=>$language["RAD_SETTINGS"]),
+					array(
+                    "url"=>"index.php?page=dj&do=list" ,
+                    "description"=>$language['djhead'])
+                    ]]></data>
+    </operation>
+  </file>
+  
+  <file>
+    <name>"$DEFAULT_LANGUAGE_PATH/lang_blocks.php"</name>
+    <operation>
+      <search><![CDATA[?>]]></search>
+      <action>"add"</action>
+      <where>"before"</where>
+      <data><![CDATA[
+$language["BLOCK_RAD"]="".$SITENAME." Radio";
+      ]]></data>
+    </operation>
+  </file>
+  
+  
+  
+    <file>
+    <name>"$DEFAULT_ROOT/include/jscss.php"</name>
+    <operation>
+      <search><![CDATA[<script type="text/javascript" src="'.$BASEURL.'/jscript/overlib.js"></script>]]></search>
+      <action>"add"</action>
+      <where>"after"</where>
+      <data><![CDATA[
+     <script src="'.$BASEURL.'/radiostats/ajaxradio.js" language="JavaScript" type="text/javascript"></script>
+                    ]]></data>
+    </operation>
+  </file>
+  
+
+  
+  <file>
+    <name>"$DEFAULT_ROOT/include/config.php"</name>
+    <operation>
+      <search><![CDATA[// interval for sanity check (good = 10 minutes)
+$clean_interval=$btit_settings['sanity_update'];]]></search>
+      <action>"add"</action>
+      <where>"after"</where>
+      <data><![CDATA[// interval for radio announcement in shout
+$radio_interval=$btit_settings['radio_interval'];
+$radio_is_on="Radio is online to tune in click -->";
+$radio_is_onalt="Or alternatively click one of the links in the radio block below.";
+$radio_msg="<font size=4 color=orangered><b>".$SITENAME." ".$radio_is_on."</font></b><a href=\"http://".$btit_settings["radio_ip"].":".$btit_settings["radio_port"]."/listen.pls\" target=\"_new\"><img src=".$BASEURL."/radiostats/images/winamp.png width=\"48\" height=\"48\" title=\"Winamp\" border=\"0\"></a>&nbsp;<b>".$radio_is_onalt."</b>"; 
+                    ]]></data>
+    </operation>
+  </file>
+  
+  <file>
+    <name>"$DEFAULT_ROOT/index.php"</name>
+    <operation>
+      <search><![CDATA[    case 'admin':
+        require("$THIS_BASEPATH/admin/admin.index.php");
+        $tpl->set("main_title",$btit_settings["name"]." .::. "."Index->Admin");
+        // the main_content for current template is setting within admin/index.php
+        break;]]></search>
+      <action>"add"</action>
+      <where>"after"</where>
+      <data><![CDATA[
+	  		case 'dj':
+		require(load_language("lang_shoutcast.php"));
+        require("$THIS_BASEPATH/dj.php");
+        $tpl->set("main_content",set_block($language["djhead"],"center",$djtpl->fetch(load_template("dj.tpl"))));
+        $tpl->set("main_title","Index->".$language["djhead"]."");
+        break;
+		
+		case 'dj_faq':
+		require(load_language("lang_shoutcast.php"));
+        require("$THIS_BASEPATH/dj_faq.php");
+        $tpl->set("main_content",set_block($language["faq"],"center",$djfaqtpl->fetch(load_template("djfaq.tpl"))));
+        $tpl->set("main_title","Index->".$language["faq"]."");
+        break;
+                    ]]></data>
+    </operation>
+  </file>
+</hack>

@@ -1,0 +1,893 @@
+First version , all V5 beta errors taken care off
+
+26/10/2012 auto rank tpl added missing code
+26/10/2012 added missing/wrong SQL DE paypal hack
+26/10/2012 extra hacks block id fixed
+
+28/10/2012 adding missing files partners
+28/10/2012 improve sb clean hack
+28/10/2012 fixed autotopic settings
+28/10/2012 sanity mem/time code
+28/10/2012 sanity BD pm smf
+
+30/10/2012 sanity warn/smf2 fix
+30/10/2012 added groupcolor/online in UD
+
+04/11/2012 added crown to user/maintracker block
+04/11/2012 fixed forum link in details
+04/11/2012 added sb to userblock
+
+07/11/2012 fix/changes in arcade block
+07/11/2012 fix pager function UD
+07/11/2012 added partners menu image
+
+08/11/2012 added peers colors for ext torrents in blocks
+08/11/2012 changed all small styles to wide styles
+
+15/11/2012 SQL - set all autorank in groups to disabled to prevent guest issues
+
+01/12/2012 bring V5 back inline with last XBTIT SVN changes (754)
+01/12/2012 removed timedrank.php from smf folder 
+01/12/2012 mayor update donation historie hack
+
+02/12/2012 fixed uploader coin total points
+---------------------------------------------------------------------------------V6.0
+02/12/2012 start V6 DE - logo/text/installer
+02/12/2012 2 extra styles added
+02/12/2012 referral system and report a bug added
+
+03/12/2012 added dt login switch hack
+03/12/2012 added sb banned hack
+03/12/2012 added group color picker
+
+19/12/2012 changed style copyright url DT style
+19/12/2012 fix %20 download problem by Flier
+19/12/2012 request edit fix in index
+19/12/2012 removed a unused tpl file
+
+20/12/2012 fixed a arcade issue
+20/12/2012 added switch for split torrent by day hack
+20/12/2012 added multiplier/gold/free/vip to torrent details
+20/12/2012 added added improved YouTube hack
+20/12/2012 added Magnet link with enable/disable switch in trackersettings
+20/12/2012 added upload multiplier hack
+
+21/12/2012 end of the world , ow wait .....;)
+21/12/2012 added auto torrent name hack 
+21/12/2012 optimized 4 blocks
+
+27/12/2012 reset xmas hack for next year
+
+04/01/2013 upgraded auto don. system to HTTP 1.1
+04/01/2013 added invites for seedbonus
+
+09/01/2013 fixed small error in invites for seedbonus
+09/01/2013 added switch for shoutbox sound
+09/01/2013 fixed small issue in online block
+
+17/01/2013 fixed error in admin users tool , sb ban
+---------------------------------------------------------------------------------V7.0
+17/01/2013 started V7 DE , text and banner
+17/01/2013 added switch for sb announce new user/torrent
+17/01/2013 added facebook login hack with enable/disable switch
+
+18/01/2013 fix/improvement auto torrent name hack in upload
+
+24/01/2013 bug fix in int forum / show post ( XBT use )
+
+31/01/2013 moved torrent mod from mainusertoolbar to admin checks block
+31/01/2013 added png support for image upload hack
+31/01/2013 added external torrent support to torrent of the day hack 
+31/01/2013 added clean Hit & Run hack / added to admin checks block
+
+03/02/2013 fix a zero peer issue ( by Flier )
+03/02/2013 unmoderated torrents don,t show in chat anymore
+
+04/02/2013 add announce new comment in sb / with switch in acp
+04/02/2013 add announce new forum post in sb / with switch in acp
+04/02/2013 fix a bug in unmoderated torrents don,t show in chat anymore
+
+05/02/2013 added Matrix Screensaver with switch in acp
+
+06/02/2013 added irc hack with switch 
+---------------------------------------------------------------------------------V7.1
+06/02/2013 many small edits , so from 7.0 to 7.1
+
+07/02/2013 added grabbed to seedwanted/toptorrent blocks
+07/02/2013 added ratio editor hack
+07/02/2013 added show new torrents after last visit
+
+10/02/2013 added new DT hack reason for torrent delete
+
+11/02/2013 Security fix ( cache system )
+11/02/2013 bug fix in new torrents after last visit
+11/02/2013 small sql fix in Auto Seedbox Hack installer
+11/02/2013 added Site Disclaimer hack with switch
+11/02/2013 fix some conflickts between some Jquery hacks
+11/02/2013 did add a auto switch on the arcade code in index 
+, if the arcade block is disabled so will be the arcade code in index
+
+----------------------------------------------------------------------------------V8.0
+12/02/2013 start V8 , logo and text
+12/02/2013 added upload form protection hack 
+12/02/2013 fix youtube link in edit
+12/02/2013 fix smf2 / inv login sys login error
+
+15/02/2013 added nfo upload hack
+15/02/2013 added switch for nfo uploader/ripper
+15/02/2013 add torrent tag hack
+15/02/2013 improved torrent edit layout
+15/02/2013 added rss hack switch
+
+16/02/2013 added gender hack
+16/02/2013 IMDB updated to v2.1.6 ( thanks Flier )
+16/02/2013 added personal note pad hack
+
+17/02/2013 if nat check is disabled in tracker settings , nat will no longer showed in main user block
+17/02/2013 improved signup design
+17/02/2013 added Password Generator hack
+17/02/2013 changed getimdb to not get full plot
+
+18/02/2013 added Shitlist hack with enable switch
+18/02/2013 added uploader request hack with switch , members will see uploader request form , all other ranks can upload
+18/02/2013 added DT shoutbox layout with acp switch
+
+19/02/2013 added last up/dl block
+19/02/2013 reworked torrentlist page and dl blocks
+19/02/2013 improved sanity
+19/02/2013 improved don for invite block
+
+20/02/2013 improved request block
+
+22/02/2013 removed welcome back from mainmenu
+
+23/02/2013 added peers colors to torrent details
+23/02/2013 added avatar switch in DT shoutbox layout
+23/02/2013 added fontsize switch in DT shoutbox layout
+23/02/2013 added catergories block
+23/02/2013 improved scrape in sanity
+23/02/2013 added switch for online avatar
+
+24/02/2013 added Anonymous Links hack
+24/02/2013 added ADS addon DT
+24/02/2013 fixed a unlink error in edit
+24/02/2013 fixed a error in sticky sql
+24/02/2013 fixed a short tag in welcome pm
+
+25/02/2013 added up/dl rate per hour
+
+26/02/2013 fixed guest sql gender
+
+28/02/2013 fixed typo in admin.stuff
+28/02/2013 changed installer to chmod777 userstuff.php
+
+02/03/2013 added more links to main menu
+02/03/2013 fixed a error in youtube hack
+02/03/2013 fixed a error in add new user using none English as lang.
+
+05/03/2013 bug in installer fixed
+05/03/2013 added new torrents block on index to replace 3 torrents blocks
+
+06/03/2013 fixed installer partners hack 
+
+08/03/2013 improved the new all torrent block
+08/03/2013 added hide peers hack
+
+11/03/2013 fixed a wrong img name ( dup_ip)
+11/03/2013 fixed 2 broken links in mainmenu.block
+11/03/2103 fixed a problem in donate sb points
+
+14/03/2013 some small fixes in login and some admin files
+
+21/03/2013 fixed the expected auto shout
+
+23/03/2013 added del/edit in shoutbox with switch
+23/03/2013 added lines in sb with switch
+23/03/2013 added system avatar in SB
+23/03/2013 added blink and marqee bbcode buttons in SB
+
+24/03/2013 improved date in last bot visit
+24/03/2013 added missing private.jpg image
+--------------------------------------------------------------------------------------V9.0
+24/03/2013 starting V9 ( logo/copyright/installer )
+24/03/2013 added acp pw hack
+
+25/03/2013 added private shouts 
+25/03/2013 added image link as option to image upload hack
+
+28/03/2013 added demote as option to low ratio ban system
+
+29/03/2103 added Language in Torrent list/details with acp switch
+
+01/04/2013 fixed a error in the banbutton
+
+02/04/2013 added invited users list in userdetails
+02/04/2013 added YouTube video page with acp switch
+
+08/04/2013 fixed a error in userblock not showing warn level
+08/04/2013 removed a forgotten .svn file
+
+16/04/2013 added PM Notification On Torrent Comment
+16/04/2013 added Update (scrape) EXT in torrents page
+
+21/04/2013 2 fixes in subtitle hack 
+
+16/05/2013 fixed a problem with the private shouts hack ( history )
+
+18/05/2013 added torrent dumper hack , thanks Atmoner
+
+20/05/2013 changed mysql_escape_string to mysql_real_escape_string in the torrent dumper hack
+
+22/05/2013 fixed some issues in the torrent dumper hack
+
+--------------------------------------------------------------------------------------V10.0
+22/05/2013 starting V10 ( logo/copyright/installer )
+22/05/2013 changed (deprecated) mysql_escape_string to mysql_real_escape_string where needed
+22/05/2013 added imdb rating/link in torrent list
+22/05/2013 added imdb image in mousehover as option 
+22/05/2013 installer updated to use DT FM style and create owner account with DT FM style
+22/05/2013 added torrent moderation to last torrent flash block
+
+23/05/2013 added imdb image in torrentdetails as option
+23/05/2013 added imdb image in blocks as option
+23/05/2013 added similar torrents in torrent list with swicht , taken from imdb or filename
+23/05/2013 improved peers colors code
+
+24/05/2013 small sql fix in settings
+
+28/05/2013 fix in upload form protection hack
+28/05/2013 added download fix for special characters in FF
+
+29/05/2013 IMDB updated to V2.18
+29/05/2013 fixed image switch in TD 
+29/05/2013 added hide function for screenshots in TD if not used
+29/05/2013 improved similar torrenst in TD
+
+30/05/2013 big update / bugfix pm spy hack 
+30/05/2013 added cloud with acp switch
+
+31/05/2013 added int. forum ban
+31/05/2013 added check PW Duplicate Accounts
+
+06/06/2013 improved recommended torrents
+06/06/2013 cleaned torrents.php 
+
+12/06/2013 fixed the shout delete problem if featured is disabled
+
+30/06/2013 added send pm function in edit.php
+
+26/07/2013 fixed the score update from yeti4 (yeti overload)
+
+----------------------------------------------------------------------------------------V11.0
+28/07/2013 started V11 ( logo/copyright/installer )
+28/07/2013 improved the sanity mem/time limit code
+28/07/2013 improved installer
+28/07/2013 added speedtest hack
+28/07/2013 added comments in acp hack
+28/07/2013 cleaned up admin.index.php
+28/07/2013 cleaned up admin.menu.php
+28/07/2013 added event counter hack
+28/07/2013 DT arcade show scores update
+
+29/07/2013 did set LED block to inactive by default
+29/07/2013 added acp switch to the speedtest hack
+29/07/2013 moved cloud flush to admin block
+29/07/2013 Improved block sort
+29/07/2013 added teams hack
+29/07/2013 added delete own account hack
+
+31/07/2013 fixed a error in Shitlist hack
+31/07/2013 added acp switch to delete own account hack
+31/07/2013 fixed a issue in friends.php ( thanks turio )
+
+02/08/2013 fixed a team error in UD
+02/08/2013 added UD link to name in SB
+02/08/2013 added Google analitic hack
+02/08/2013 cleaned up DT style
+
+09/08/2013 added UD link to name in User block
+09/08/2013 added UD link to name in Arcade block
+
+15/08/2013 updated teams sql / fixed a teams edit error
+15/08/2013 intergrated teams in DT FM blocks
+
+16/08/2013 fixed all the DE hack installers to work with V11
+16/08/2013 fixed a small tpl error in user block ( thanks Flier )
+16/08/2013 added team page
+
+18/08/2013 improved team page
+18/08/2013 fixed comments to work with XBT and impoved code
+18/08/2013 custom XBTT sql added
+18/08/2013 added custom XBTT to V11
+18/08/2013 fixed gold/silver to work with XBTT
+18/08/2013 fixed Speed stats in peers with filename (colour coded) to work with XBTT
+18/08/2013 fixed freeleech to work with XBTT
+18/08/2013 fixed clientban to work with XBTT
+18/08/2013 changed bloodzone style to not collapse upper blocks by default ( thanks Friendly )
+18/08/2013 fixed a xbtt team error in UD ( thanks Flier )
+
+19/08/2013 added pm popup with acp switch
+19/08/2013 fixed recommended to work with xbtt
+19/08/2013 added a howto by Flier to use custom XBTT
+19/08/2013 added team link in TD
+19/08/2013 added overall team page
+19/08/2013 fixed userblock to work with xbtt
+
+21/08/2013 fixed avatars in shoutbox
+21/08/2013 added xbtt working to last flash torrents block
+21/08/2013 added team to work with featured torrent
+21/08/2013 improved installer sql
+
+22/08/2013 added torrent scroller with switch
+22/08/2013 improvement seedbox hack
+22/08/2013 upgrade script added V10 to V11
+
+23/08/2013 added UD link/images in low ratio ban block
+23/08/2013 added SSL support
+23/08/2013 fixed overall teams page not show id 0
+
+24/08/2013 upgrade script added V7.1 to V11
+
+25/08/2013 updated upgrade readme files 
+25/08/2013 fixed a V7.1 to V11 upgrade script problem
+25/08/2013 fixed a sql problem in adv seedbox hack
+25/08/2013 removed top / seedwanted block as not needed anymore
+
+25/08/2013 added French Language files for V11 , thanks to aiai
+
+27/08/2013 added cache duration to int forum to speed it up
+27/08/2013 fixed a show active torrents error
+27/08/2013 added custom upload language fields in acp
+
+28/08/2013 changed comment shout layout ( thanks Flier )
+28/08/2013 fixed a no image imdb problem ( thanks LoopyLyric )
+28/08/2013 fixed if team is none broken image in torrentlist
+28/08/2013 Added anti flood for comments
+
+29/08/2013 added switch in acp for anti comments flood  
+
+30/08/2013 fixed dl link in bookmark 
+30/08/2013 added shout as system with /sys
+
+01/09/2013 utf8 added to private shouts
+
+02/09/2013 fixed dl link in recommended
+
+05/09/2013 improved team code in last torrent block
+05/09/2013 added auto switch off H&R system if XBTT is used
+
+06/09/2013 added @ { } | to download replace
+06/09/2013 added signup chat to validation = none 
+
+08/09/2013 fixed a few typos in settings
+08/09/2013 added Casino module in DT FM hacks
+
+10/09/2013 added 3 forgotten pictures for partners page
+
+12/09/2013 now show torrent name if you a dl recommended torrent
+12/09/2013 fixed a Jquery conflict DT menu/chat delete-edit
+
+13/09/2013 tracker settings updated ( all SB functions are now togheter )
+
+17/09/2013 added a new way for extra smilies dropdown in SB
+
+14/10/2013 fixed a error in Expected edit
+14/10/2013 new announce fl/gold function
+
+----------------------------------------------------------------------------------------V12.0
+28/10/2013 started V12 ( logo/copyright/installer )
+28/10/2013 added hide none importend errors in new php versions
+28/10/2013 added Currently Viewing Topic by Yupy
+28/10/2013 added Active Users on Forum by Yupy
+28/10/2013 added Torrent search Info by Bhorer_alo
+28/10/2013 improved torrents.php
+28/10/2013 added new logo , thanks Robert 
+
+30/10/2013 updated imdb to 2.2.1
+30/10/2013 improved layout Currently Viewing Topic
+30/10/2013 added username changelog
+
+01/11/2013 added cat permissions hack
+01/11/2013 cleaned many files to work faster
+01/11/2013 updated upgrade scripts
+01/11/2013 fixed some use imdb images problems
+
+03/11/2013 added lost XBT files again
+03/11/2013 small change in SB for XBT 
+
+11/11/2013 added new torrent sb announce after moderation ok
+11/11/2013 cleaned up edit.php
+
+29/11/2013 removed a short tag in pm popup
+30/11/2013 fixed the LRN ban / demote
+30/11/2013 changed all "true" / "false" to TRUE / FALSE
+
+07/12/2013 added time offset to freeleech / happy hour
+07/12/2013 added more torrent details to mousover
+07/12/2013 added NB007 DT FM style
+
+08/12/2013 added show users style in UD
+08/12/2013 fixed a colspan issue in TL
+
+----------------------------------------------------------------------------------------V13.0
+16/12/2013 started V13 ( copyright/installer/news )
+16/12/2013 first c dates updated to 2014
+16/12/2013 Updated xmas hack for 2014
+16/12/2013 added updated files for user image store hack
+
+18/12/2013 added slots machine
+18/12/2013 added V13 logo , thanks Robert 
+18/12/2013 updated paypal hack for pending payments
+
+20/12/2013 finish userimages hack , added protection
+20/12/2013 updated upgrade scripts
+20/12/2013 added torrents to top for SB
+20/12/2013 added SB editor
+20/12/2013 added search block
+20/12/2013 changed language overal top 10 to top
+20/12/2013 added auto torrent prune
+
+21/12/2013 fixed lottery show tickets / view winners
+21/12/2013 changed end time system sport betting
+
+22/12/2013 added ratio fix hack in acp
+22/12/2013 added last dec 2013 rev announce
+22/12/2013 updated reseed hack to work with XBT
+22/12/2013 reseed button rules settings
+
+23/12/2013 added DB backup system
+23/12/2013 fixed the empty imdb number in grouped torrents
+23/12/2013 faster gold/silver code in TL
+23/12/2013 removed blink bb code buttons as blink is not suported anymore
+23/12/2013 improved user block code
+
+24/12/2013 changed www.diemthuy.nl to www.xbtitdeveloping.nl where needed
+24/12/2013 YouTube BB code in SB
+
+25/12/2013 last c dates updated to 2014
+25/12/2013 Beta 1
+
+31/12/2013 fixed private profile settings in ucp
+31/12/2013 private profile added in main ucp
+
+1/1/2014 added new staff shout in admin checks block
+1/1/2014 Beta 2 
+1/1/2014 fixed sql problem in installer / update scripts
+1/1/2014 fixed installer adv. seedbox hack for V13
+1/1/2014 added missing changelog.txt
+
+2/1/2014 added image for slots game in DT menu
+2/1/2014 few small text changes 
+2/1/2014 whois tpl fix by TT
+
+7/1/2014 removed DB backup system
+7/1/2014 added Khez backup system
+7/1/2014 updated update scripts
+
+12/1/2014 updated NB-007DTFM to use color selector , thanks TT
+
+----V13.1----
+
+14/1/2014 changed version number
+14/1/2014 changed login/pw images for transparant versions [TT]
+14/1/2014 added jan 2014 version announce.php 
+14/1/2014 added improved clients block / sql [TT]
+14/1/2014 added improved tracker info block [TT]
+14/1/2014 added improved main usertoolbar block [TT]
+14/1/2014 removed unused function from common.php
+
+15/1/2014 added extra menu language $ to main lang [TT]
+15/1/2014 mayor dropdown menu improvements [TT]
+15/1/2014 css impovement us/pw images all DT FM styles [TT]
+15/1/2014 updated whois tpl fix by TT
+15/1/2014 added Yupy login page as 3e login system
+
+16/1/2014 added background image to Yupy login system
+16/1/2014 added back to top
+16/1/2014 changed footer (c) layout
+16/1/2014 added updated function ext_err_msg by TT
+
+17/1/2014 fixed phpmailer
+
+19/1/2014 fixed 2 DT FM hacks to work with new dropdownmenu
+
+23/1/2014 added improved main menu block by TT
+23/1/2104 improved index.php
+
+24/1/2014 changed footer credits
+24/1/2014 end of V13.1 - next V14 
+
+----V14----
+
+24/1/2014 started V14 ( copyright/installer/news/logo )
+24/1/2014 added new collapse script in all styles ( TT )
+24/1/2014 changed dock menu scrip for newer ( TT )
+24/1/2014 improved admin checks block
+24/1/2014 improved top uploader block 
+
+26/1/2014 added NB007 css fix (TT)
+27/1/2014 improved 2 DT FM hack installers
+
+30/1/2014 added no collapse for guest in DT FM style
+30/1/2014 added 8 switches for links in dropdown menu
+
+1/2/2014 updated paypal.php to work with new paypal updates 
+1/2/2014 big opensignupblock improvement , new layout ( TT ) and added max number of users
+1/2/2014 added switches for upper/lower collapse
+1/2/2014 changed disclaimer to class = lista
+1/2/2014 alligned some dockmenu,s 
+
+2/2/2014 added support section to staff page
+2/2/2014 last dropdownmenu version (TT)
+2/2/2014 improved staff shout hack ( TT )
+
+3/2/2014 new staff image by TT
+3/2/2014 added changelist to installer
+3/2/2014 fixed a double setting bug
+3/2/2014 release
+3/2/2014 added signup agreement to yupy login
+3/2/2014 changed get date method from agree.php
+
+8/2/2014 fixed a tpl error in admin config by TT
+8/2/2014 rewrite of the yupy login , no more conflicts , less code ;)
+
+9/2/2014 fixed 2 small errors in yupy login
+
+10/2/2014 fixed a show time/date bug in the int forum
+
+20/2/2014 fixed some broken images in Xmas style
+20/2/2014 updated error catch code in functions
+
+28/2/2014 fixed show NAT system
+
+06/3/2014 improvment of config.php to take care of a possible error
+
+----V15----
+
+17/3/2014 new rev number / copyrights / logo / etc
+17/3/2014 fixed a small error in installer
+17/3/2014 improved subtitle hack
+17/3/2014 added mass update to seedbonus editor
+17/3/2014 updated seedbonus hack to work more accurate
+17/3/2014 center align mousover images
+
+19/3/2014 added pie chart in TD with acp switch
+
+20/3/2014 fixed extra staff user search to work with new collapse system
+20/3/2014 added user client/port search to collapse
+20/3/2014 updated all update scripts to V15
+20/3/2014 changes torrent list layout 
+20/3/2014 other / smaller images in torrent list
+20/3/2014 fixed error in imdb rating in recommended
+
+24/3/2014 updated sql news
+24/3/2014 added profile status
+24/3/2014 block links in comments with acp switch
+
+25/3/2014 added force to thank or comment with acp switch
+25/3/2014 improved the VIP torrents code
+25/3/2014 added filled badword list from ShadowMaster
+25/3/2014 edited badword list to take out problem words like xb(tit) 
+25/3/2014 improved votes.php
+25/3/2014 fixed mass delete comments
+
+07/4/2014 changed torrents to top system
+
+08/4/2014 fixed 0 s/l/f issue in pie
+08/4/2014 removed sb per hour from sanity , yeah less load
+08/4/2014 added new sb per hour system in seedbonus module
+
+11/4/2014 added anonymous uploader to last torrent flash block
+
+25/4/2014 cleaned up edit.php
+25/4/2014 changed TM hack to use UM as default in edit instead of BAD
+
+07/5/2014 fixed a donor icon error in details
+07/5/2014 fixed a error in forum unread
+
+----V16----
+
+
+27/5/2014 new rev number / copyrights / logo by BeyondHD / etc
+27/5/2014 added last rev (may) phpmailer
+27/5/2014 added IMDb search hack as module with acp switch
+27/5/2014 updated 2 update scripts
+27/5/2014 added few forgotten switches in dropdownmenu / org menu
+27/5/2014 fixed a 0 (unlimited ) users issue in opensingup block
+27/5/2014 added new users today / this month 
+27/5/2014 fixed sql installer to add ALL settings in database
+
+28/5/2014 added datepicker to birthdayhack
+28/5/2014 added datepicker to admin freeleech 
+28/5/2014 added datepicker to admin lottery
+28/5/2014 added datepicker to admin donate
+28/5/2014 added V16 image by BeyondHD/link in acp
+28/5/2014 added FS-23 style
+28/5/2014 fixed style to work with DT FM V16
+28/5/2014 added show own ip in user block with acp switch
+28/5/2014 fixed hack installer from adv seedbox hack to work with V16
+28/5/2014 big update donation historie and added year colors up to 2017
+
+31/5/2014 added new uploader medals images by BeyondHD
+31/5/2014 added B>MB>GB Calculator 
+31/5/2014 added new torrents today / this month 
+
+03/6/2014 fixed a hole in the recommended torrents hack
+03/6/2014 added yupy login background rotater with acp switch
+03/6/2014 added a few extra background images by default
+03/6/2014 final test for release
+
+05/6/2014 mayor rewrite of the simular torrents system in torrentlist
+
+08/6/2014 fixed 2 errors in sql install and sql upgrade scripts
+
+14/6/2014 fixed a dropdownmenu issue with dt menu/uploader request hack
+14/6/2014 fixed torrent per day in tracker info block
+
+16/6/2014 changed way of linking for xbtit default style in sql ( thanks SM )
+16/6/2014 added apply for membership hack
+16/6/2014 changed the way uploader request hack works
+
+----V16.1----
+
+05/7/2014 added pre time hack with acp switch
+05/7/2014 added switch to images in shoutbox hack
+05/7/2014 updated dt rrs feed reader
+05/7/2014 updated pre time hack with new options
+
+28/7/2014 updated forum signature hack to have a admin edit option 
+28/7/2014 updated forum signature hack to also show signature in comments
+28/7/2014 added datepicker to profile edit
+
+30/7/2014 updated torrent mod. hack to not send pm,s or add shoutbox announce for edits by trusted uploaders
+
+----V17----
+
+31/7/2014 new rev number / copyrights / logos by BeyondHD / etc
+31/7/2014 prepared update scripts for V17
+31/7/2014 improved all 3 sql install/update scripts
+31/7/2014 added improved file hosting hack
+31/7/2014 added brand new xbtit quiz hack
+31/7/2014 fixed some typos in admin config
+31/7/2104 added seedbonus bonus to quiz
+
+1/8/2014 added brand new members birthday calender
+1/8/2014 added bonus switch to xbtit quiz
+1/8/2104 improved dropdownblock code on some points
+1/8/2014 added BBCode Enhancements as to install hack
+
+3/8/2014 fixed a few short tags in quiz
+3/8/2014 optimized bd calender
+3/8/2014 added mp3 flash player block
+3/8/2014 updated news sql
+3/8/2014 updated admin hacks tpl
+
+5/8/2014 added brand new contact hack
+5/8/2014 fixed a few small issues after new install test
+5/8/2014 improved some quiz language
+
+8/8/2014 improved request votes view
+
+14/8/2014 improved TM code on some points
+
+15/8/2014 fixed 2 wrong links in report.php
+
+19/8/2014 improved tag hack to not show tag +- as no tag
+19/8/2014 added new custom DT FM category images by BeyondHD
+
+21/8/2014 changed a timedranks protection for not logical rank numbers
+21/8/2014 fixed the add new user issue on some servers 
+
+22/8/2014 updated adv seedbox hack installer for new tag system
+
+27/8/2014 fixed a DOB error in user profile edit
+
+29/8/2014 updated video page to use https
+
+1/9/2014 changed the rank list function 
+
+----V18----
+
+11/9/2014 new rev number / copyrights / logos by BeyondHD / etc
+11/9/2014 prepared update scripts for V18
+11/9/2014 added server stats hack
+11/9/2014 added delete unread pm hack with acp switch
+11/9/2014 added none connectable users in acp
+
+21/9/2014 conversion to mysqli by Shadowmaster
+
+22/9/2014 fixed 1e batch mysqli conversion errors 
+
+26/9/2014 fixed a tpl error in admin donate
+26/9/2014 fixed a tpl error in admin ratio edit
+26/9/2014 fixed a tpl error in admin config
+26/9/2014 added sb to upload converter with acp switch
+26/9/2014 sb to upload converter converted to mysqli
+26/9/2014 updated YT in shoutbox to use https
+26/9/2014 updated YT in torrent details to use https
+
+29/9/2014 fixed a few mysqli conversion errors
+29/9/2014 added function for backwards compatibility with < php5 by Flier
+29/9/2014 added code to delete torrent images if a torrent is pruned , thanks badje
+29/9/2014 added custom dropdownmenu links hack
+29/9/2014 added mysqli in hacks mod.xml by Flier
+
+2/10/2014 fixed a error in DOX settings
+2/10/2014 improved installer on some points
+2/10/2014 fixed a error in lottery tickets tpl , thanks Badje
+2/10/2014 loads of mysql_result converted to mysqli_result , thanks Flier
+
+3/10/2014 changed phpmailer as this version have no mysqli conflicts, thanks Flier
+
+9/10/2014 added PreDB Pretime , thanks Crash_OV
+9/10/2014 last small edits before release
+
+14/10/2014 fixed a mysqli count problem in maintrackertoolbar 
+14/10/2014 added select all button to rss category select , thanks Crash_OV
+
+15/10/2014 added new mass torrent moderate hack
+15/10/2014 added Enable or Disable Blocks on Add/Edit , thanks Bhorer_Alo
+
+16/10/2014 improved update scripts
+16/10/2014 fixed a missing reseed tpl part
+16/10/2014 improved the reseed system
+
+19/10/2014 fixed a error in block settings
+19/10/2014 fixed a install mysqli problem
+19/10/2014 added new torrents folder security , thanks Lupin/KC
+19/10/2014 moved captcha to own dir
+19/10/2014 updated intstall for this dir
+
+20/10/2014 added lost part in userdetail.tpl back
+
+22/10/2014 60% of all mysqli_real_escape_string warnings fixed
+
+23/10/2014 created new escape function for install
+23/10/2014 updated min php version text from 4.1 to 5.0
+
+25/10/2014 fixed a mysqli error in upload
+25/10/2014 70% of all mysqli_real_escape_string warnings fixed
+
+26/10/2014 100% of all mysqli_real_escape_string warnings fixed
+
+11/11/2014 mysqli conversion error fixed in account.php
+
+24/11/2014 version number to 18.1
+24/11/2014 added category free leech hack
+24/11/2014 added DC imdb system 
+
+01/12/2014 added better lang/style support to getimdb
+
+07/12/2014 fixed a error in account.php
+07/12/2014 fixex a mysqli conversion in ajax shoutbox.block , thanks Flier
+
+10/12/2014 fixed a tpl error in profile edit
+10/12/2014 updated signature hack
+
+10/12/2014 version number to 18.2
+10/12/2014 added memcache support
+
+----V19----
+
+12/12/2014 new rev number / copyrights / logos by BeyondHD / etc
+12/12/2014 updated xmas gift hack for 2015
+12/12/2014 updated update scripts for V19
+12/12/2014 first 20% of file copyrights to 2015 done
+12/12/2014 added new Flash IRC system
+12/12/2014 added new Jquery LED bar news system
+12/12/2014 removed old java IRC system
+12/12/2014 removed old javascript LED bar news system
+12/12/2014 updated some install sql , mp3 disabled , yupy login enabled , led bar enabled
+12/12/2014 updated hacks credits tpl
+
+13/12/2014 first 80% of file copyrights to 2015 done
+13/12/2014 added language selector to IRC system
+
+14/12/2014 all 100% of file copyrights to 2015 done
+14/12/2014 added gallery hack
+14/12/2014 converted gallery hack to use mysqli
+
+15/12/2014 updated installer for new gallery hack
+15/12/2014 added gallary switch in acp
+15/12/2014 changed a few forgotten dt.nl links to xbtitdev links
+
+19/12/2014 changed news text 
+19/12/2014 fixed the wrong userimages display for custom groups , thanks LoopyLyric
+
+23/12/2014 fixed a few short tags in gallery
+23/12/2014 added new Google ( no ) captcha hack with acp settings / switch
+
+25/12/2014 added mysqli to DC gallery files and used those
+
+26/12/2014 fixed a error in username.php , thanks Crash_OV
+
+06/01/2015 fixed the memcache module what did show a white page in some cases
+06/01/2015 some forgotten input sanitizing with mysqli_real_escape_string , thanks Kick Ass for letting me know
+06/01/2015 added torrent moderation to last up/dl block
+06/01/2015 added torrent moderation to stats
+06/01/2015 upgrade today / yesterday torrents hack and added torrent moderation
+
+07/01/2015 fixed a admin settings xbtt error 
+
+08/01/2015 improved upload.php to work better with XBT
+
+11/01/2015 fixed a staff page issue , thanks LoopyLyric
+11/01/2015 added a existing VIP days check to Paypal system
+11/01/2015 fixed a forgotten mysqli issue in arcade
+11/01/2015 added Pm notification on forum post hack
+
+13/01/2015 fixed mysqli issue in ajax poll
+
+18/01/2015 added max torrent per page setting in account.php
+
+21/01/2015 mayor improvement in sanity.php , server load will go down 
+
+23/01/2015 updated links in installer
+23/01/2054 updated links in admin main
+23/01/2015 updated category permission hack to add better default settings 
+23/01/2015 added owner auto thanks hack with acp switch
+
+----V20----
+
+25/01/2015 new rev number / copyrights / logos by BeyondHD / etc
+25/01/2015 optimized sanity.php
+25/01/2015 removed old php 4 mailer
+25/01/2015 fixed image upload hack to use png for screenshots
+25/01/2015 up to date lightbox system 
+25/01/2015 added no image - image in featured torrent
+
+28/01/2015 added new marquee jscript to replace the html marguee tags
+28/01/2015 changed H&R block marquee to new script
+28/01/2015 changed paypal block marquee to new script
+
+31/01/2015 changed last torrents marquee to new script
+31/01/2015 added mouse over stop/go to the script
+31/01/2015 added ajax category selector
+
+01/02/2015 rewrite auto external torrents update
+01/02/2015 added shoutbox reply , thanks Danno
+01/02/2015 changed partners hack to use new marquee script
+
+02/02/2015 updated both update hacks to V20
+02/02/2015 added 3 extra custom languages to upload language
+02/02/2015 optimized upload.php
+02/02/2015 added phpmailer 5.2.4    
+02/02/2015 announce.php updated to mysqli after some testing
+
+03/02/2015 added porn yes/no to admin category , so now more than one porn cat can be hidded
+03/02/2015 added min age to see porn categories
+03/02/2015 changed torrents.php to new no porn code 
+
+05/02/2015 added sql error protection on admin donate , and show deleted before a deleted donor name
+05/02/2015 changed all torrents by uploader hack to use new marquee script , thanks Flier 
+05/02/2015 changed last torrents block to new no porn code 
+05/02/2015 changed featured block to new no porn code 
+05/02/2015 changed last torrents imgage scroll block to new no porn code
+05/02/2015 changed details.php to new no porn code  
+
+06/02/2015 fixed imdb rating in tl
+06/02/2015 added Jquery to top as to install hack
+06/02/2015 final test stage , fixed a few small things 
+
+08/02/2015 re-added 2 missing gallery files
+
+09/02/2015 added owner birthday in setup , to not fail porn age check ;)
+10/02/2015 fixed a typo in sql install , thanks Moon
+
+16/02/2015 added radio requests as to install hack
+
+25/02/2015 fixed a memcache issue in common.php
+25/02/2015 added mybb forum intergration as to install hack
+
+04/03/2015 added missing beer.gif smilie
+04/03/2015 added shoutbox announce to casino
+
+16/03/2015 fixed the pm part in appysend
+
+07/05/2015 added updated SB multiplier system as to install hack
+
+28/05/2015 updated IMDB to v2.6.1
+
+03/09/2015 added $limit to online time in extra stats
+
+27/02/2015 changed www.xbtitdeveloping.nl to www.websitecustomizers.net where needed

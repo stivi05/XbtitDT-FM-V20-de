@@ -1,0 +1,110 @@
+<hack>
+  <title>Partners Page</title>
+  <author>DiemThuy</author>
+  <version>DT FM</version>
+  
+    <file>
+    <name>"database"</name>
+    <operation>
+      <action>"sql"</action>
+            <data><![CDATA[INSERT INTO `{$db_prefix}blocks` VALUES ('301', 'links', 'b', 1, 1, 'BLOCK_LINKS', 'no', 3, 8)]]></data>
+    </operation>
+  </file>
+
+  <file>
+    <name>"database"</name>
+    <operation>
+      <action>"sql"</action>
+      <data><![CDATA[CREATE TABLE IF NOT EXISTS `{$db_prefix}partner` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `title` varchar(255) character set latin1 collate latin1_general_ci default NULL,
+  `banner` varchar(255) character set latin1 collate latin1_general_ci default NULL,
+  `link` varchar(255) character set latin1 collate latin1_general_ci NOT NULL,
+  `addedby` bigint(20) unsigned NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;]]></data>
+    </operation>
+  </file>
+
+  <file>
+    <name>"$DEFAULT_ROOT/index.php"</name>
+    <operation>
+      <search><![CDATA[case 'userdetails':
+        require("$THIS_BASEPATH/userdetails.php");
+        $tpl->set("main_content",set_block($language["USER_DETAILS"],"center",$userdetailtpl->fetch(load_template("userdetails.tpl"))));
+        $tpl->set("main_title",$btit_settings["name"]." .::. "."Index->Users->Details");
+        break;]]></search>
+      <action>"add"</action>
+      <where>"after"</where>
+      <data><![CDATA[
+      //Partners
+    case 'partners':
+        require("$THIS_BASEPATH/partners.php");
+        $tpl->set("main_content",set_block($language["PARTNERS"],"center",$partnerstpl->fetch(load_template("partners.tpl"))));
+        $tpl->set("main_title",$btit_settings["name"]." .::. "."Index->partners");
+        break;
+        //Partners
+]]></data>
+    </operation>
+  </file>
+
+      <file>
+    <name>"$DEFAULT_ROOT/blocks/mainmenu_block.php"</name>
+        <operation>
+      <search><![CDATA[print("<td class=\"header\" align=\"center\"><a class=\"mainmenu\" href=\"index.php?page=limit\">".$language["MNU_STATS"]."</a></td>\n");]]></search>
+      <action>"add"</action>
+      <where>"after"</where>
+      <data><![CDATA[
+    print("<td class=\"header\" align=\"center\"><a class=\"mainmenu\" href=\"index.php?page=partners\">Partners</a></td>\n");
+]]></data>
+    </operation>
+  </file>
+  
+        <file>
+    <name>"$DEFAULT_ROOT/blocks/dropdownmenu_block.php"</name>
+    
+            <operation>
+      <search><![CDATA[//hack add one]]></search>
+      <action>"add"</action>
+      <where>"after"</where>
+      <data><![CDATA[
+      print("<a href=\"index.php?page=partners\"><img src=\"images/menu/partners.png\" title='Partners' alt=\'\' /></a>\n"); 
+      ]]></data>
+    </operation>
+        <operation>
+      <search><![CDATA[//hack add two]]></search>
+      <action>"add"</action>
+      <where>"after"</where>
+      <data><![CDATA[
+      print("<li><a href='index.php?page=partners'>Partners</a></li>\n");
+]]></data>
+    </operation>
+    </file>
+
+  <file>
+    <name>"$DEFAULT_LANGUAGE_PATH/lang_main.php"</name>
+    <operation>
+      <search><![CDATA[?>]]></search>
+      <action>"add"</action>
+      <where>"before"</where>
+      <data><![CDATA[
+        $language['PARTNERS']='Our Partners';
+      ]]></data>
+    </operation>
+  </file>
+
+  <file>
+    <name>"$DEFAULT_LANGUAGE_PATH/lang_blocks.php"</name>
+    <operation>
+      <search><![CDATA[?>]]></search>
+      <action>"add"</action>
+      <where>"before"</where>
+      <data><![CDATA[
+        $language['BLOCK_LINKS']='Our Partners';
+      ]]></data>
+    </operation>
+  </file>
+
+  
+
+</hack>

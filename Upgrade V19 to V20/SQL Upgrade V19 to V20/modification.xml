@@ -1,0 +1,28 @@
+<hack>
+  <title>SQL Update V19 to V20</title>
+  <author>DiemThuy</author>
+  <version>DT FM</version>
+  <file>
+    <name>"database"</name>
+    
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[ALTER TABLE `{$db_prefix}categories` ADD `porn` enum('yes','no') NOT NULL default 'no';]]></data>
+</operation>    
+    
+<operation>
+          <action>"sql"</action>
+          <data><![CDATA[INSERT INTO `{$db_prefix}settings` (`key`, `value`) VALUES
+
+('owth', 'false'),
+('customlanga', 'custom'),
+('customflaga', 'ba'),
+('customlangb', 'custom'),
+('customflagb', 'be'),
+('customlangc', 'custom'),
+('customflagc', 'hk');
+]]></data>
+</operation>
+    
+</file>
+</hack>

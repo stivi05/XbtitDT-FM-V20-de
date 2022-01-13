@@ -1,0 +1,253 @@
+
+               
+  [ Warning ] /var/www/html/dtfm/recover.php   * * *                             
+                             
+  [ Warning ] /var/www/html/dtfm/facebook_login.php    ***                        
+                                
+  [ Warning ] /var/www/html/dtfm/takeexpectedit.php   * **                        
+    
+        
+             
+  [ Warning ] /var/www/html/dtfm/language/bangla/lang_account.php   --            
+                
+  [ Warning ] /var/www/html/dtfm/language/danish/lang_account.php   --            
+               
+  [ Warning ] /var/www/html/dtfm/language/english/lang_account.php    --          
+                
+  [ Warning ] /var/www/html/dtfm/language/french/lang_account.php     --          
+               
+  [ Warning ] /var/www/html/dtfm/language/arabic/lang_account.php     --          
+             
+  [ Warning ] /var/www/html/dtfm/language/chinese/lang_account.php    --          
+                                
+                                  
+  [ Warning ] /var/www/html/dtfm/rpc.php   --                                     
+                              
+  [ Warning ] /var/www/html/dtfm/smf_import.php  ***                              
+  [ Warning ] /var/www/html/dtfm/offer_comment.php  ***                            
+  [ Warning ] /var/www/html/dtfm/yesterdaytorrents.php  --                        
+                  
+  [ Warning ] /var/www/html/dtfm/reputationpage.php   --                          
+                              
+  [ Warning ] /var/www/html/dtfm/coins.php    ***                                  
+  [ Warning ] /var/www/html/dtfm/takedelreport.php  --                            
+                            
+  [ Warning ] /var/www/html/dtfm/username.php   ***                                
+                                 
+  [ Warning ] /var/www/html/dtfm/paypal.php   --                                  
+  [ Warning ] /var/www/html/dtfm/subtitles.php    --                              
+                                   
+  [ Warning ] /var/www/html/dtfm/forum/forum.actions.php   --                     
+                                  
+  [ Warning ] /var/www/html/dtfm/ipb_import.php    ***                             
+                         
+  [ Warning ] /var/www/html/dtfm/subtitles_search.php   --                        
+                                   
+  [ Warning ] /var/www/html/dtfm/votesexpectedview.php   --                       
+  [ Warning ] /var/www/html/dtfm/casino.php   --                                  
+                
+                               
+  [ Warning ] /var/www/html/dtfm/ajaxchat/conn.php   --                           
+                            
+  [ Warning ] /var/www/html/dtfm/ajaxchat/sendChatData.php  --                    
+                      
+  [ Warning ] /var/www/html/dtfm/radiostats/fetch.php   ***                        
+                          
+  [ Warning ] /var/www/html/dtfm/include/class.ajaxpoll.php ***                    
+                           
+  [ Warning ] /var/www/html/dtfm/include/config.php  --                           
+                         
+  [ Warning ] /var/www/html/dtfm/include/conextra.php --                           
+                         
+  [ Warning ] /var/www/html/dtfm/include/torrentsdumper/class.thepiratebay.php  ***
+  [ Warning ] /var/www/html/dtfm/include/torrentsdumper/class.extratorrent.php  ***
+  [ Warning ] /var/www/html/dtfm/include/torrentsdumper/class.mnova.php  ***       
+  [ Warning ] /var/www/html/dtfm/include/torrentsdumper/class.limetorrents.php  ***
+  [ Warning ] /var/www/html/dtfm/include/torrentsdumper/class.btchat.php   ** *    
+  [ Warning ] /var/www/html/dtfm/include/torrentsdumper/class.fenopy.php   ** *    
+  [ Warning ] /var/www/html/dtfm/include/torrentsdumper/class.kat.php     ** *     
+  [ Warning ] /var/www/html/dtfm/include/torrentsdumper/class.bitsnoop.php    **  *
+                  
+  [ Warning ] /var/www/html/dtfm/include/common.php  ***                           
+  [ Warning ] /var/www/html/dtfm/include/class.update_hacks.php    --             
+                    
+  [ Warning ] /var/www/html/dtfm/include/sanity.php    ***                         
+  [ Warning ] /var/www/html/dtfm/include/functions.php    ***                      
+  [ Warning ] /var/www/html/dtfm/include/getscrape.php    ***                      
+                          
+  [ Warning ] /var/www/html/dtfm/account.php   ** *                                
+                
+  [ Warning ] /var/www/html/dtfm/blocks/recommended_block.php     --              
+            
+  [ Warning ] /var/www/html/dtfm/blocks/lrb_block.php   --                        
+  [ Warning ] /var/www/html/dtfm/blocks/hit_run_block.php  --                     
+  [ Warning ] /var/www/html/dtfm/blocks/online_block.php   --                     
+                       
+  [ Warning ] /var/www/html/dtfm/blocks/lastflashtorrents_block.php  --           
+                       
+  [ Warning ] /var/www/html/dtfm/blocks/poller_block.php  --                      
+                       
+  [ Warning ] /var/www/html/dtfm/blocks/arcade_block.php  --                                     
+  [ Warning ] /var/www/html/dtfm/blocks/lasttorrents_block.php    --              
+                     
+  [ Warning ] /var/www/html/dtfm/blocks/bet_block.php --                          
+                   
+  [ Warning ] /var/www/html/dtfm/blocks/last_block.php --                         
+                                   
+  [ Warning ] /var/www/html/dtfm/reports.php  --                                                                    
+  [ Warning ] /var/www/html/dtfm/viewrequests.php   --                            
+                                   
+  [ Warning ] /var/www/html/dtfm/scrape.php  --                                   
+  [ Warning ] /var/www/html/dtfm/edit.php   ***                                    
+                                    
+  [ Warning ] /var/www/html/dtfm/upload.php  ***                                   
+
+  [ Warning ] /var/www/html/dtfm/sb.php        --                                 
+                                
+  [ Warning ] /var/www/html/dtfm/subtitle_add.php  ***                             
+                  
+  [ Warning ] /var/www/html/dtfm/ajaxstarrater/db.php  --                         
+                    
+  [ Warning ] /var/www/html/dtfm/ajaxstarrater/_drawrating.php --                
+          
+  [ Warning ] /var/www/html/dtfm/contact.php  *** 
+
+[ Warning ] /var/www/html/dtfm/dox.php    ***                                   
+                               
+  [ Warning ] /var/www/html/dtfm/install.php  *** 
+
+  [ Warning ] /var/www/html/dtfm/reseed.php  ***                                   
+                                    
+  [ Warning ] /var/www/html/dtfm/title2.php  ***   
+
+
+  [ Warning ] /var/www/html/dtfm/subs_edit.php  ***                                
+                             
+  [ Warning ] /var/www/html/dtfm/_config-rating.php     --                                   
+         
+          
+  [ Warning ] /var/www/html/dtfm/blackjack.php    --   
+
+  [ Warning ] /var/www/html/dtfm/iplog.php   --                                       
+                      
+  [ Warning ] /var/www/html/dtfm/votesexpectedviewmin.php   --                    
+                                
+  [ Warning ] /var/www/html/dtfm/subtitle_del.php --   
+  [ Warning ] /var/www/html/dtfm/admin/admin.cleanshout.php --                              
+  [ Warning ] /var/www/html/dtfm/freereq.php    ***                                
+                                  
+  [ Warning ] /var/www/html/dtfm/votesview.php  --                                
+                                
+  [ Warning ] /var/www/html/dtfm/report.php ** *  
+  [ Warning ] /var/www/html/dtfm/admin/admin.banbutton.php  --   
+
+  [ Warning ] /var/www/html/dtfm/user/usercp.index.php    ***                                  
+                                    
+  [ Warning ] /var/www/html/dtfm/unlog.php   --                                   
+     
+  [ Warning ] /var/www/html/dtfm/phpmailer/class.smtp.php --                      
+        
+  [ Warning ] /var/www/html/dtfm/phpmailer/examples/mailing_list.phps  --         
+             
+  [ Warning ] /var/www/html/dtfm/userbar.php --                                   
+                        
+  [ Warning ] /var/www/html/dtfm/takeexpect.php    ***                             
+                              
+  [ Warning ] /var/www/html/dtfm/bonus_transfered.php  ***                         
+                                  
+  [ Warning ] /var/www/html/dtfm/ajax-poller-cast-vote-php.php***                 
+
+  [ Warning ] /var/www/html/dtfm/modules/seedbonus/index.php --                   
+                                
+  [ Warning ] /var/www/html/dtfm/casino_player.php  --                            
+                           
+  [ Warning ] /var/www/html/dtfm/dj.php --                                        
+                           
+  [ Warning ] /var/www/html/dtfm/seedbonus_exchange.php --                        
+                           
+  [ Warning ] /var/www/html/dtfm/paypalsynch.php  --                              
+                                    
+  [ Warning ] /var/www/html/dtfm/comment.php  ***                                  
+  [ Warning ] /var/www/html/dtfm/viewexpected.php ***                              
+  [ Warning ] /var/www/html/dtfm/notepad.php --                                   
+  [ Warning ] /var/www/html/dtfm/takerequest.php --                               
+  [ Warning ] /var/www/html/dtfm/searchusers.php ***                                                          
+  [ Warning ] /var/www/html/dtfm/todaytorrents.php --                                                             
+  [ Warning ] /var/www/html/dtfm/announce.php ***                                  
+                                
+  [ Warning ] /var/www/html/dtfm/login.php ***                                     
+                                 
+  [ Warning ] /var/www/html/dtfm/casino_player_edit.php --                        
+            
+  [ Warning ] /var/www/html/dtfm/admin/admin.styles.php --                        
+                       
+  [ Warning ] /var/www/html/dtfm/admin/admin.radioconf.php --                     
+  [ Warning ] /var/www/html/dtfm/admin/admin.forums.php  --                       
+                       
+  [ Warning ] /var/www/html/dtfm/admin/admin.prune_users.php ***                   
+                 
+  [ Warning ] /var/www/html/dtfm/admin/admin.donate.php --                                                
+  [ Warning ] /var/www/html/dtfm/admin/admin.languages.php --                                       
+  [ Warning ] /var/www/html/dtfm/admin/admin.lrb.php --                           
+  [ Warning ] /var/www/html/dtfm/admin/admin.pd-block_cheapmail.php             
+                         
+  [ Warning ] /var/www/html/dtfm/admin/admin.invitations.php ***                    
+  [ Warning ] /var/www/html/dtfm/admin/admin.sb.php --                            
+                            
+  [ Warning ] /var/www/html/dtfm/admin/admin.whereheard.php --                    
+  [ Warning ] /var/www/html/dtfm/admin/admin.mysql_stats.php --                   
+                         
+  [ Warning ] /var/www/html/dtfm/admin/admin.freeleech_req.php ***                 
+                       
+                  
+                  
+  [ Warning ] /var/www/html/dtfm/admin/admin.proxy.php --                         
+  [ Warning ] /var/www/html/dtfm/admin/admin.reputation_list.php  --              
+             
+  [ Warning ] /var/www/html/dtfm/admin/admin.banbutton_user.php --                
+  [ Warning ] /var/www/html/dtfm/admin/admin.connect.php --                                         
+  [ Warning ] /var/www/html/dtfm/admin/admin.hitrun.php  ***                       
+  [ Warning ] /var/www/html/dtfm/admin/admin.users.chknew.php ***                  
+                           
+                
+                        
+  [ Warning ] /var/www/html/dtfm/admin/kocs/acp.restore.php --                    
+                   
+  [ Warning ] /var/www/html/dtfm/admin/admin.read_messages.php ***                 
+               
+  [ Warning ] /var/www/html/dtfm/admin/admin.config.php --                        
+  [ Warning ] /var/www/html/dtfm/admin/admin.php_errors_log.php  ***               
+                    
+  [ Warning ] /var/www/html/dtfm/admin/admin.reputation.php --                     
+                     
+  [ Warning ] /var/www/html/dtfm/admin/admin.module_config.php  --                
+                     
+  [ Warning ] /var/www/html/dtfm/admin/admin.security_suite.php ***                
+                     
+  [ Warning ] /var/www/html/dtfm/admin/admin.ban_client.php  ***                   
+                                  
+  [ Warning ] /var/www/html/dtfm/download.php ***                                  
+                                    
+  [ Warning ] /var/www/html/dtfm/bookmark.php --                                  
+                          
+  [ Warning ] /var/www/html/dtfm/subtitle_download.php --                                                         
+  [ Warning ] /var/www/html/dtfm/banbutton.php ***                                 
+                        
+  [ Warning ] /var/www/html/dtfm/details.php ***                                   
+                      
+  [ Warning ] /var/www/html/dtfm/whos_listening.php ***                            
+                                      
+   [ Warning ] /var/www/html/dtfm/after_smf_to_ipb_convert.php --                  
+                                   
+  [ Warning ] /var/www/html/dtfm/users.php ***                                     
+  [ Warning ] /var/www/html/dtfm/delete.php ***                                    
+              
+  [ Warning ] /var/www/html/dtfm/dj_faq.php ***                                    
+  [ Warning ] /var/www/html/dtfm/user/usercp.invitations.php ***                   
+                   
+  [ Warning ] /var/www/html/dtfm/user/usercp.profile.php --                        
+                       
+  [ Warning ] /var/www/html/dtfm/user/usercp.pass.php ***                          
+                                          
+                                                            
+  [ Warning ] /var/www/html/dtfm/torrents.php ***                                                       

@@ -1,0 +1,298 @@
+<hack>
+  <title>Sport Betting</title>
+  <author>DiemThuy</author>
+  <version>DT FM</version>
+  
+<!-- start Sport Betting Database stuffing-->
+    <file>
+    <name>"database"</name>
+<operation>
+			<action>"sql"</action>
+			<data><![CDATA[CREATE TABLE IF NOT EXISTS `{$db_prefix}betgames` (
+  `id` int(11) NOT NULL auto_increment,
+  `heading` varchar(50) collate utf8_unicode_ci NOT NULL default '',
+  `undertext` varchar(150) collate utf8_unicode_ci NOT NULL default '',
+  `endtime` int(11) NOT NULL,
+  `active` int(1) NOT NULL default '0',
+  `sort` int(1) NOT NULL default '0',
+  `creator` varchar(20) collate utf8_unicode_ci NOT NULL,
+  `fix` tinyint(1) NOT NULL default '0',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;]]></data>
+		</operation>
+		
+  <operation>
+      <action>"sql"</action>
+      <data><![CDATA[CREATE TABLE IF NOT EXISTS `{$db_prefix}betlog` (
+  `id` int(11) NOT NULL auto_increment,
+  `userid` int(11) NOT NULL default '0',
+  `date` int(11) NOT NULL,
+  `bonus` int(11) NOT NULL default '0',
+  `msg` varchar(150) collate utf8_unicode_ci NOT NULL default '',
+  PRIMARY KEY  (`id`),
+  KEY `userid` (`userid`),
+  KEY `userid_2` (`userid`,`bonus`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;]]></data>
+    </operation>
+    
+  		<operation>
+			<action>"sql"</action>
+			<data><![CDATA[CREATE TABLE IF NOT EXISTS `{$db_prefix}betoptions` (
+  `id` int(11) NOT NULL auto_increment,
+  `gameid` int(11) NOT NULL default '0',
+  `text` varchar(100) collate utf8_unicode_ci NOT NULL default '',
+  `odds` double NOT NULL default '0',
+  PRIMARY KEY  (`id`),
+  KEY `gameid` (`gameid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;]]></data>
+		</operation>
+		<operation>
+			<action>"sql"</action>
+			<data><![CDATA[CREATE TABLE IF NOT EXISTS `{$db_prefix}bets` (
+  `id` int(11) NOT NULL auto_increment,
+  `gameid` int(11) NOT NULL default '0',
+  `bonus` int(11) NOT NULL default '0',
+  `optionid` int(11) NOT NULL default '0',
+  `userid` int(11) NOT NULL default '0',
+  `date` int(11) NOT NULL,
+  PRIMARY KEY  (`id`),
+  KEY `gameid` (`gameid`),
+  KEY `userid` (`userid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;]]></data>
+		</operation>
+				<operation>
+			<action>"sql"</action>
+			<data><![CDATA[CREATE TABLE IF NOT EXISTS `{$db_prefix}bettop` (
+  `userid` int(11) NOT NULL default '0',
+  `bonus` int(11) NOT NULL default '0',
+  PRIMARY KEY  (`userid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;]]></data>
+		</operation>
+		<operation>
+			<action>"sql"</action>
+			<data><![CDATA[INSERT INTO `{$db_prefix}settings` (`key`, `value`) VALUES ('min_bet', '3');]]></data>
+		</operation>
+				<operation>
+			<action>"sql"</action>
+			<data><![CDATA[INSERT INTO `{$db_prefix}settings` (`key`, `value`) VALUES ('fid_bet', '25');]]></data>
+		</operation>
+						<operation>
+			<action>"sql"</action>
+			<data><![CDATA[INSERT INTO `{$db_prefix}settings` (`key`, `value`) VALUES ('max_bon_bet', '200');]]></data>
+		</operation>
+		
+		        <operation>
+      <action>"sql"</action>
+      <data><![CDATA[INSERT INTO `{$db_prefix}blocks` (`blockid`, `content`, `position`, `sortid`, `status`, `title`, `cache`, `minclassview`, `maxclassview`) VALUES
+      (300, 'bet', 'r', 2, 1, 'BET', 'no', 3, 8);]]></data>
+    </operation>
+</file>
+<!-- end Sport Bettingstuffing-->
+
+  	        <!-- start index.php -->
+    <file>
+    <name>"$DEFAULT_ROOT/index.php"</name>
+<operation>
+              <search><![CDATA[case 'news':
+        require("$THIS_BASEPATH/news.php");
+        $tpl->set("main_content",set_block($language["MANAGE_NEWS"],"center",$newstpl->fetch(load_template("news.tpl"))));
+        $tpl->set("main_title",$btit_settings["name"]." .::. "."Index->News");
+        break;]]></search>
+          <action>"add"</action>
+          <data><![CDATA[ 
+// betting mod start 
+ 
+        case 'bet':
+        require("$THIS_BASEPATH/bet.php");
+        $tpl->set("main_content",set_block($language["BETTING"],"center",$bettpl->fetch(load_template("bet.tpl"))));
+        $tpl->set("main_title",$btit_settings["name"]." .::. "."Index->Betting");
+        break;
+        
+        case 'betinfo':
+        require("$THIS_BASEPATH/bet_info.php");
+        $tpl->set("main_content",set_block($language["BETTING"],"center",$betinfotpl->fetch(load_template("bet_info.tpl"))));
+        $tpl->set("main_title",$btit_settings["name"]." .::. "."Index->Betting");
+        break;
+        
+        case 'betgameinfo':
+        require("$THIS_BASEPATH/bet_gameinfo.php");
+        $tpl->set("main_content",set_block($language["BETTING"],"center",$betgameinfotpl->fetch(load_template("bet_gameinfo.tpl"))));
+        $tpl->set("main_title",$btit_settings["name"]." .::. "."Index->Betting");
+        break;
+        
+        
+        case 'betadmin':
+        require("$THIS_BASEPATH/bet_admin.php");
+        $tpl->set("main_content",set_block($language["BETTING"],"center",$betadmintpl->fetch(load_template("bet_admin.tpl"))));
+        $tpl->set("main_title",$btit_settings["name"]." .::. "."Index->Betting");
+        break;
+        
+        case 'bettakeedit':
+        require("$THIS_BASEPATH/bet_takeedit.php");
+        break;
+        
+        case 'betactive':
+        require("$THIS_BASEPATH/bet_active.php");
+        break;
+        
+        case 'betaddoption':
+        require("$THIS_BASEPATH/bet_addopt.php");
+        break;
+        
+        case 'betdelgame':
+        require("$THIS_BASEPATH/bet_delgame.php");
+        break;
+        
+        case 'betdelopt':
+        require("$THIS_BASEPATH/bet_delopt.php");
+        break;
+        
+        case 'betopttwee':
+        require("$THIS_BASEPATH/bet_opt2.php");
+        $tpl->set("main_content",set_block($language["BETTING"],"center",$betopttweetpl->fetch(load_template("bet_opt2.tpl"))));
+        $tpl->set("main_title",$btit_settings["name"]." .::. "."Index->Betting");
+        break;
+        
+        case 'betodds':
+        require("$THIS_BASEPATH/bet_odds.php");
+        $tpl->set("main_content",set_block($language["BETTING"],"center",$betoddstpl->fetch(load_template("bet_odds.tpl"))));
+        $tpl->set("main_title",$btit_settings["name"]." .::. "."Index->Betting");
+        break;
+        
+        case 'betoddstwo':
+        require("$THIS_BASEPATH/bet_odds2.php");
+
+        break;
+        
+        case 'betaddonetwo':
+        require("$THIS_BASEPATH/bet_add1x2.php");
+        break;
+        
+        case 'bettakenew':
+        require("$THIS_BASEPATH/bet_takenew.php");
+        break;
+
+        
+        case 'betcoupon':
+        require("$THIS_BASEPATH/bet_coupon.php");
+        $tpl->set("main_content",set_block($language["BETTING"],"center",$betcoupontpl->fetch(load_template("bet_coupon.tpl"))));
+        $tpl->set("main_title",$btit_settings["name"]." .::. "."Index->Betting");
+        break;
+
+        case 'betoption':
+        require("$THIS_BASEPATH/bet_opt.php");
+        $tpl->set("main_content",set_block($language["BETTING"],"center",$betopttpl->fetch(load_template("bet_opt.tpl"))));
+        $tpl->set("main_title",$btit_settings["name"]." .::. "."Index->Betting");
+        break;
+        
+        case 'betbonustop':
+        require("$THIS_BASEPATH/bet_bonustop.php");
+        $tpl->set("main_content",set_block($language["BETTING"],"center",$betbonustpl->fetch(load_template("bet_bonustop.tpl"))));
+        $tpl->set("main_title",$btit_settings["name"]." .::. "."Index->Betting");
+        break;
+        
+        case 'betback':
+        require("$THIS_BASEPATH/bet_nullbet.php");
+        $tpl->set("main_content",set_block($language["BETTING"],"center",$betbacktpl->fetch(load_template("bet_nullbet.tpl"))));
+        $tpl->set("main_title",$btit_settings["name"]." .::. "."Index->Betting");
+        break;
+        
+        case 'betfinish':
+        require("$THIS_BASEPATH/bet_gamefinish.php");
+        $tpl->set("main_content",set_block($language["BETTING"],"center",$betfinishtpl->fetch(load_template("bet_gamefinish.tpl"))));
+        $tpl->set("main_title",$btit_settings["name"]." .::. "."Index->Betting");
+        break;
+        
+        case 'betfinishtwo':
+        require("$THIS_BASEPATH/bet_gamefinish2.php");
+        $tpl->set("main_content",set_block($language["BETTING"],"center",$betfintwotpl->fetch(load_template("bet_gamefinish2.tpl"))));
+        $tpl->set("main_title",$btit_settings["name"]." .::. "."Index->Betting");
+        break;
+// betting mod end 
+]]></data>
+       <where>"after"</where>
+    </operation>
+ </file>
+     <!-- End sanity.php -->
+
+
+
+
+   <!-- Start lang_main.php -->
+  <file>
+    <name>"$DEFAULT_LANGUAGE_PATH/lang_main.php"</name>
+    <operation>
+     <search><![CDATA[?>]]></search>
+      <action>"add"</action>
+      <data><![CDATA[
+$language["BETTING"]="Site Betting";
+      ]]></data>
+      <where>"before"</where>
+    </operation>
+   </file>
+ <!-- End lang_main.php -->
+ 
+  <!-- Startlang_blocks.php -->
+     <file>
+    <name>"$DEFAULT_LANGUAGE_PATH/lang_blocks.php"</name>
+    <operation>
+      <search><![CDATA[?>]]></search>
+      <action>"add"</action>
+      <where>"before"</where>
+      <data><![CDATA[
+$language['BET']='Sport Betting';
+
+      ]]></data>
+    </operation>
+  </file>
+ <!-- End lang_blocks.php -->
+ 
+
+     <!-- edit admin.config.tpl -->
+
+    <file>
+    <name>"$DEFAULT_STYLE_PATH/admin.config.tpl"</name>
+    <operation>
+      <search><![CDATA[<tr>
+       <td align="center" class="header" colspan="2"><input type="submit" name="write" class="btn" value="<tag:language.FRM_CONFIRM />" /></td>]]></search>
+      <action>"add"</action>
+      <where>"before"</where>
+      <data><![CDATA[
+      <tr>
+      <td class="header" align="center" colspan="4">Sport Betting Settings</td>
+      </tr>
+      <tr>
+       <td class="header">Min ID level To Bet</td>
+      <td class="lista"><input type="text" name="min_bet" value="<tag:config.min_bet />" size="7" /></td>
+      <td class="header">Int. Forum ID</td>
+      <td class="lista"><input type="text" name="fid_bet" value="<tag:config.fid_bet />" size="7" /></td>
+      </tr>
+      <tr>
+      <td class="header">Max Bonus Points</td>
+      <td class="lista"><input type="text" name="max_bon_bet" value="<tag:config.max_bon_bet />" size="7" /></td>
+      </tr>
+     ]]></data>
+    </operation>
+  </file>
+  
+    <!-- edit admin.config.php -->
+
+    <file>
+        <name>"$DEFAULT_ROOT/admin/admin.config.php"</name>
+        <operation>
+            <search><![CDATA[$btit_settings["forum"]=$_POST["f_link"];]]></search>
+            <action>"add"</action>
+            <data><![CDATA[
+          // bet
+          $btit_settings["min_bet"]=$_POST["min_bet"];
+          $btit_settings["fid_bet"]=$_POST["fid_bet"];
+          $btit_settings["max_bon_bet"]=$_POST["max_bon_bet"];
+          //bet
+                    ]]></data>
+      <where>"after"</where>
+        </operation>
+</file>
+     
+
+
+</hack>

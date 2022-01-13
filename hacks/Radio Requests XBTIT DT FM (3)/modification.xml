@@ -1,0 +1,41 @@
+<hack>
+  <title>Radio Requests</title>
+  <author>Degiking / DT</author>
+  <version>DT FM</version>
+
+<file>
+    <name>"database"</name>
+    <operation>
+    <action>"sql"</action>
+    <data><![CDATA[CREATE TABLE IF NOT EXISTS `{$db_prefix}radio_wish` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `comment` text NOT NULL,
+  `date` int(10) NOT NULL,
+  `genre` text NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM;]]></data>
+</operation>
+
+<operation>
+    <action>"sql"</action>
+    <data><![CDATA[INSERT INTO {$db_prefix}modules (`name`,`activated`,`type`,`changed`,`created`) VALUES ('Radio_request', 'yes', 'misc', NOW(), NOW());]]></data>
+    </operation>
+</file>
+
+<file>
+    <name>"$DEFAULT_ROOT/blocks/dropdownmenu_block.php"</name>
+
+     <operation>
+      <search><![CDATA[//hack add two]]></search>
+      <action>"add"</action>
+      
+      <data><![CDATA[
+      print("<li><a href='index.php?page=modules&amp;module=Radio_request'>Radio Requests</a></li>\n");
+	  ]]></data>
+<where>"after"</where>
+    </operation>
+
+</file>
+</hack>

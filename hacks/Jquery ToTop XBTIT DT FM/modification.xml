@@ -1,0 +1,108 @@
+<hack>
+  <title>Jquery To Top</title>
+  <author>DiemThuy</author>
+  <version>DT FM</version>
+
+  <file>
+    <name>"style/FS-FM-DT/main.tpl"</name>
+    <operation>
+      <search><![CDATA[<tag:main_jscript />]]></search>
+      <action>"add"</action>
+      <where>"after"</where>
+      <data><![CDATA[
+	 <link rel="stylesheet" media="screen,projection" href="jscript/ui.totop.css" />
+		<script src="jscript/jquery-1.7.2.min.js" type="text/javascript"></script>
+	<!-- easing plugin ( optional ) -->
+	<script src="jscript/easing.js" type="text/javascript"></script>
+	<!-- UItoTop plugin -->
+	<script src="jscript/jquery.ui.totop.js" type="text/javascript"></script>
+	<!-- Starting the plugin -->
+	<script type="text/javascript">
+	var st=jQuery.noConflict();
+		st(document).ready(function() {
+			/*
+			var defaults = {
+	  			containerID: 'toTop', // fading element id
+				containerHoverID: 'toTopHover', // fading element hover id
+				scrollSpeed: 1200,
+				easingType: 'linear' 
+	 		};
+			*/
+			
+			st().UItoTop({ easingType: 'easeOutQuart' });
+			
+		});
+	</script>
+	]]></data>
+    </operation>
+</file>
+
+<file>
+    <name>"style/FS-FM-DT/main.left_column.tpl"</name>
+    <operation>
+      <search><![CDATA[<tag:main_jscript />]]></search>
+      <action>"add"</action>
+      <where>"after"</where>
+      <data><![CDATA[
+	 <link rel="stylesheet" media="screen,projection" href="jscript/ui.totop.css" />
+		<script src="jscript/jquery-1.7.2.min.js" type="text/javascript"></script>
+	<!-- easing plugin ( optional ) -->
+	<script src="jscript/easing.js" type="text/javascript"></script>
+	<!-- UItoTop plugin -->
+	<script src="jscript/jquery.ui.totop.js" type="text/javascript"></script>
+	<!-- Starting the plugin -->
+	<script type="text/javascript">
+	var st=jQuery.noConflict();
+		st(document).ready(function() {
+			/*
+			var defaults = {
+	  			containerID: 'toTop', // fading element id
+				containerHoverID: 'toTopHover', // fading element hover id
+				scrollSpeed: 1200,
+				easingType: 'linear' 
+	 		};
+			*/
+			
+			st().UItoTop({ easingType: 'easeOutQuart' });
+			
+		});
+	</script>
+	]]></data>
+    </operation>
+</file>
+  
+<file>
+    <name>"style/FS-FM-DT/main.no_columns.tpl"</name>
+    <operation>
+      <search><![CDATA[<head>]]></search>
+      <action>"add"</action>
+      <where>"after"</where>
+      <data><![CDATA[
+	 <link rel="stylesheet" media="screen,projection" href="jscript/ui.totop.css" />
+		<script src="jscript/jquery-1.7.2.min.js" type="text/javascript"></script>
+	<!-- easing plugin ( optional ) -->
+	<script src="jscript/easing.js" type="text/javascript"></script>
+	<!-- UItoTop plugin -->
+	<script src="jscript/jquery.ui.totop.js" type="text/javascript"></script>
+	<!-- Starting the plugin -->
+	<script type="text/javascript">
+	var st=jQuery.noConflict();
+		st(document).ready(function() {
+			/*
+			var defaults = {
+	  			containerID: 'toTop', // fading element id
+				containerHoverID: 'toTopHover', // fading element hover id
+				scrollSpeed: 1200,
+				easingType: 'linear' 
+	 		};
+			*/
+			
+			st().UItoTop({ easingType: 'easeOutQuart' });
+			
+		});
+	</script>
+	]]></data>
+    </operation>
+</file>
+  
+</hack>

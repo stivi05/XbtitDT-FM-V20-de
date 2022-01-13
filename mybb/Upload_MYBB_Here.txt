@@ -1,0 +1,2 @@
+If you intend to use MYBB (http://http://www.mybb.com//)
+as your forum solution, please upload it to this folder.

@@ -1,0 +1,86 @@
+<?php
+$language['WATCHED']='Watched topic';
+$language['DELETE_READED']='Delete';
+$language['USER_LANGUE']='Language';
+$language['USER_STYLE']='Style';
+$language['CURRENTLY_PEER']='You&rsquo;re currently seeding or leeching some torrent.';
+$language['STOP_PEER']='You must stop your client.';
+$language['USER_PWD_AGAIN']='Repeat password';
+$language['EMAIL_FAILED']='Sending email has failed!';
+$language['NO_SUBJECT']='No subject';
+$language['MUST_ENTER_PASSWORD']='<br /><font color="#FF0000"><strong>You must enter your password to change the settings above.</strong></font>';
+$language['ERR_PASS_WRONG']='Password empty or incorrect, cannot update profile.';
+$language['MSG_DEL_ALL_PM']='If you select PMs which are not read, they will not be deleted';
+$language['ERR_PM_GUEST']='Sorry you can&rsquo;t send PM to guest or to yourself!';
+$language["MNU_UCP_AVATAR"] = "Avatar Upload";
+$language["AVATAR_SUCCESS"] = "The avatar has successfully been uploaded!";
+$language["AVATAR_FAILURE1"] = "Failure. The image size was to big! The measurements are";
+$language["AVATAR_FAILURE2"] = "Failure. The file size was to big! The limit is";
+$language["AVATAR_FAILURE3"] = "Failure. An unknown reason has accured!";
+$language["AV_FEW_HEAD"] = "Avatar upload rules";
+$language["AV_FILE_SIZE"] = "Do not upload images larger than";
+$language["AV_IMAGE_SIZE"] = "Do not upload images that are bigger than";
+$language["AV_FORBIDDEN"] = "Do not upload any offensive material";
+$language["AV_NO_HEADER"] = "You have already uploaded an image. You can no longer upload any images.";
+$language["AV_NO_1"] = "You recently uploaded";
+$language["AV_NO_2"] = "Delete this file";
+$language["AV_NO_3"] = "Link to file";
+//INVITATION SYSTEM
+$language['ACCOUNT_CONFIRMED']='Account Confirmed';
+$language['CONFIRMED']='Confirmed';
+$language['DATE_SENT']='Date Sent';
+$language['ERR_EMAIL_ALREADY_EXISTS']='This e-mail address already exists in our database.';
+$language['ERR_INVITATIONS_OFF']='Sorry, invitation system is deactivated.';
+$language['ERR_MISSING_DATA']='Missing information!<br />Please, fill all necessary fields.';
+$language['INSERT_EMAIL']='Empty e-mail address field!';
+$language['INSERT_MESSAGE']='Empty personal message field!';
+$language['INVIT_CONFIRM']='Invitation Confirmed';
+$language['INVIT_MSG']='Hello,<br /><br />You have been invited to join the '.$SITENAME.' community by';
+$language['INVIT_MSG1']='<br />If you want to accept this invitation, you\'ll need to click this link:<br /><br />';
+$language['INVIT_MSG2']='<br /><br />You\'ll need to accept the invitation within 24 hours, or else the link will become inactive.<br />We on '.$SITENAME.' hope that you\'ll accept the invitation and join our great community!<br /><br />Personal message from';
+$language['INVIT_MSG3']='<br /><br />----------------<br />If you do not know the person who has invited you, please forward this email to '.$SITEEMAIL;
+$language['INVIT_MSGCONFIRM']='Hello,<br />Your account has been confirmed. You can now visit<br /><br />'.$BASEURL.'/login.php<br /><br />and use your login information to login in. We hope you\'ll read the FAQ\'s and Rules before you start sharing files.<br /><br />Good luck and have fun on '.$SITENAME.'!<br /><br /><br />----------------<br />If you did not register for '.$SITENAME.', please forward this email to '.$SITEEMAIL;
+$language['INVITATIONS']='Invitations';
+$language['INVITE_SOMEONE_TO']='Send Invitation';
+$language['MEMBERS_INVITED_BY']='Members Invited By You';
+$language['MESSAGE']='Message';
+$language['MNU_UCP_INVITATIONS']='Invitations';
+$language["MNU_UCP_TOOLS"]='Tools';
+$language['NO_INV']='No invitations left.';
+$language['NO_INVITATIONS_OUT']='No invitations sent.';
+$language['NO_NEED_CONFIRM_YET']='No invitations to confirm.';
+$language['PENDING']='Pending';
+$language['REMAINING']='Remaining';
+$language['SENT_INVITATIONS']='Sent Invitations';
+$language['STATUS']='Status';
+$language['WELCOME_UCP_INVITE']='Welcome to your Invitation Panel.<br />Here you may send invitations, so your friends can register in '.$SITENAME.'.<br />';
+        
+$language["PR_SHOW"] = "Show";
+$language["PR_HIDE"] = "Hide";
+$language["PROFILEVIEW"] = "Show/Hide Profile";
+
+$language["MNU_UCP_RENAME"]="Change nickname";
+$language["CURR_NICK"]="Current nickname";
+$language["NEW_NICK"]="New nickname";
+$language["REPEAT_NICK"]="Repeat new nickname";
+$language["ERR_NICK_NO_MATCH"]="Nicknames don't match";
+$language["ERR_SAME_NICK"]="Your nickname is already";
+$language["ERR_NICK_TOO_SMALL"]="Your new nickname must be at least 3 characters in length";
+$language["ERR_NICK_NOT_ALLOWED"]="This nickname is not permitted to be used";
+$language["NICK_CHANGE_SUCCESS"]="You have successfully changed your nickname to ";
+$language["CHANGED_THEIR_NICK"]="Changed their nickname to ";
+$language["CHANGE_NICKNAME"]="Change Nickname";
+// UserBars
+$language['USERBAR'] = 'UserBar';
+$language['NEWUSERBAR'] = 'Change UserBar';
+
+$language["SUBSCRIBE"]="Torrent's Subscription";
+$language["SUB_OK"]="You successfull subscribe torrent's upload for <a href=\"index.php?page=usercp&amp;do=subscribe&amp;action=change&amp;uid=".$CURUSER["uid"]."\">categories selected</a>";
+$language["SUB_SUBJECT"]="Torrent's Subscription On $SITENAME";
+$language["SUB_EMAIL"]="Hello,\nA new torrent \"%s\" has been uploaded in a category you subscript\n\nDetails: %s\nDownload: %s\n\nHappy Download\n$SITENAME";
+$language["APARKED"]="Account Parked";
+$language["GENDER"]="Gender";
+$language["MALE"]="Male";
+$language["FEMALE"]="Female";
+$language["UNKNOW"]="Unknow";
+?>

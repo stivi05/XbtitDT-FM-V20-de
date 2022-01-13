@@ -1,0 +1,141 @@
+<hack>
+  <title>SB Multiplier</title>
+  <author>DiemThuy</author>
+  <version>DT FM</version>
+  
+<operation>
+        <action>"sql"</action>
+        <data><![CDATA[INSERT INTO `{$db_prefix}settings` (`key`, `value`) VALUES 
+        ('multie', '1');]]></data>
+</operation>
+
+<file>
+    <name>"$DEFAULT_ROOT/blocks/maintrackertoolbar_block.php"</name>
+    <operation>
+      <search><![CDATA[print("<td class=\"blocklist\" align=\"left\" style=\"text-align:left;\">".$rep." \n");]]></search>
+      <action>"add"</action>
+      <where>"after"</where>
+      <data><![CDATA[
+if($btit_settings["multie"]>1) 
+{
+$mult = "<img alt=\"".$btit_settings["multie"]."x Upload Multiplier\" src=\"images/".$btit_settings["multie"]."x.gif\" />";
+print("<td class=\"blocklist\" align=\"center\" style=\"text-align:richt; padding-right:10px;\"><font color = steelblue>SB Multiplier </font>".$mult."</td>\n");
+}
+]]></data>
+</operation>
+ 
+ <file>
+    <name>"$DEFAULT_ROOT/admin/admin.config.php"</name>
+    <operation>
+      <search><![CDATA[$btit_settings["supportsw"]=$_POST["supportsw"];
+// support]]></search>
+      <action>"add"</action>
+      <where>"after"</where>
+      <data><![CDATA[
+$btit_settings["multie"]=$_POST["multie"];
+]]></data>
+    </operation>
+	   
+        <operation>
+      <search><![CDATA[$btit_settings["language_combo"].=("\n</select>\n");
+        unset($lres);]]></search>
+      <action>"add"</action>
+      <where>"after"</where>
+      <data><![CDATA[
+//multie
+        $btit_settings["multie_combo"]="
+                    <select name=\"multie\" size=\"1\">
+                    <option value=\"1\"".($btit_settings["multie"]=="1"?" selected=\"selected\"":"").">1x</option>
+                    <option value=\"2\"".($btit_settings["multie"]=="2"?" selected=\"selected\"":"").">2x</option>
+                    <option value=\"3\"".($btit_settings["multie"]=="3"?" selected=\"selected\"":"").">3x</option>
+                    <option value=\"4\"".($btit_settings["multie"]=="4"?" selected=\"selected\"":"").">4x</option>
+                    <option value=\"5\"".($btit_settings["multie"]=="5"?" selected=\"selected\"":"").">5x</option>
+                    <option value=\"6\"".($btit_settings["multie"]=="6"?" selected=\"selected\"":"").">6x</option>
+                    <option value=\"7\"".($btit_settings["multie"]=="7"?" selected=\"selected\"":"").">7x</option>
+                    <option value=\"8\"".($btit_settings["multie"]=="8"?" selected=\"selected\"":"").">8x</option>
+                    <option value=\"9\"".($btit_settings["multie"]=="9"?" selected=\"selected\"":"").">9x</option>
+                    <option value=\"10\"".($btit_settings["multie"]=="10"?" selected=\"selected\"":"").">10x</option>
+                    </select>";
+//multie
+]]></data>
+    </operation>
+  </file>
+
+   <file>
+    <name>"$DEFAULT_STYLE_PATH/admin.config.tpl"</name>
+    <operation>
+      <search><![CDATA[<tr>
+       <td align="center" class="header" colspan="2"><input type="submit" name="write" class="btn" value="<tag:language.FRM_CONFIRM />" /></td>]]></search>
+      <action>"add"</action>
+      <where>"before"</where>
+      <data><![CDATA[
+      <tr>
+      <td class="header" align="center" colspan="4">SeedBonus Multiplier</td>
+      </tr>
+      <tr>
+      <td class="header">SB Multiplier</td>
+      <td class="lista"><tag:config.multie_combo /></td>
+      </tr>
+]]></data>
+    </operation>
+  </file>
+  
+  
+
+<file>
+    <name>"$DEFAULT_ROOT/include/sanity.php"</name>
+    <operation>
+      <search><![CDATA[//sb
+if ($XBTT_USE) {
+ $ressb = do_sqlquery("SELECT uid FROM xbt_files_users as u INNER JOIN xbt_files as x ON u.fid=x.fid WHERE u.left = '0' AND x.flags='0' AND u.active='1'");
+   if (mysqli_num_rows($ressb) > 0)
+   {
+       while ($arrsb = mysqli_fetch_assoc($ressb))
+       {
+       $x=$arrsb["uid"];
+       quickQuery("UPDATE `{$TABLE_PREFIX}users` SET `seedbonus`=`seedbonus`+'".number_format((((($ts>0)?(time()-$ts):$clean_interval)/3600)*$GLOBALS["bonus"]),6,".","")."' WHERE `id` = '$x'");
+
+       }
+   } }else
+   {
+ $ressb = do_sqlquery("SELECT pid FROM {$TABLE_PREFIX}peers WHERE status = 'seeder'");
+   if (mysqli_num_rows($ressb) > 0)
+   {
+       while ($arrsb = mysqli_fetch_assoc($ressb))
+       {
+       $x=$arrsb['pid'];
+       quickQuery("UPDATE `{$TABLE_PREFIX}users` SET `seedbonus`=`seedbonus`+'".number_format((((($ts>0)?(time()-$ts):$clean_interval)/3600)*$GLOBALS["bonus"]),6,".","")."' WHERE `pid`= '$x'");
+
+    }
+   } }
+//sb]]></search>
+      <action>"replace"</action>
+      <data><![CDATA[//sb
+$multie=$btit_settings["multie"]*$GLOBALS["bonus"];     
+if ($XBTT_USE) {
+ $ressb = do_sqlquery("SELECT uid FROM xbt_files_users as u INNER JOIN xbt_files as x ON u.fid=x.fid WHERE u.left = '0' AND x.flags='0' AND u.active='1'");
+   if (mysqli_num_rows($ressb) > 0)
+   {
+       while ($arrsb = mysqli_fetch_assoc($ressb))
+       {
+       $x=$arrsb["uid"];
+       quickQuery("UPDATE `{$TABLE_PREFIX}users` SET `seedbonus`=`seedbonus`+'".number_format((((($ts>0)?(time()-$ts):$clean_interval)/3600)*$multie),6,".","")."' WHERE `id` = '$x'");
+
+       }
+   } }else
+   {
+ $ressb = do_sqlquery("SELECT pid FROM {$TABLE_PREFIX}peers WHERE status = 'seeder'");
+   if (mysqli_num_rows($ressb) > 0)
+   {
+       while ($arrsb = mysqli_fetch_assoc($ressb))
+       {
+       $x=$arrsb['pid'];
+       quickQuery("UPDATE `{$TABLE_PREFIX}users` SET `seedbonus`=`seedbonus`+'".number_format((((($ts>0)?(time()-$ts):$clean_interval)/3600)*$multie),6,".","")."' WHERE `pid`= '$x'");
+
+    }
+   } }
+//sb]]></data>
+    </operation>
+</file>
+
+</hack>

@@ -1,0 +1,36 @@
+<?php
+$language['SUBFORUM']='Sous-Forum';
+$language['SUBFORUMS']='<b>Sous-Forums</b>';
+$language['NEW_TOPIC']='Nouveau Sujet';
+$language['NO_TOPICS']='Désoler, aucun sujet présent.';
+$language['LOCKED']='Sujet Vérouillé';
+$language['LOCKED_NEW']='Sujet Vérouillé (Nouveau)';
+$language['UNLOCKED']='Pas de message';
+$language['UNLOCKED_NEW']='Nouveau message';
+$language['ERR_CANT_START_TOPICS']='Vous n\'avez pas la permission de rediger un nouveau sujet dans ce forum.';
+$language['BAD_FORUM_ID']='ID du forum incorrecte';
+$language['MOD_OPTION']='Options de Modération';
+$language['SET_STICKY']='Mettre/Enlever Post-It';
+$language['SET_LOCKED']='Vérouillé/Dévérouillé Sujet';
+$language['RENAME_TOPIC']='Renomer le Sujet';
+$language['DELETE_TOPIC']='Supprimer le Sujet';
+$language['MOVE_TOPIC']='Déplacé ce sujet vers';
+$language['MOVE']='Déplacer';
+$language['ADD_REPLY']='Ajouter une réponse';
+$language['BAD_TOPIC_ID']='ID du sujet incorrecte';
+$language['LAST_10_POSTS']='10 dernier messages, dans l\'ordre inverse';
+$language['LAST_EDITED_BY']='Dernière édition par';
+$language['ERR_POST_ID_NA']='ID du message N/A';
+$language['ERR_FORUM_TOPIC']='ID Sujet ou Forum incorrecte.';
+$language['ERR_POST_NOT_FOUND']='Message non trouvé';
+$language['ERR_POST_UNIQUE']='Impossible de supprimé le message; c\'est le seul message du sujet. Vous devez';
+$language['ERR_POST_UNIQUE_2']='supprimé ce sujet';
+$language['ERR_POST_UNIQUE_3']='à la place';
+$language['TOPIC_LOCKED']='Ce sujet est vérouillé; aucun nouveau message n\'est possible.';
+$language['TOPIC_NOT_FOUND']='Sujet non trouvé';
+$language['TOPIC_UNREAD_POSTS']='Sujets avec messages non-lu';
+$language['POST']='Message';
+$language['SEARCH_AGAIN']='Nouvelle Recherche';
+$language['SEARCH_HELP']='Entrez un ou plusieurs mots-clés.<br />Les mots inférieur à 3 caractères sont ignorés.';
+$language['SEARCHED_FOR']='Recherche pour';
+?>
